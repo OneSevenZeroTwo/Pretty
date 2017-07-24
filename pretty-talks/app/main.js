@@ -9,6 +9,8 @@ Vue.use(VueRouter);
 Vue.use(VueAwesomeSwiper);
 Vue.prototype.$ajax = axios;
 
+import home from "./router/router/psort.vue"
+
 var store = new Vuex.Store({
 	state: {
 		
@@ -21,11 +23,18 @@ var store = new Vuex.Store({
 	}
 })
 var router = new VueRouter({
-	
+	routes: [{
+		path: '/category',
+		component: home
+	}]
+
 })
 
 new Vue({
-	el: '#demo',
+	el: '#pretty-talks',
+	template: `
+		<router-view></router-view>
+	`,
 	store,
 	router,
 })
