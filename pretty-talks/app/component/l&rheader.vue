@@ -7,7 +7,7 @@
 			<a href="">{{theHeader.title}}</a>
 		</div>
 		<div>
-			<a href="">{{theHeader.rightBtn}}</a>
+			<a :href='theHeader.theHref'>{{theHeader.rightBtn}}</a>
 		</div>
 	</header>
 </template>
@@ -24,10 +24,13 @@
 	header div {
 		float: left;
 		width: 15%;
+		height: 100%;
 	}
 	
 	header img {
-		height: 14px;
+		display: block;
+		margin: 20% 0 0 15%;
+		height: 20px;
 	}
 	
 	header a {

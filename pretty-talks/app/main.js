@@ -19,6 +19,7 @@ import Pindex from './router/pindex.vue';
 import Phome from './router/router/phome.vue'
 import Psort from "./router/router/psort.vue"
 import Plogin from "./router/plogin.vue";
+import Preg from "./router/preg.vue";
 import sub from "./router/pmine.vue";
 
 var router = new VueRouter({
@@ -39,8 +40,10 @@ var router = new VueRouter({
 	},{
 		path:'/login',
 		component:Plogin
-	},
-    {
+	},{
+		path:'/reg',
+		component:Preg
+	},{
         path: '/',
         redirect: 'index/home'
     }]
