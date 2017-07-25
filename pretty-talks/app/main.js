@@ -12,14 +12,23 @@ Vue.prototype.$ajax = axios;
 import home from "./router/router/psort.vue"
 import Plogin from "./router/plogin.vue";
 import sub from "./router/pmine.vue";
-
+import Psort from "./router/router/phome.vue";
+import Pindex from "./router/pindex.vue";
 
 var router = new VueRouter({
 
 	routes: [{
+		path:'index',
+		component:Pindex,
+		children:[{
+			path:'home',
+			component:Psort
+		},{
 		path: '/category',
 		component: home,
-	},{
+	 }]
+    },
+	{
 		path: '/subCategory',
 		component: sub,
 	},{
@@ -53,9 +62,9 @@ var store = new Vuex.Store({
 		},
 		setChar(state) {
 
-			axios.get("http://localhost:999/tsort" + state.pid, {
+			axios.get("http://localhost:999/tsort", {
 					params: {
-
+						pid:state.pid
 					}
 				}).then((response) => {
 					console.log(response)

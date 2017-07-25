@@ -38,23 +38,27 @@
 		z-index: 10;
 		height: 43px;
 		background: #fafafa;
+		border-top: 1px solid #fafafa;
 	}
 	.weui-tabbar__icon{
 		width:16px;
 		height: 16px;
-		margin: 0 30px;
-		text-indent: -9999px;
+		margin: 0 32px;
+		margin-top: 8px;
+		/*text-indent: -9999px;*/
         text-align: left;
 	}
 	.weui-tabbar__item{
 		float: left;
-		
+		width:25%;
 		text-decoration: none;
 		font-size: 12px;
 		color: #999;
 	}
 	.weui-tabbar__item p{
-		margin:4px 26px;
+		display: block;
+		width: 100%;
+		margin-top: -2px;
 		text-align: center;
 	}
 </style>
