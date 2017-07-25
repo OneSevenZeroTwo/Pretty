@@ -40,6 +40,7 @@
 		background: #fff;
 	}
 	li{
+        margin: 10px 0 10px 10px;
 		float: left;
 		
 	}

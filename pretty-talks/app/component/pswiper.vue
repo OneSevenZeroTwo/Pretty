@@ -37,7 +37,6 @@
 
 <style scoped="">
 	.swiper-container {
-		margin-top: 54px;
 		width: 100%;
 		height: 203px;
 	}

@@ -9,11 +9,16 @@ Vue.use(VueRouter);
 Vue.use(VueAwesomeSwiper);
 Vue.prototype.$ajax = axios;
 
+
 // 样式
 import './css/base.css'
 // 组件
 import Pindex from './router/pindex.vue';
 import Phome from './router/router/phome.vue'
+
+import Psort from "./router/router/psort.vue"
+import Plogin from "./router/plogin.vue";
+
 
 var store = new Vuex.Store({
     state: {
@@ -32,16 +37,25 @@ var router = new VueRouter({
         children: [{
             path: 'home',
             component: Phome,
+        },{
+        	path: '/category',
+			component: Psort
         }]
-    }, {
+    }, 
+    {
+		path:'/login',
+		component:Plogin
+	},
+    {
         path: '/',
         redirect: 'index/home'
     }]
 })
 
 new Vue({
-    el: '#perry-talks',
-    template: `<router-view></router-view>`,
-    store,
-    router,
+	el: '#pretty-talks',
+	template:`<router-view></router-view>`,
+	store,
+	router,
 })
+
