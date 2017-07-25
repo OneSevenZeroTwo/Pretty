@@ -27,11 +27,30 @@ var store = new Vuex.Store({
 	}
 })
 var router = new VueRouter({
-	routes:[{
+    routes: [{
+        path: '/index',
+        component: Pindex,
+        children: [{
+            path: 'home',
+            component: Phome,
+        },{
+        	path: '/category',
+			component: Psort
+        }]
+    }, 
+    {
+		path: '/subCategory',
+		component: sub,
+	},{
 		path:'/login',
 		component:Plogin
-	}]
+	},
+    {
+        path: '/',
+        redirect: 'index/home'
+    }]
 })
+
 
 new Vue({
 	el: '#pretty-talks',

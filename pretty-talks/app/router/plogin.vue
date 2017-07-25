@@ -35,7 +35,6 @@
 				},
 			}
 		},
-		props:['theHeader'],
 		components: {
 			lrHeader,
 			lrInput
