@@ -12,18 +12,12 @@ Vue.use(VueRouter);
 Vue.use(VueAwesomeSwiper);
 Vue.prototype.$ajax = axios;
 
-<<<<<<< HEAD
-import "./css/base.css";
-=======
-
 // 样式
 import './css/base.css'
 // 组件
 import Pindex from './router/pindex.vue';
 import Phome from './router/router/phome.vue'
-
 import Psort from "./router/router/psort.vue"
->>>>>>> b1a39778f7148c3df1726de66cfba77aa4dc8798
 import Plogin from "./router/plogin.vue";
 import sub from "./router/pmine.vue";
 
@@ -54,20 +48,12 @@ var router = new VueRouter({
 
 var store = new Vuex.Store({
 	state: {
-<<<<<<< HEAD
-
-=======
 		pid:null,
 	},
 	getters: {
-		
->>>>>>> b1a39778f7148c3df1726de66cfba77aa4dc8798
 	},
 	//分发状态
 	mutations: {
-		
-<<<<<<< HEAD
-=======
 		setNews(state) {
 			axios.get('http://localhost:999/fsort',{
 				 params: {
@@ -96,12 +82,15 @@ var store = new Vuex.Store({
 					console.log(error)
 				})
 		}
->>>>>>> b1a39778f7148c3df1726de66cfba77aa4dc8798
 	},
 
 	actions: {
-<<<<<<< HEAD
-
+		setNews(context, data) {
+			context.commit('setNews')
+		},
+		setChar(context, data) {
+			context.commit('setChar')
+		}
 	}
 })
 var router = new VueRouter({
@@ -128,17 +117,6 @@ var router = new VueRouter({
         redirect: 'index/home'
     }]
 })
-=======
-		setNews(context, data) {
-			context.commit('setNews')
-		},
-		setChar(context, data) {
-			context.commit('setChar')
-		}
-	}
-})
->>>>>>> b1a39778f7148c3df1726de66cfba77aa4dc8798
-
 
 new Vue({
 	el: '#pretty-talks',
