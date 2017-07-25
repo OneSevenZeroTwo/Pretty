@@ -10,6 +10,7 @@ Vue.use(VueAwesomeSwiper);
 Vue.prototype.$ajax = axios;
 
 import home from "./router/router/psort.vue"
+import Plogin from "./router/plogin.vue";
 
 var store = new Vuex.Store({
 	state: {
@@ -23,18 +24,19 @@ var store = new Vuex.Store({
 	}
 })
 var router = new VueRouter({
+
 	routes: [{
 		path: '/category',
 		component: home
+	},{
+		path:'/login',
+		component:Plogin
 	}]
-
 })
 
 new Vue({
 	el: '#pretty-talks',
-	template: `
-		<router-view></router-view>
-	`,
+	template:`<router-view></router-view>`,
 	store,
 	router,
 })

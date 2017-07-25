@@ -1,7 +1,7 @@
 <template>
 	<header class="warpper">
 		<form action="post" id="js_form">
-			<a href="#"></a>
+			<a href="#" class="home_btn"></a>
 			<input type="text" placeholder="套装" class="js_input" />
 			<div class="js_right"></div>
 		</form>
@@ -12,16 +12,51 @@
 </script>
 
 <style scoped>
-	*{
-		margin:0;
-		padding:0;
-	}
-	header{
+	.warpper {
 		width: 100%;
 		height: 39px;
 		background-color: #fff;
 		position: relative;
 		font-size: 12px;
 		z-index: 100;
+	}
+	
+	.home_btn {
+		float: left;
+		width: 25px;
+		height: 39px;
+		margin: 0 5px;
+		background: url('../img/logo.png') no-repeat center;
+		background-size: contain;
+		text-align: center;
+		color: #666;
+	}
+	
+	.js_input {
+		float: left;
+		font-size: 10px;
+		color: #333;
+		border: none;
+		padding: 5px 10px 5px 20px;
+		width: 195px;
+		height: 18px;
+		border-radius: 5px;
+		margin-bottom: 0.16rem;
+		margin-top: 0.16rem;
+		margin-left: 5px;
+		background: #f4f4f4 url('../img/jing.png') no-repeat 0.2rem center;
+		background-size: auto .8rem;
+		-webkit-appearance: none;
+		outline: none;
+	}
+	.js_right{
+		width:36px;
+		height:28px;
+		float: left;
+		margin-top: 0.15rem;
+		line-height: 28px;
+		text-align: center;
+		background: url('../img/right.png') no-repeat center center;
+		background-size:15px 12px;
 	}
 </style>
