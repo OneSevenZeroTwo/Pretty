@@ -3,15 +3,24 @@ import Vuex from "vuex";
 import VueRouter from "vue-router";
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import axios from "axios";
+import MuseUI from 'muse-ui';
+import 'muse-ui/dist/muse-ui.css';
 
+Vue.use(MuseUI);
 Vue.use(Vuex);
 Vue.use(VueRouter);
 Vue.use(VueAwesomeSwiper);
 Vue.prototype.$ajax = axios;
 
-import home from "./router/router/psort.vue"
+// 样式
+import './css/base.css'
+// 组件
+import Pindex from './router/pindex.vue';
+import Phome from './router/router/phome.vue'
+import Psort from "./router/router/psort.vue"
 import Plogin from "./router/plogin.vue";
 import sub from "./router/pmine.vue";
+<<<<<<< HEAD
 import Psort from "./router/router/phome.vue";
 import Pindex from "./router/pindex.vue";
 
@@ -29,12 +38,32 @@ var router = new VueRouter({
 	 }]
     },
 	{
+=======
+
+var router = new VueRouter({
+    routes: [{
+        path: '/index',
+        component: Pindex,
+        children: [{
+            path: 'home',
+            component: Phome,
+        },{
+        	path: 'category',
+			component: Psort
+        }]
+    }, 
+    {
+>>>>>>> 97344bd4822ac3a4da2fb55a01c4247b7f6fbd95
 		path: '/subCategory',
 		component: sub,
 	},{
 		path:'/login',
 		component:Plogin
-	}]
+	},
+    {
+        path: '/',
+        redirect: 'index/home'
+    }]
 })
 
 var store = new Vuex.Store({
@@ -42,11 +71,9 @@ var store = new Vuex.Store({
 		pid:null,
 	},
 	getters: {
-		
 	},
 	//分发状态
 	mutations: {
-		
 		setNews(state) {
 			axios.get('http://localhost:999/fsort',{
 				 params: {
@@ -86,6 +113,30 @@ var store = new Vuex.Store({
 		}
 	}
 })
+var router = new VueRouter({
+    routes: [{
+        path: '/index',
+        component: Pindex,
+        children: [{
+            path: 'home',
+            component: Phome,
+        },{
+        	path: '/category',
+			component: Psort
+        }]
+    }, 
+    {
+		path: '/subCategory',
+		component: sub,
+	},{
+		path:'/login',
+		component:Plogin
+	},
+    {
+        path: '/',
+        redirect: 'index/home'
+    }]
+})
 
 new Vue({
 	el: '#pretty-talks',
@@ -93,5 +144,4 @@ new Vue({
 	store,
 	router,
 })
-
 

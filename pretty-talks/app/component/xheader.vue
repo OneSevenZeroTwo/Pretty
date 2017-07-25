@@ -70,23 +70,23 @@
 		color: #333;
 		border: none;
 		padding: 5px 10px 5px 20px;
-		width: 195px;
-		height: 18px;
+		width: 75%;
+		height: 90%;
 		border-radius: 5px;
 		margin-bottom: 0.16rem;
-		margin-top: 0.16rem;
-		margin-left: 5px;
+		margin-top: 8px;
+		margin-left: 8px;
 		background: #f4f4f4 url('../img/jing.png') no-repeat 0.2rem center;
 		background-size: auto .8rem;
 		-webkit-appearance: none;
 		outline: none;
 	}
-	
-	.js_right {
-		width: 36px;
-		height: 28px;
-		float: left;
+	.js_right{
+		width:36px;
+		height:28px;
+		float: right;
 		margin-top: 0.15rem;
+		margin-right: 5px;
 		line-height: 28px;
 		text-align: center;
 		background: url('../img/right.png') no-repeat center center;
