@@ -23,8 +23,8 @@
 </style>
 
 <script>
-	import lrHeader from "../components/l&rheader.vue";
-	import lrInput from "../components/l&rinput.vue";
+	import lrHeader from "../component/l&rheader.vue";
+	import lrInput from "../component/l&rinput.vue";
 	
 	export default {
 		data() {
