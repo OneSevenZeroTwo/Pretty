@@ -33,7 +33,7 @@
 				headerMsg:{
 					title:'登录 - 美丽说',
 					rightBtn:'注册',
-					theHref:'http://localhost:8080/#/reg',
+					theHref:'http://localhost:8080/#/reg/step1',
 				},
 				inputMsg:{
 					title:'美丽说账号登录',

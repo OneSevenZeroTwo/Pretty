@@ -7,6 +7,21 @@
 			<mu-text-field :label="theInput.user" v-model="user" labelFloat/>
 			<mu-text-field label="密码" type="password" v-model="password" labelFloat/>
 		</div>
+		<div id="captcha">
+			<div class="img-code" id="imgCode" style="display: block;">
+				<p> 请点击下方图片，将它们翻转到正确方向
+					<a href="javascript:;">换一组</a>
+				</p>
+				<ul>
+					<ul>
+						<li class="dego" @click="changeDeg($event)"></li>
+						<li class="degl" @click="changeDeg($event)"></li>
+						<li class="degw" @click="changeDeg($event)"></li>
+						<li class="dege" @click="changeDeg($event)"></li>
+					</ul>
+				</ul>
+			</div>
+		</div>
 		<div id="login">
 			<mu-raised-button v-show="bool" :label="theInput.type" @click="login" class="demo-raised-button" :fullWidth="true" secondary/>
 			<mu-raised-button v-show="!bool" :label="theInput.type" @click="reg('top')" class="demo-raised-button" :fullWidth="true" secondary/>
@@ -22,6 +37,65 @@
 </template>
 
 <style>
+	.dego{
+		 transform:rotateX(0deg);
+		-ms-transform:rotateX(0deg); 	
+		-moz-transform:rotateX(0deg); 	
+		-webkit-transform:rotateX(0deg); 
+		-o-transform:rotateX(0deg); 
+	}
+	.degl{
+		 transform:rotate(90deg);
+		-ms-transform:rotate(90deg); 	
+		-moz-transform:rotate(90deg); 	
+		-webkit-transform:rotate(90deg); 
+		-o-transform:rotate(90deg);
+	}
+	.degw{
+		transform:rotate(180deg);
+		-ms-transform:rotate(180deg); 	
+		-moz-transform:rotate(180deg); 	
+		-webkit-transform:rotate(180deg); 
+		-o-transform:rotate(180deg);
+	}
+	.dege{
+		 transform:rotate(270deg);
+		-ms-transform:rotate(270deg); 	
+		-moz-transform:rotate(270deg); 	
+		-webkit-transform:rotate(270deg); 
+		-o-transform:rotate(270deg);
+	}
+	.deg{
+		animation:zhuan 0.5s forwards;
+	}
+	@keyframes zhuan{
+		0%{
+		}
+		100%{
+			transform:rotate(90deg);
+		}
+	}
+	#captcha {
+		margin: 0 15px 0 15px;
+	}
+	
+	#captcha p {
+		margin: 15px 0 15px 0;
+	}
+	
+	#captcha a {
+		float: right;
+	}
+	
+	#captcha li {
+		display: inline-block;
+		width: 80px;
+		height: 80px;
+		background-image: url(../../images/login&reg&mine/test.jpg);
+		background-size: 80px 80px;
+		background-repeat:no-repeat;
+	}
+	
 	.login_title {
 		padding: 30px 15px 0 15px;
 	}
@@ -107,6 +181,7 @@
 				dialog: false,
 				bool: 'true',
 				topPopup: false,
+				deg:'',
 			}
 		},
 		methods: {
@@ -133,7 +208,8 @@
 					this[position + 'Popup'] = true;
 					this.user = '';
 					return false;
-				}else if(!/^\S{1,19}$/.test(this.password)) {
+				}
+				if(!/^\S{1,19}$/.test(this.password)) {
 					this[position + 'Popup'] = true;
 					this.password = '';
 					return false;
@@ -143,21 +219,23 @@
 							'phone': this.user,
 							'password': this.password
 						}
-					}, )
-					.then(res => {
-						if(res.data == '0') {
-							window.location.href = 'http://localhost:8080';
-						} else if(res.data == '1') {
-							this.dialog = true;
-						}
-					})
-					.catch(err => {
-
-					})
+				})
+				.then(res => {
+					if(res.data == '0') {
+						window.location.href = 'http://localhost:8080/#/reg/step2/?phone='+this.user;
+					} else if(res.data == '1') {
+						this.dialog = true;
+					}
+				})
+				.catch(err => {
+				})
 			},
 			closeDialog() {
 				this.dialog = false
 			},
+			changeDeg(event){
+				event.currentTarget.classList.add('deg');
+			}
 		},
 		watch: {
 			topPopup(val) {
@@ -173,15 +251,14 @@
 				case '/login':
 					this.bool = true;
 					this.$ajax.get('http://localhost:999/active')
-					.then(res => {
-						console.log(res.data.data)
-						console.log(res.data.data['44287'])
-					})
-					.catch(err => {
+						.then(res => {
+							console.log(res.data.data['42287'].list)
+						})
+						.catch(err => {
 
-					});
+						});
 					break;
-				case '/reg':
+				case '/reg/step1':
 					this.bool = false;
 					break;
 			}

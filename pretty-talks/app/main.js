@@ -22,8 +22,9 @@ import Psort from "./router/router/psort.vue"
 
 import Plogin from "./router/plogin.vue";
 import Preg from "./router/preg.vue";
+import Regstep1 from "./router/router/regstep1.vue";
+import Regstep2 from "./router/router/regstep2.vue";
 import sub from "./router/pmine.vue";
-
 import car from "./router/pcar.vue";
 
 var store = new Vuex.Store({
@@ -96,7 +97,7 @@ var router = new VueRouter({
 				path: 'home',
 				component: Phome,
 			}, {
-				path: '/category',
+				path: 'category',
 				component: Psort
 			}]
 		},
@@ -111,7 +112,14 @@ var router = new VueRouter({
 			component: car
 		}, {
 			path: '/reg',
-			component: Preg
+			component: Preg,
+			children:[{
+				path:'step1',
+				component:Regstep1
+			},{
+				path:'step2',
+				component:Regstep2
+			}]
 		}, {
 			path: '/',
 			redirect: 'index/home'

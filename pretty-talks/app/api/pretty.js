@@ -2,6 +2,7 @@ var http = require('http');
 var https = require('https');
 var express = require('express');
 var app = express();
+
 // 首页
 app.get('/home', function(request, response) {
     response.append("Access-Control-Allow-Origin", "*");
@@ -74,7 +75,6 @@ app.get('/tsort', function(request,response){
         })
     })
 });
-
 
 app.listen(999, function() {
     console.log('打开999端口')
