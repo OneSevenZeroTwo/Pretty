@@ -4,7 +4,7 @@
 			<div class="cart_list" v-show="carListNone" data-shopid="1172jnw8">
 				<div class="shop_title order_info" :class="{folded:carListShow}" id="shop_1172jnw8">
 					<div class="box_btn">
-						<input type="checkbox" @change="isChecked" class="select_shop" name="shop[0]" value="1172jnw8" id="select_1172jnw8" shopid="1172jnw8">
+						<input type="checkbox" v-model="isAllChecked" class="select_shop" id="select_1172jnw8">
 						<label for="select_1172jnw8"></label>
 					</div>
 					<div class="shop_name">
@@ -12,18 +12,18 @@
 					</div>
 					<div class="fold_btn js-action" @click="isCarListShow" data-action="fold">展开</div>
 					<div class="shop_tatol_price">合计：
-						<span class="shop_price_text"></span>
+						<span class="shop_price_text">{{totalPrice|currecy}}</span>
 					</div>
 				</div>
-				
+
 				<ul class="order_goods_list" v-show="carListShow">
-					<li id="" class="goods" data-skuid="" v-if="delList" v-for="(list,index) in carList">
+					<li id="" class="goods" v-if="delList" v-for="(list,index) in carList">
 						<div class="box_btn">
-							<input type="checkbox" checked="false" class="select_goods" name="shop[0]goods[0]" value="1snk9ym" id="select_1snk9ym">
-							<label for="select_1snk9ym"></label>
+							<input type="checkbox" checked v-model="isChecked" :value="list.id" class="select_goods" :id="list.id">
+							<label :for="list.id"></label>
 						</div>
 						<div class="main">
-							<a class="pic_wrap lazyload-img-end" href="/wap/detail/1kfp88y" :style="'background-image: url('+list.imgUrl+'); background-size: cover;'"> 
+							<a class="pic_wrap lazyload-img-end" href="/wap/detail/1kfp88y" :style="'background-image: url('+list.imgUrl+'); background-size: cover;'">
 							</a>
 							<div class="middle">
 								<a href="/wap/detail/1kfp88y">
@@ -34,16 +34,16 @@
 									<span class="size">尺码：{{list.size}}</span>
 								</p>
 								<div class="numBox">
-									<div class="minus">-</div>
+									<div class="minus" @click="minuNum(index)">-</div>
 									<input type="text" class="js-amount amount nums" data-ori="1" data-max="495" :value="list.num" readonly="">
-									<div class="add plus">+</div>
+									<div class="add plus" @click="addNum(index)">+</div>
 									<div class="nums_mask"></div>
 								</div>
 							</div>
 							<div class="right">
-								<p class="goods_price" data-price="52.80">¥{{list.price}}</p>
-								<p class="origin_price"> ¥{{list.origin_price}}</p>
-								<div class="delete_btn js-action" @click="isDelList" data-action="removeSingle">删除</div>
+								<p class="goods_price" data-price="52.80">{{list.price|currecy}}</p>
+								<p class="origin_price">{{list.origin_price|currecy}}</p>
+								<div class="delete_btn js-action" @click="isDelList(index)" data-action="removeSingle">删除</div>
 							</div>
 						</div>
 					</li>
@@ -61,20 +61,23 @@
 			<div id="float_ctrl" class="float_ctrl">
 				<div class="goods_check_box">
 					<div class="box_btn">
-						<input type="checkbox" class="select_all" id="select_all">
+						<input type="checkbox" v-model="isAllChecked" class="select_all" id="select_all">
 						<label for="select_all"></label>
 					</div>
 					<span>全选</span>
 				</div>
 				<form action="/order/orderConfirm" method="POST">
 					<input type="hidden" name="data" id="form-data">
-					<input class="go_charge js-action js-charge-num" data-action="charge" type="submit" value="去结算">
+					<input class="go_charge js-action js-charge-num" data-action="charge" type="submit" :value="totalNum!=0?'去结算('+totalNum+')':'去结算'">
 				</form>
 				<div class="order_msg">
-					<p class="price">合计：<span class="total_price">¥{{totalPrice}}</span></p>
+					<p class="price">合计：<span class="total_price">{{totalPrice|currecy}}</span></p>
 					<p class="num msg">不含运费、优惠扣减</p>
 				</div>
 			</div>
+		</div>
+		<div class="prompt_wrap" v-show="isPrompt" :class="{prompt_wrap_show:isPrompt,prompt_wrap_hide:isNoPrompt}">
+			<div class="prompt_cont">{{promptCont}}</div>
 		</div>
 	</div>
 </template>
@@ -85,44 +88,128 @@
 			return {
 				carListShow: true,
 				carListNone: true,
-				delList:true,
+				delList: true,
+				isPrompt: false,
+				isNoPrompt: false,
+				promptCont: "",
+				isChecked:[]
 			}
 		},
 		methods: {
-			isCarListShow() {
-				this.carListShow = !this.carListShow
-			},
+			//购物车是否为空
 			isCarListNone() {
-				console.log(this.$store.state.carList)
 				if(this.$store.state.carList) {
 					this.carListNone = true;
 				} else {
 					this.carListNone = false;
 				}
 			},
-			isChecked(){
+			//显示/隐藏 列表
+			isCarListShow() {
+				this.carListShow = !this.carListShow
+			},
+			//删除选中项
+			isDelList(index) {
+				alert("确定要删除该物品？");
+				this.$store.state.carProId = this.$store.state.carList[index].id;
+				this.$store.state.carList.splice(index,1);
+				this.$store.dispatch("delCarList");
 				
 			},
-			isDelList(){
-				this.delList = false;
+			//商品数量减
+			minuNum(index) {
+				if(this.$store.state.carList[index].num <= 1) {
+					this.promptShow();
+					this.promptCont = "数量不能小于1";
+				} else {
+					this.$store.state.carList[index].num--;
+					this.$store.state.carProId = this.$store.state.carList[index].id;
+					this.$store.state.carProNum = this.$store.state.carList[index].num;
+					this.$store.dispatch("getCarList");
+				}
+			},
+			//商品数量加
+			addNum(index) {
+				if(this.$store.state.carList[index].num >= 100) {
+					this.promptShow();
+					this.promptCont = "数量不能大于100"
+				} else {
+					this.$store.state.carList[index].num++;
+					this.$store.state.carProId = this.$store.state.carList[index].id;
+					this.$store.state.carProNum = this.$store.state.carList[index].num;
+					this.$store.dispatch("getCarList");
+				}
+			},
+			promptShow(){
+				this.isPrompt = true;
+				clearTimeout(timeout1);
+				var timeout1 = setTimeout(() => {
+					this.isPrompt = false;
+					this.isNoPrompt = true;
+					var timeout2 = setTimeout(() => {
+						this.isNoPrompt = false;
+					}, 1);
+				}, 1500);
 			}
 		},
 		mounted() {
+			//发送给actions，调用mutations里的setCarList函数通过axios.get获取数据
 			this.$store.dispatch("setCarList");
 		},
-		computed:{
-			carList(){
+		computed: {
+			//获取数据列表
+			carList() {
 				return this.$store.state.carList;
 			},
-			totalPrice(){
+			/*isChecked(){
+				return this.$store.state.isChecked;
+			},*/
+			//全选/全不选
+			isAllChecked: {
+				get() {
+					return this.checkedCount == this.$store.state.carList.length;
+				},
+				set(value) {
+					if(value) {
+						this.isChecked = this.$store.state.carList.map(function(item) {
+							return item.id;
+						});
+					} else {
+						this.isChecked = [];
+					}
+				}
+			},
+			checkedCount: {
+				get() {
+					return this.isChecked.length;
+				}
+			},
+			//计算总价
+			totalPrice() {
 				var total = 0;
-				this.$store.state.carList.forEach((goods)=>{
-					total += goods.price * goods.num;
-					if(goods.isChecked){
+				this.$store.state.carList.forEach((goods) => {
+					//如果选中，计算总价
+					if(this.isChecked.join("").indexOf(goods.id) != -1) {
 						total += goods.price * goods.num;
 					}
 				});
 				return total;
+			},
+			totalNum() {
+				var total = 0;
+				this.$store.state.carList.forEach((goods) => {
+					//如果选中，计算总价
+					if(this.isChecked.join("").indexOf(goods.id) != -1) {
+						total += Number(goods.num);
+					}
+				});
+				return total;
+			}
+		},
+		filters: {
+			currecy(val) {
+				var n = parseFloat(val).toFixed(2);
+				return "¥" + n;
 			}
 		}
 	}
@@ -202,7 +289,7 @@
 	}
 	
 	.order_goods_list .goods {
-		width: 5.8rem;
+		/*width: 5.8rem;*/
 		margin-left: .3rem;
 		padding: .3rem;
 		padding-left: 0;
@@ -392,7 +479,7 @@
 		position: fixed;
 		bottom: .8rem;
 		left: 0;
-		width: 5.8rem;
+		width: 100%;
 		padding: .2rem .3rem;
 		background-color: #fff;
 		border-top: 1px solid rgba(51, 51, 51, .2);
@@ -475,5 +562,37 @@
 	
 	.float_ctrl_wrap .order_msg .msg {
 		color: #999;
+	}
+	
+	.prompt_wrap {
+		position: fixed;
+		top: 46%;
+		left: 0;
+		width: 100%;
+		text-align: center;
+		z-index: 1111;
+		opacity: 0;
+	}
+	
+	.prompt_wrap_show {
+		opacity: 1;
+		transition: opacity 0.5s ease-out 0s;
+	}
+	
+	.prompt_wrap_hide {
+		opacity: 0;
+		transition: opacity 0.5s ease-out 0s;
+	}
+	
+	.prompt_cont {
+		padding: .2rem .4rem;
+		background: #555;
+		border-radius: 3px;
+		color: #fff;
+		display: inline-block;
+		max-width: 80%;
+		line-height: .32rem;
+		box-sizing: border-box;
+		font-size: .28rem;
 	}
 </style>

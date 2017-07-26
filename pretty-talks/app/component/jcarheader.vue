@@ -5,7 +5,7 @@
 				<img src="http://s17.mogucdn.com/p1/160922/idid_ie3wmnbvgftginzsmizdambqgayde_35x52.png">
 			</a>
 		</div>
-		<div class="right_btn js-action" data-action="removeSelected" @click="">删除</div>
+		<div class="right_btn js-action" data-action="removeSelected" @click="isDelList">删除</div>
 		<div class="title">
 			<a href="javascript:;">购物车</a>
 		</div>
@@ -13,6 +13,18 @@
 </template>
 
 <script>
+	export default {
+		methods: {
+			isDelList() {
+				alert("确定要删除选定项？")
+				/*this.$store.state.carList.forEach((goods) => {
+					if(this.isChecked.join("").indexOf(goods.id) != -1) {
+						this.$store.state.delList = true;
+					}
+				});*/
+			}
+		}
+	}
 </script>
 
 <style scoped>

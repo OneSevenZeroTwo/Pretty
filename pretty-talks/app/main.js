@@ -19,30 +19,64 @@ import "./css/base.css";
 import Pindex from './router/pindex.vue';
 import Phome from './router/router/phome.vue'
 import Psort from "./router/router/psort.vue"
-
 import Plogin from "./router/plogin.vue";
 import Preg from "./router/preg.vue";
 import Regstep1 from "./router/router/regstep1.vue";
 import Regstep2 from "./router/router/regstep2.vue";
 import sub from "./router/pmine.vue";
-import car from "./router/pcar.vue";
+import Pchlist from "./component/pchlist.vue";
+ import car from "./router/pcar.vue";
 
 var store = new Vuex.Store({
+
 	state: {
 		carList: [],
 		pid: null,
+		carProId: null,
+		carProNum:null,
+		delList:true,
+        carousel: null,
+        special: null,
+        liactive: null,
+        litime: null,
+        sort: 'pop',
+        list: [],
+        pid: null,
 	},
 	getters: {
 
 	},
 	//分发状态
 	mutations: {
+		//获取购物车列表数据
 		setCarList(state) {
-			axios.get("http://localhost:8080/carlist.json")
+			axios.get("http://localhost:5555/read")
 				.then((res) => {
-					//console.log(res);
-					state.carList = res.data.data;
+					state.carList = state.carList.concat(res.data);
 					console.log(state.carList);
+				}).catch((err) => {})
+		},
+		//修改购物车列表选中项数据
+		getCarList(state) {
+			axios.get("http://localhost:5555/write", {
+					params: {
+						id: state.carProId,
+						num:state.carProNum,
+					}
+				})
+				.then((res) => {
+					console.log("数据写入成功："+res);
+				}).catch((err) => {})
+		},
+		//删除购物车列表选中项数据
+		delCarList(state) {
+			axios.get("http://localhost:5555/delete", {
+					params: {
+						id: state.carProId,
+					}
+				})
+				.then((res) => {
+					console.log("数据删除成功："+res);
 				}).catch((err) => {})
 		},
 		setNews(state) {
@@ -52,12 +86,54 @@ var store = new Vuex.Store({
 					},
 				})
 				.then((response) => {
-					//					state.news = state.news.concat(response.data.data)
+					//state.news = state.news.concat(response.data.data)
 				})
 				.catch((error) => {
 					console.log(error);
 				});
 		},
+        getActive(state, data) {
+            axios.get('http://localhost:999/active').then((data) => {
+                // 轮播图
+                state.carousel = data.data.data['43542'].list;
+                // 9.9包邮活动
+                state.special = data.data.data['13730'].list;
+                // 限时活动
+                state.liactive = data.data.data['42287'].list;
+                // 实现时间
+                state.litime = data.data.data['42287'].context.currentTime;
+            }).catch((err) => {
+
+            })
+        },
+        getActive(state) {
+
+            axios.get("http://localhost:999/tsort", {
+                    params: {
+                        pid: state.pid
+                    }
+                }).then((response) => {
+                    console.log(response)
+                    //state.res = response.data.data
+                    console.log(state.res)
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+        },
+        getList(state, data) {
+            axios.get('http://localhost:999/home', {
+                params: {
+                    page: state.page,
+                    sort: state.sort
+                }
+            }).then((data) => {
+                state.list = state.list.concat(data.data.data.list);
+                // console.log(data.data.data.list)
+            }).catch((err) => {
+
+            })
+        },
 		setChar(state) {
 
 			axios.get("http://localhost:999/tsort", {
@@ -66,7 +142,7 @@ var store = new Vuex.Store({
 					}
 				}).then((response) => {
 					console.log(response)
-					//					state.res = response.data.data
+					//state.res = response.data.data
 					console.log(state.res)
 				})
 				.catch((error) => {
@@ -77,8 +153,17 @@ var store = new Vuex.Store({
 	},
 
 	actions: {
+		//提交触发 mutations 的 setCarList 获取数据函数
 		setCarList(context) {
 			context.commit("setCarList");
+		},
+		//提交触发 mutations 的 getCarList 修改数据函数
+		getCarList(context) {
+			context.commit("getCarList");
+		},
+		//提交触发 mutations 的 getCarList 修改数据函数
+		delCarList(context) {
+			context.commit("delCarList");
 		},
 		setNews(context, data) {
 			context.commit('setNews')
@@ -86,6 +171,12 @@ var store = new Vuex.Store({
 		setChar(context, data) {
 			context.commit('setChar')
 		},
+        getActive(context, data) {
+            context.commit('getActive')
+        },
+        getList(context, data) {
+            context.commit('getList')
+        },
 	}
 })
 
@@ -123,15 +214,65 @@ var router = new VueRouter({
 		}, {
 			path: '/',
 			redirect: 'index/home'
-		}
-	]
+		}]
+	})
 
-})
 
+
+        /*setNews(state) {
+            axios.get('http://localhost:999/fsort', {
+                    params: {
+
+                    },
+                })
+                .then((response) => {
+                    //state.news = state.news.concat(response.data.data)
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
+        setCarList(state) {
+            axios.get("http://localhost:8080/carlist.json")
+                .then((res) => {
+                    //console.log(res);
+                    state.carList = res.data.data;
+                    console.log(state.carList);
+                }).catch((err) => {})
+        },
+        setNews(state) {
+            axios.get('http://localhost:999/fsort', {
+                    params: {
+
+                    },
+                })
+                .then((response) => {
+                    //					state.news = state.news.concat(response.data.data)
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
+        setChar(state) {
+
+            axios.get("http://localhost:999/tsort", {
+                    params: {
+                        pid: state.pid
+                    }
+                }).then((response) => {
+                    console.log(response)
+                    //					state.res = response.data.data
+                    console.log(state.res)
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+
+        }
+    },*/
 new Vue({
-	el: '#pretty-talks',
-	template: `<router-view></router-view>`,
-	store,
-	router,
-
+    el: '#pretty-talks',
+    template: `<router-view></router-view>`,
+    store,
+    router,
 })

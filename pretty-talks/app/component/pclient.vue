@@ -2,28 +2,10 @@
 <template>
     <div>
         <ul class="clearfix">
-            <li>
+            <li v-for="se in special">
             	<a href="#">
-            		<img src="https://s3.mogucdn.com/mlcdn/c45406/170718_01fj7da0ggab18i7bhilclhg0bl66_225x225.png_160x160.v1cAC.70.webp">
-            		<p class="cl_title">明星衣橱 </p>
-            	</a>
-            </li>
-             <li>
-            	<a href="#">
-            		<img src="https://s3.mogucdn.com/mlcdn/c45406/170718_01fj7da0ggab18i7bhilclhg0bl66_225x225.png_160x160.v1cAC.70.webp">
-            		<p class="cl_title">明星衣橱</p>
-            	</a>
-            </li>
-             <li>
-            	<a href="#">
-            		<img src="https://s3.mogucdn.com/mlcdn/c45406/170718_01fj7da0ggab18i7bhilclhg0bl66_225x225.png_160x160.v1cAC.70.webp">
-            		<p class="cl_title">明星衣橱</p>
-            	</a>
-            </li>
-             <li>
-            	<a href="#">
-            		<img src="https://s3.mogucdn.com/mlcdn/c45406/170718_01fj7da0ggab18i7bhilclhg0bl66_225x225.png_160x160.v1cAC.70.webp">
-            		<p class="cl_title">明星衣橱</p>
+            		<img :src="se.image">
+            		<p class="cl_title">{{se.title}}</p>
             	</a>
             </li>
         </ul>
@@ -32,6 +14,14 @@
 
 <script>
 	export default{
+        mounted(){
+            this.$store.dispatch('getActive');
+        },
+        computed:{
+            special(){
+                return this.$store.state.special
+            }
+        },
 	}
 </script>
 
