@@ -12,7 +12,6 @@ Vue.use(VueRouter);
 Vue.use(VueAwesomeSwiper);
 Vue.prototype.$ajax = axios;
 
-
 // 样式
 import "./css/base.css";
 
@@ -26,6 +25,34 @@ import Preg from "./router/preg.vue";
 import sub from "./router/pmine.vue";
 
 import car from "./router/pcar.vue";
+
+var router = new VueRouter({
+	routes: [{
+			path: '/index',
+			component: Pindex,
+			children: [{
+				path: 'home',
+				component: Phome,
+			}, {
+				path: 'category',
+				component: Psort
+			}]
+		},
+		{
+			path: '/subCategory',
+			component: sub,
+		}, {
+			path: '/login',
+			component: Plogin
+		}, {
+			path: '/reg',
+			component: Preg
+		}, {
+			path: '/',
+			redirect: 'index/home'
+		}
+	]
+})
 
 var store = new Vuex.Store({
 	state: {
@@ -66,7 +93,7 @@ var store = new Vuex.Store({
 					}
 				}).then((response) => {
 					console.log(response)
-//					state.res = response.data.data
+					//					state.res = response.data.data
 					console.log(state.res)
 				})
 				.catch((error) => {
