@@ -1,17 +1,17 @@
 <template>
 	<div>
-		<pheader></pheader>
-		<pcarcontent></pcarcontent>
+		<Jheader></Jheader>
+		<Jcarcontent></Jcarcontent>
 	</div>
 </template>
 <script>
-	import pheader from "./pcarheader.vue";
-	import pcarcontent from "./pcarcontent.vue";
+	import Jheader from "./component/jcarheader.vue";
+	import Jcarcontent from "./component/jcarcontent.vue";
 	
 	export default {
 		components:{
-			pheader,
-			pcarcontent
+			Jheader,
+			Jcarcontent
 		}
 	}
 </script>
