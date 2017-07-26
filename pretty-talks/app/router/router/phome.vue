@@ -6,6 +6,7 @@
     	<pclientfas></pclientfas>
     	<passembly></passembly>
     	<plist></plist>
+    	<router-view></router-view>
     </div>
 </template>
 <script>

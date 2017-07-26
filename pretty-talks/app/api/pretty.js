@@ -2,7 +2,7 @@ var http = require('http');
 var https = require('https');
 var express = require('express');
 var app = express();
-// 首页
+// 首页商品详情
 app.get('/home', function(request, response) {
     response.append("Access-Control-Allow-Origin", "*");
     var tatol = request.query
@@ -33,7 +33,7 @@ app.get('/active', function(request,response){
 });
 
 // 好物
-app.get('well', function(request,response){
+app.get('/well', function(request,response){
 	response.append("Access-Control-Allow-Origin", "*");
     var tatol = request.query
     https.get(`https://simba-api.meilishuo.com/venus/topic/v2/queryTopicList/h5`, function(res) {
