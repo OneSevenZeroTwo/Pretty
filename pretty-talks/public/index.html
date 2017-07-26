@@ -1,13 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-	<title>美丽说</title>
-	<!--<link rel="stylesheet" href="../app/css/base.css" />-->
-</head>
-<body>
-	<div id="pretty-talks"></div>
-</body>
-<script src="./storll.js"></script>
+	<head>
+		<meta charset="UTF-8">
+		<meta id="vp" name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<title>美丽说</title>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+		<!--<script type="text/javascript">
+			window.use_screen_base = '640_mate';
+			(function(a, b) {
+				var c = "orientationchange" in b ? "orientationchange" : "resize",
+					d = use_screen_base.indexOf("_mate"),
+					e = parseInt(use_screen_base),
+					f = a.documentElement,
+					g = function() {
+						var a = f.clientWidth,
+							c = b.innerWidth;
+						f.style.fontSize = 100 * (c / e) + "px"
+					};
+				if(/iPad.*OS|iPhone.*OS/.test(navigator.userAgent) && d > 0) {
+					var h = a.querySelectorAll("meta[name=viewport]"),
+						i = b.devicePixelRatio;
+					i = i != 1 ? 2 : 1, h[0] && h[0].setAttribute("content", "width=device-width, user-scalable=no, minimum-scale=" + 1 / i + ", maximum-scale=" + 1 / i + ", initial-scale=" + 1 / i)
+				}
+				g(), b.addEventListener(c, g, !1), delete use_screen_base
+			})(document, window);
+		</script>-->
+	</head>
+
+	<body>
+		<div id="pretty-talks"></div>
+	</body>
+	<script src="./storll.js"></script>
 </html>

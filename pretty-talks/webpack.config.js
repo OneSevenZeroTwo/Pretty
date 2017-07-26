@@ -31,6 +31,10 @@ module.exports ={
 		},{
 			test: /\.vue$/,
 			loader: "vue-loader"
+		}, {
+			//字体图标
+			test: /\.(woff|svg|eot|ttf)\??.*$/,
+			loader: "url-loader?name=fonts/[name].[md5:hash:hex:7].[ext]"
 		}]
 	},
 	// 服务器
