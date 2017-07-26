@@ -1,7 +1,11 @@
 <template>
 	<header class="page_head">
-		<div class="back_icon" id="back_btn"><img src="http://s17.mogucdn.com/p1/160922/idid_ie3wmnbvgftginzsmizdambqgayde_35x52.png"></div>
-		<div class="right_btn js-action" data-action="removeSelected">删除</div>
+		<div class="back_icon" id="back_btn">
+			<a href="javascript:history.go(-1)">
+				<img src="http://s17.mogucdn.com/p1/160922/idid_ie3wmnbvgftginzsmizdambqgayde_35x52.png">
+			</a>
+		</div>
+		<div class="right_btn js-action" data-action="removeSelected" @click="">删除</div>
 		<div class="title">
 			<a href="javascript:;">购物车</a>
 		</div>
@@ -11,12 +15,11 @@
 <script>
 </script>
 
-<style>
+<style scoped>
 	body,
 	html {
 		width: 100%;
 		background-color: #f4f4f4;
-		font-size: .24rem;
 		color: #666;
 	}
 	
