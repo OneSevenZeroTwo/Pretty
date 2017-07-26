@@ -21,25 +21,6 @@ import Psort from "./router/router/psort.vue"
 import Plogin from "./router/plogin.vue";
 import Preg from "./router/preg.vue";
 import sub from "./router/pmine.vue";
-<<<<<<< HEAD
-import Psort from "./router/router/phome.vue";
-import Pindex from "./router/pindex.vue";
-
-var router = new VueRouter({
-
-	routes: [{
-		path:'index',
-		component:Pindex,
-		children:[{
-			path:'home',
-			component:Psort
-		},{
-		path: '/category',
-		component: home,
-	 }]
-    },
-	{
-=======
 
 var router = new VueRouter({
     routes: [{
@@ -54,7 +35,6 @@ var router = new VueRouter({
         }]
     }, 
     {
->>>>>>> 97344bd4822ac3a4da2fb55a01c4247b7f6fbd95
 		path: '/subCategory',
 		component: sub,
 	},{
