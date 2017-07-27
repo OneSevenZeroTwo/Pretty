@@ -1,36 +1,20 @@
 <template>
 	<div class="box-wrap">
 		<div class="wrap_a">
-			<h3>本周流行</h3>
+			<h3 @click="load()">本周流行</h3>
 			<p></p>
 		</div>
 		<div class="list">
 			<ul class="list_log">
-				<li>
-					<a :href="'#/subCategory/'">
+				<li v-for="n in news">
+					<!--<p class="getId">{{n.link|time}}</p>-->
+					<a  v-vid="n.link">
 						<div class="list_a">
-							<img src="https://s3.mogucdn.com/mlcdn/c45406/170719_4451638k5dg4kcd9a3f87a8hh4l2g_265x331.jpg" alt="" />
+							<img :src="n.image" alt="" />
 						</div>
-						<span class="list_b">裙子</span>
+						<span class="list_b">{{n.title}}</span>
 					</a>
 				</li>
-				<li>
-					
-				</li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
 			</ul>
 		</div>
 	</div>
@@ -40,18 +24,43 @@
 	export default{
 		data(){
 			return {
-				
+		
 			}
 		},
 		computed:{
-			
+			news() {
+				return this.$store.state.news;
+				
+			}
 		},
 		methods:{
 			load() {
 				this.$store.dispatch("setNews")
 			},
+			mach() {
+				this.$store.dispatch("setChar")
+			},
+			
 		},
-		
+		mounted(){
+			this.load();
+		},
+		filters: {
+			time(input) {
+				var main = (input.split('='))[1].split('&')[0]
+//				console.log(main);
+				return main
+			},
+		},
+		directives:{
+			vid:{
+				bind(el,binding){
+					var input = binding.value;
+					var main = (input.split('='))[1].split('&')[0]
+					el.setAttribute('href','#/subCategory/'+main)
+				}
+			}
+		}
 	}
 </script>
 
@@ -114,6 +123,7 @@
 		font-size: 0.64rem;
 		font-weight: normal;
 		float: left;
+		margin-bottom:20px;
 	}
 	.wrap_a p{
 		color: #666;

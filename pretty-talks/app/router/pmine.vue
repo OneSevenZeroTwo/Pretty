@@ -1,7 +1,6 @@
 <template>
 	<div>
 		<xsubcategory></xsubcategory>
-		<xseek></xseek>
 	</div>
 </template>
 <script>

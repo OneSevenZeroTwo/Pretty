@@ -82,7 +82,7 @@
 		outline: none;
 	}
 	.js_right{
-		width:36px;
+		width:32px;
 		height:28px;
 		float: right;
 		margin-top: 0.15rem;

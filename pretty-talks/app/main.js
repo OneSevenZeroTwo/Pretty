@@ -20,25 +20,9 @@ import Phome from './router/router/phome.vue'
 import Psort from "./router/router/psort.vue"
 import Plogin from "./router/plogin.vue";
 import sub from "./router/pmine.vue";
-<<<<<<< HEAD
-import Psort from "./router/router/phome.vue";
-import Pindex from "./router/pindex.vue";
+import Plist from "./router/plist.vue";
+import Pdown from "./router/pdate.vue";
 
-var router = new VueRouter({
-
-	routes: [{
-		path:'index',
-		component:Pindex,
-		children:[{
-			path:'home',
-			component:Psort
-		},{
-		path: '/category',
-		component: home,
-	 }]
-    },
-	{
-=======
 
 var router = new VueRouter({
     routes: [{
@@ -48,13 +32,12 @@ var router = new VueRouter({
             path: 'home',
             component: Phome,
         },{
-        	path: 'category',
+        	path: '/category',
 			component: Psort
         }]
     }, 
     {
->>>>>>> 97344bd4822ac3a4da2fb55a01c4247b7f6fbd95
-		path: '/subCategory',
+		path: '/subCategory/:pid',
 		component: sub,
 	},{
 		path:'/login',
@@ -63,25 +46,38 @@ var router = new VueRouter({
     {
         path: '/',
         redirect: 'index/home'
+    },{
+    	path:'/listed',
+    	component:Plist,
+    	children:[{
+    		path:'/detail',
+    		component:Pdown
+    	}]
     }]
 })
 
 var store = new Vuex.Store({
 	state: {
 		pid:null,
+		news:null,
+		res:null,
+		now:null,
 	},
 	getters: {
 	},
 	//分发状态
 	mutations: {
 		setNews(state) {
+			console.log(111)
 			axios.get('http://localhost:999/fsort',{
 				 params: {
 				 	
 				},
 			})
 				.then((response) => {
-//					state.news = state.news.concat(response.data.data)
+//					console.log(response)
+					state.news = response.data.value
+//					console.log(state.news)
 				})
 				.catch((error) => {
 					console.log(error);
@@ -94,9 +90,10 @@ var store = new Vuex.Store({
 						pid:state.pid
 					}
 				}).then((response) => {
-					console.log(response)
-//					state.res = response.data.data
-					console.log(state.res)
+//					console.log(response)
+					state.res = response.data.value.category_1.list
+					state.now = response.data.value.category_2.list
+					console.log(state.now)
 				})
 				.catch((error) => {
 					console.log(error)
@@ -112,30 +109,6 @@ var store = new Vuex.Store({
 			context.commit('setChar')
 		}
 	}
-})
-var router = new VueRouter({
-    routes: [{
-        path: '/index',
-        component: Pindex,
-        children: [{
-            path: 'home',
-            component: Phome,
-        },{
-        	path: '/category',
-			component: Psort
-        }]
-    }, 
-    {
-		path: '/subCategory',
-		component: sub,
-	},{
-		path:'/login',
-		component:Plogin
-	},
-    {
-        path: '/',
-        redirect: 'index/home'
-    }]
 })
 
 new Vue({

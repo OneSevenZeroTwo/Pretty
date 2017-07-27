@@ -50,7 +50,7 @@ app.get('well', function(request,response){
 app.get('/fsort', function(request,response){
 	response.append("Access-Control-Allow-Origin", "*");
     var tatol = request.query
-    https.get(`https://simba-api.meilishuo.com/venus/mce/v1/urlChange/pc?pid=20783&channel=wap&page=1&pageSize=30&_=1500961728181`, function(res) {
+  https.get(`https://simba-api.meilishuo.com/venus/mce/v1/urlChange/pc?pid=20783&channel=wap&page=1&pageSize=30&_=1500961728181`, function(res) {
         var data = '';
         res.on('data', function(chunk) {
             data += chunk;
@@ -64,6 +64,7 @@ app.get('/fsort', function(request,response){
 app.get('/tsort', function(request,response){
 	response.append("Access-Control-Allow-Origin", "*");
     var tatol = request.query
+    console.log(tatol)
     https.get(`https://simba-api.meilishuo.com/venus/mce/v1/urlMakeUpChange/h5?channel=wap&page=1&pageSize=30&pid=${tatol.pid}&_=1500982611007`, function(res) {
         var data = '';
         res.on('data', function(chunk) {
@@ -71,6 +72,7 @@ app.get('/tsort', function(request,response){
         })
         res.on('end', function() {
             response.end(data)
+            console.log(data)
         })
     })
 });

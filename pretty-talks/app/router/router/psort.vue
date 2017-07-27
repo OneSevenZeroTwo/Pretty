@@ -1,9 +1,6 @@
 <template>
 	<div>
-		<xheader></xheader>
-		<xfooter></xfooter>
 		<xcategary></xcategary>
-		<!--<router-view></router-view>-->
 	</div>
 </template>
 <script>

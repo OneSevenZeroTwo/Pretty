@@ -7,31 +7,14 @@
 		</div>
 		<div class="list">
 			<ul class="list_log">
-				<li>
+				<li v-for="n in res">
 					<a href="">
 						<div class="list_a">
-							<img src="https://s3.mogucdn.com/mlcdn/c45406/170719_4451638k5dg4kcd9a3f87a8hh4l2g_265x331.jpg" alt="" />
+							<img :src="n.image" alt="" />
 						</div>
-						<span class="list_b">裙子</span>
+						<span class="list_b">{{n.title}}</span>
 					</a>
 				</li>
-				<li>
-					
-				</li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
 			</ul>
 		</div>
 	</div>
@@ -43,31 +26,14 @@
 		</div>
 		<div class="list">
 			<ul class="list_log">
-				<li>
-					<a href="">
+				<li v-for="item in now">
+					<a href="" >
 						<div class="list_a">
-							<img src="https://s3.mogucdn.com/mlcdn/c45406/170719_4451638k5dg4kcd9a3f87a8hh4l2g_265x331.jpg" alt="" />
+							<img :src="item.image" alt="" />
 						</div>
-						<span class="list_b">裙子</span>
+						<span class="list_b">{{item.title}}</span>
 					</a>
 				</li>
-				<li>
-					
-				</li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
 			</ul>
 		</div>
 	</div>
@@ -82,15 +48,24 @@
 			}
 		},
 		computed:{
-			sub() {
-				console.log(this)
+			res() {
+//				console.log(this.$store.state.res)
 				return this.$store.state.res
+			},
+			now(){
+//				console.log(this.$store.state)
+				return this.$store.state.now
 			}
 		},
-		mounted() {
-			console.log(this.$store.state.res)
-			this.$store.state.id = this.$route.params.id;
-			this.$store.dispatch('setChar')
+		methods:{
+			mach() {
+				
+			},
+			
+		},
+		mounted(){
+			this.$store.state.pid = this.$route.params.pid;
+			this.$store.dispatch("setChar")
 		},
 	}
 </script>
@@ -154,6 +129,7 @@
 		font-size: 0.64rem;
 		font-weight: normal;
 		float: left;
+		margin:20px 0;
 	}
 	.wrap_a p{
 		color: #666;
@@ -164,7 +140,7 @@
 	.aaa{
 		width:100%;
 		height: 10px;
-		background: #eee;
-		margin-top: 376px;
+		/*background: #eee;*/
+		/*margin-top: 376px;*/
 	}
 </style>
