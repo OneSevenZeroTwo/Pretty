@@ -1,37 +1,42 @@
 <template>
 	<swiper :options="swiperOption" ref="mySwiper">
 		<!-- slides -->
-		<swiper-slide><img src="../img/1.jpeg"></swiper-slide>
-		<swiper-slide><img src="../img/1.jpeg"></swiper-slide>
-		<swiper-slide><img src="../img/1.jpeg"></swiper-slide>
-		<swiper-slide><img src="../img/1.jpeg"></swiper-slide>
+		<swiper-slide v-for="img in imgs"><img :src="img.image"></swiper-slide>
 		<!-- Optional controls -->
-		<div class="swiper-pagination" slot="pagination"></div>
-		<div class="swiper-button-prev" slot="button-prev"></div>
-		<div class="swiper-button-next" slot="button-next"></div>
+		 <div class="swiper-pagination"  slot="pagination"></div>
 	</swiper>
 </template>
 
 <script>
 	import { swiper, swiperSlide } from 'vue-awesome-swiper';
 	export default {
-		data: function() {
+		mounted(){
+			this.$store.dispatch('getActive');
+		},
+		data(){
 			return {
 				swiperOption: {
 					paginationClickable: true,
 					//					loop:true,
 					spaceBetween: 30,
+					pagination : '.swiper-pagination',
 					centeredSlides: true,
-					autoplay: 2500,
+					autoplay: 3000,
 					observer: true,
 					autoplayDisableOnInteraction: false
-				}
+				},
+			}
+		},
+		computed:{
+			imgs(){
+				return this.$store.state.carousel
 			}
 		},
 		components: {
 			swiper,
 			swiperSlide
 		},
+
 	}
 </script>
 

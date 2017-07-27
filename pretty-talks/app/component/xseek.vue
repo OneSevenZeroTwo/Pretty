@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
 	<div class="mode">
 		<div class="wallTop">
 			<div class="tags">
@@ -51,6 +52,10 @@
 			</ul>
 
 		</div>
+=======
+	<div>
+		111
+>>>>>>> 303d634a2f01f26b42dab92c9e3fdbf363c43aa7
 	</div>
 </template>
 

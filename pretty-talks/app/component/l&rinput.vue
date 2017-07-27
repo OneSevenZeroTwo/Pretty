@@ -1,23 +1,101 @@
 <template>
 	<div>
 		<div class="login_title mgj">
-			<span class="third_title">美丽说账号登录</span>
+			<span class="third_title">{{theInput.title}}</span>
 		</div>
 		<div id="form">
-			<mu-text-field label="昵称/邮箱/手机号" v-model="user" labelFloat/>
+			<mu-text-field :label="theInput.user" v-model="user" labelFloat/>
 			<mu-text-field label="密码" type="password" v-model="password" labelFloat/>
 		</div>
-		<div id="login">
-			<mu-raised-button label="登录" @click="show" class="demo-raised-button" :fullWidth="true" secondary/>
+		<div id="captcha">
+			<div class="img-code" id="imgCode" style="display: block;">
+				<p> 请点击下方图片，将它们翻转到正确方向
+					<a href="javascript:;">换一组</a>
+				</p>
+				<ul>
+					<ul>
+						<li class="dego" @click="changeDeg($event)"></li>
+						<li class="degl" @click="changeDeg($event)"></li>
+						<li class="degw" @click="changeDeg($event)"></li>
+						<li class="dege" @click="changeDeg($event)"></li>
+					</ul>
+				</ul>
+			</div>
 		</div>
-		<mu-dialog :open="dialog" title="登录失败">
-			请输入正确的账号和密码
-			<mu-flat-button label="关闭" slot="actions" primary @click="close" />
+		<div id="login">
+			<mu-raised-button v-show="bool" :label="theInput.type" @click="login" class="demo-raised-button" :fullWidth="true" secondary/>
+			<mu-raised-button v-show="!bool" :label="theInput.type" @click="reg('top')" class="demo-raised-button" :fullWidth="true" secondary/>
+		</div>
+		<mu-dialog :open="dialog" :title="theInput.dialogTitle">
+			{{theInput.dialogMsg}}
+			<mu-flat-button label="关闭" slot="actions" primary @click="closeDialog" />
 		</mu-dialog>
+		<mu-popup position="top" :overlay="false" popupClass="demo-popup-top" :open="topPopup">
+			请输入正确的格式
+		</mu-popup>
 	</div>
 </template>
 
 <style>
+	.dego{
+		 transform:rotateX(0deg);
+		-ms-transform:rotateX(0deg); 	
+		-moz-transform:rotateX(0deg); 	
+		-webkit-transform:rotateX(0deg); 
+		-o-transform:rotateX(0deg); 
+	}
+	.degl{
+		 transform:rotate(90deg);
+		-ms-transform:rotate(90deg); 	
+		-moz-transform:rotate(90deg); 	
+		-webkit-transform:rotate(90deg); 
+		-o-transform:rotate(90deg);
+	}
+	.degw{
+		transform:rotate(180deg);
+		-ms-transform:rotate(180deg); 	
+		-moz-transform:rotate(180deg); 	
+		-webkit-transform:rotate(180deg); 
+		-o-transform:rotate(180deg);
+	}
+	.dege{
+		 transform:rotate(270deg);
+		-ms-transform:rotate(270deg); 	
+		-moz-transform:rotate(270deg); 	
+		-webkit-transform:rotate(270deg); 
+		-o-transform:rotate(270deg);
+	}
+	.deg{
+		animation:zhuan 0.5s forwards;
+	}
+	@keyframes zhuan{
+		0%{
+		}
+		100%{
+			transform:rotate(90deg);
+		}
+	}
+	#captcha {
+		margin: 0 15px 0 15px;
+	}
+	
+	#captcha p {
+		margin: 15px 0 15px 0;
+	}
+	
+	#captcha a {
+		float: right;
+	}
+	
+	#captcha li {
+		display: inline-block;
+		width: 80px;
+		height: 80px;
+		background-image: url(../../images/login&reg&mine/test.jpg);
+		background-size: 80px 80px;
+		background-repeat:no-repeat;
+	}
+	
 	.login_title {
 		padding: 30px 15px 0 15px;
 	}
@@ -79,39 +157,111 @@
 		background-color: #ff5777;
 		left: 15px;
 	}
+	
+	.demo-popup-top {
+		width: 100%;
+		opacity: .8;
+		height: 48px;
+		line-height: 48px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		max-width: 375px;
+		background-color: #ccc;
+	}
 </style>
 
 <script>
 	export default {
+		props: ['theInput'],
 		data() {
 			return {
 				user: '',
 				password: '',
-				 dialog: false
+				dialog: false,
+				bool: 'true',
+				topPopup: false,
+				deg:'',
 			}
 		},
 		methods: {
-			show() {
+			login() {
 				this.$ajax.get('http://localhost:4399/login', {
-					params: {
-						'user': this.user,
-						'password': this.password
-					}
-				}, )
+						params: {
+							'user': this.user,
+							'password': this.password
+						}
+					}, )
+					.then(res => {
+						if(res.data == '0') {
+							this.dialog = true
+						} else if(res.data == '1') {
+
+						}
+					})
+					.catch(err => {
+
+					})
+			},
+			reg(position) {
+				if(!/^1[3-57-9]\d{9}$/.test(this.user)) {
+					this[position + 'Popup'] = true;
+					this.user = '';
+					return false;
+				}
+				if(!/^\S{1,19}$/.test(this.password)) {
+					this[position + 'Popup'] = true;
+					this.password = '';
+					return false;
+				}
+				this.$ajax.get('http://localhost:4399/reg', {
+						params: {
+							'phone': this.user,
+							'password': this.password
+						}
+				})
 				.then(res => {
 					if(res.data == '0') {
-						this.dialog = true
+						window.location.href = 'http://localhost:4399/#/reg/step2/?phone='+this.user;
 					} else if(res.data == '1') {
-						
+						this.dialog = true;
 					}
 				})
 				.catch(err => {
-
 				})
 			},
-    		close () {
-      			this.dialog = false
-    		}
+			closeDialog() {
+				this.dialog = false
+			},
+			changeDeg(event){
+				event.currentTarget.classList.add('deg');
+			}
+		},
+		watch: {
+			topPopup(val) {
+				if(val) {
+					setTimeout(() => {
+						this.topPopup = false
+					}, 1500)
+				}
+			}
+		},
+		mounted() {
+			switch(this.$route.path) {
+				case '/login':
+					this.bool = true;
+					this.$ajax.get('http://localhost:999/active')
+						.then(res => {
+							console.log(res.data.data['42287'].list)
+						})
+						.catch(err => {
+
+						});
+					break;
+				case '/reg/step1':
+					this.bool = false;
+					break;
+			}
 		}
 	}
 </script>

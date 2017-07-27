@@ -7,12 +7,6 @@ module.exports ={
 		filename:'storll.js',
 		path: __dirname + "/public"
 	},
-	// vue
-	resolve:{
-		alias:{
-			'vue':'vue/dist/vue.js'
-		}
-	},
 	// 加载器
 	module: {
 		loaders:[{
@@ -31,12 +25,23 @@ module.exports ={
 		},{
 			test: /\.vue$/,
 			loader: "vue-loader"
+		}, {
+			//字体图标
+			test: /\.(woff|svg|eot|ttf)\??.*$/,
+			loader: "url-loader?name=fonts/[name].[md5:hash:hex:7].[ext]"
 		}]
+	},
+	// vue
+	resolve:{
+		alias:{
+			'vue':'vue/dist/vue.js'
+		}
 	},
 	// 服务器
 	devServer:{
 		contentBase:'./public',
-		inline:true
+		inline:true,
+		port:4399
 	}
 		
 }
