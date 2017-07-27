@@ -2,7 +2,12 @@ var http = require('http');
 var https = require('https');
 var express = require('express');
 var app = express();
+<<<<<<< HEAD
+
+// 首页
+=======
 // 首页商品详情
+>>>>>>> 3740a76cc056a3e0e2f82c9d986ecdd1f6b883d2
 app.get('/home', function(request, response) {
     response.append("Access-Control-Allow-Origin", "*");
     var tatol = request.query
@@ -74,7 +79,6 @@ app.get('/tsort', function(request,response){
         })
     })
 });
-
 
 app.listen(999, function() {
     console.log('打开999端口')
