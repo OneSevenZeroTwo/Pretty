@@ -25,42 +25,6 @@ import Preg from "./router/preg.vue";
 import Regstep1 from "./router/router/regstep1.vue";
 import Regstep2 from "./router/router/regstep2.vue";
 import sub from "./router/pmine.vue";
-<<<<<<< HEAD
-import Plist from "./router/plist.vue";
-import Pdown from "./router/pdate.vue";
-
-
-var router = new VueRouter({
-    routes: [{
-        path: '/index',
-        component: Pindex,
-        children: [{
-            path: 'home',
-            component: Phome,
-        },{
-        	path: '/category',
-			component: Psort
-        }]
-    }, 
-    {
-		path: '/subCategory/:pid',
-		component: sub,
-	},{
-		path:'/login',
-		component:Plogin
-	},
-    {
-        path: '/',
-        redirect: 'index/home'
-    },{
-    	path:'/listed',
-    	component:Plist,
-    	children:[{
-    		path:'/detail',
-    		component:Pdown
-    	}]
-    }]
-=======
 import Pchlist from "./component/pchlist.vue";
 import car from "./router/pcar.vue";
 
@@ -105,67 +69,10 @@ var router = new VueRouter({
             redirect: 'index/home/list/pop'
         }
     ]
->>>>>>> 303d634a2f01f26b42dab92c9e3fdbf363c43aa7
 })
 
 
 var store = new Vuex.Store({
-<<<<<<< HEAD
-	state: {
-		pid:null,
-		news:null,
-		res:null,
-		now:null,
-	},
-	getters: {
-	},
-	//分发状态
-	mutations: {
-		setNews(state) {
-			console.log(111)
-			axios.get('http://localhost:999/fsort',{
-				 params: {
-				 	
-				},
-			})
-				.then((response) => {
-//					console.log(response)
-					state.news = response.data.value
-//					console.log(state.news)
-				})
-				.catch((error) => {
-					console.log(error);
-				});
-		},
-		setChar(state) {
-
-			axios.get("http://localhost:999/tsort", {
-					params: {
-						pid:state.pid
-					}
-				}).then((response) => {
-//					console.log(response)
-					state.res = response.data.value.category_1.list
-					state.now = response.data.value.category_2.list
-					console.log(state.now)
-				})
-				.catch((error) => {
-					console.log(error)
-				})
-		}
-	},
-
-	actions: {
-		setNews(context, data) {
-			context.commit('setNews')
-		},
-		setChar(context, data) {
-			context.commit('setChar')
-		}
-	}
-})
-=======
->>>>>>> 303d634a2f01f26b42dab92c9e3fdbf363c43aa7
 
     state: {
         carList: [],
