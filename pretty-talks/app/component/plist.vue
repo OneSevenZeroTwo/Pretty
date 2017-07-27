@@ -26,10 +26,11 @@ export default {
         shownav(num) {
             this.isshownav = num;
             this.$store.state.list = [];
+            this.$store.state.page = 0;
             if (this.$route.path == '/index/home/list/pop') {
                 this.isshownav = 0;
                 this.$store.state.sort = 'pop';
-                 this.$store.dispatch('getList');
+                this.$store.dispatch('getList');
             } else if (this.$route.path == '/index/home/list/sell') {
                 this.isshownav = 1;
                 this.$store.state.sort = 'sell';
@@ -44,7 +45,7 @@ export default {
         }
     },
     mounted() {
-       this.shownav()
+       this.$store.dispatch('getList');
     }
 }
 </script>
