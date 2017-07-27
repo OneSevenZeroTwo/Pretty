@@ -1,7 +1,7 @@
 <template>
     <div>
         <ul class="list_ch clearfix">
-            <li v-for="lis in list">
+            <li v-for="(lis,index) in list" :key="index">
                 <a href="#">
 					<img :src="lis.show.img">
 					<p class="li_title">{{lis.title}}</p>

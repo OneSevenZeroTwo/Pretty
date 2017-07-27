@@ -87,6 +87,7 @@ var store = new Vuex.Store({
         sort: 'pop',
         list: [],
         pid: null,
+        page:0
     },
     getters: {
 
@@ -142,11 +143,13 @@ var store = new Vuex.Store({
                 // 轮播图
                 state.carousel = data.data.data['43542'].list;
                 // 9.9包邮活动
-                state.special = data.data.data['13730'].list;
+                state.special = data.data.data['13730'].list.slice(0,-1);
                 // 限时活动
                 state.liactive = data.data.data['42287'].list;
-                // 实现时间
+                // 限时时间
                 state.litime = data.data.data['42287'].context.currentTime;
+                // 小图标
+                
             }).catch((err) => {
 
             })
@@ -154,7 +157,7 @@ var store = new Vuex.Store({
         getList(state, data) {
             axios.get('http://localhost:999/home', {
                 params: {
-                    page: state.page,
+                    page: 1,
                     sort: state.sort
                 }
             }).then((data) => {
@@ -219,3 +222,11 @@ new Vue({
     store,
     router,
 });
+
+
+// window.onload = function(){
+// 	var bomove = document.querySelector('.bomove');
+// 	bomove.ontouchstart = function(data1) {
+// 		console.log(data1)
+// 	}
+// }

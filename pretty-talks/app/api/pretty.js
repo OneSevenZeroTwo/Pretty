@@ -14,7 +14,8 @@ app.get('/home', function(request, response) {
             data += chunk;
         })
         res.on('end', function() {
-            response.end(data)
+            response.end(data);
+            console.log('执行')
         })
     })
 });
