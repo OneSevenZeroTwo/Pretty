@@ -17,11 +17,12 @@
 		methods: {
 			isDelList() {
 				alert("确定要删除选定项？")
-				/*this.$store.state.carList.forEach((goods) => {
-					if(this.isChecked.join("").indexOf(goods.id) != -1) {
-						this.$store.state.delList = true;
+				this.$store.state.carList.forEach((goods,idx) => {
+						console.log(this.$store.state.isChecked,goods,idx);
+					if(this.$store.state.isChecked.join("").indexOf(goods.id) != -1) {
+						//this.$store.state.carList.splice(idx,1);
 					}
-				});*/
+				});
 			}
 		}
 	}
@@ -36,11 +37,11 @@
 	}
 	
 	.page_head {
-		height: .92rem;
+		height: 55px;
 		width: 100%;
 		text-align: center;
 		color: #333;
-		line-height: .92rem;
+		line-height: 55px;
 		border-bottom: 1px solid rgba(51, 51, 51, .15);
 	}
 	
@@ -55,22 +56,23 @@
 		float: left;
 		text-align: left;
 		vertical-align: middle;
-		width: .8rem;
-		padding-left: .3rem;
+		width: 65px;
+		height: 55px;
+		padding-left: 17px;
 	}
 	
 	.page_head .back_icon img {
-		width: .2rem;
+		width: 12px;
 		display: inline-block;
-		margin-top: .28rem;
+		margin-top: 16px;
 	}
 	
 	.page_head .right_btn {
 		z-index: 5;
-		font-size: .35rem;
+		font-size: 20px;
 		float: right;
-		padding-right: .3rem;
-		height: .88rem;
+		padding-right: 17px;
+		height: 55px;
 	}
 	
 	.page_head .title {
@@ -79,7 +81,7 @@
 	}
 	
 	.page_head .title a {
-		font-size: .35rem;
+		font-size: 20px;
 		color: #666;
 		text-decoration: none;
 	}

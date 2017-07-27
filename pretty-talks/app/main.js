@@ -14,7 +14,7 @@ Vue.prototype.$ajax = axios;
 
 // 样式
 import "./css/base.css";
-import "./css/weui.css"
+import "./css/weui.css";
 
 // 组件
 import Pindex from './router/pindex.vue';
@@ -27,50 +27,43 @@ import Regstep2 from "./router/router/regstep2.vue";
 import sub from "./router/pmine.vue";
 import Pchlist from "./component/pchlist.vue";
 import car from "./router/pcar.vue";
+import order from "./router/porder.vue";
 
 var router = new VueRouter({
     routes: [{
-            path: '/index',
-            component: Pindex,
+        path: '/index',
+        component: Pindex,
+        children: [{
+            path: 'home',
+            component: Phome,
             children: [{
-                path: 'home',
-                component: Phome,
-                children: [{
-                    path: 'list/:sort',
-                    component: Pchlist,
-                }]
-            }, {
-                path: 'category',
-                component: Psort
-            }]
-
-        },
-        {
-            path: '/subCategory',
-            component: sub,
-        }, {
-            path: '/login',
-            component: Plogin
-        }, {
-            path: "/car",
-            component: car
-        }, {
-            path: '/reg',
-            component: Preg,
-            children: [{
-                path: 'step1',
-                component: Regstep1
-            }, {
-                path: 'step2',
-                component: Regstep2
+                path: 'list/:sort',
+                component: Pchlist,
             }]
         }, {
-            path: '/',
-            redirect: 'index/home/list/pop'
-        }
-    ]
+            path: 'category',
+            component: Psort
+        }]
+    }, {
+        path: '/subCategory',
+        component: sub,
+    }, {
+        path: '/login',
+        component: Plogin
+    }, {
+        path: "/car",
+        component: car
+    }, {
+        path: "/order",
+        component: order
+    }, {
+        path: '/reg',
+        component: Preg
+    }, {
+        path: '/',
+        redirect: 'index/home/list/pop'
+    }]
 })
-
 
 var store = new Vuex.Store({
 
@@ -79,7 +72,7 @@ var store = new Vuex.Store({
         pid: null,
         carProId: null,
         carProNum: null,
-        delList: true,
+        // delList: null,
         carousel: null,
         special: null,
         liactive: null,
@@ -87,6 +80,7 @@ var store = new Vuex.Store({
         sort: 'pop',
         list: [],
         pid: null,
+        isChecked: [],
     },
     getters: {
 
@@ -98,7 +92,10 @@ var store = new Vuex.Store({
             axios.get("http://localhost:5555/read")
                 .then((res) => {
                     state.carList = state.carList.concat(res.data);
-                    console.log(state.carList);
+                    state.isChecked = state.carList.map(function(item) {
+                        return item.id;
+                    });
+                    console.log(state.isChecked);
                 }).catch((err) => {})
         },
         //修改购物车列表选中项数据
@@ -151,6 +148,21 @@ var store = new Vuex.Store({
 
             })
         },
+        getActive(state) {
+
+            axios.get("http://localhost:999/tsort", {
+                    params: {
+                        pid: state.pid
+                    }
+                }).then((response) => {
+                    console.log(response)
+                        //state.res = response.data.data
+                    console.log(state.res)
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+        },
         getList(state, data) {
             axios.get('http://localhost:999/home', {
                 params: {
@@ -172,7 +184,7 @@ var store = new Vuex.Store({
                     }
                 }).then((response) => {
                     console.log(response)
-                    //state.res = response.data.data
+                        //state.res = response.data.data
                     console.log(state.res)
                 })
                 .catch((error) => {
@@ -210,12 +222,9 @@ var store = new Vuex.Store({
     }
 })
 
-
-
-
 new Vue({
     el: '#pretty-talks',
     template: `<router-view></router-view>`,
     store,
     router,
-});
+})
