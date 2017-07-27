@@ -5,7 +5,7 @@
 
 	</div>
 	<div class="weui-tabbar">
-		<a href="#" class="weui-tabbar__item">
+		<a href="#/index/home/list/pop" class="weui-tabbar__item">
 			<img src="https://s10.mogucdn.com/p2/160802/upload_439ak5453ih43h5d2a109dhe71agg_36x39.png" alt="" class="weui-tabbar__icon">
 			<p class="weui-tabbar__label">主页</p>
 		</a>
@@ -27,6 +27,9 @@
 </template>
 
 <script>
+	export default{
+
+	}
 </script>
 
 <style scoped>

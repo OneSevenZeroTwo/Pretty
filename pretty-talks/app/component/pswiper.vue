@@ -3,9 +3,7 @@
 		<!-- slides -->
 		<swiper-slide v-for="img in imgs"><img :src="img.image"></swiper-slide>
 		<!-- Optional controls -->
-		<div class="swiper-pagination" slot="pagination"></div>
-		<div class="swiper-button-prev" slot="button-prev"></div>
-		<div class="swiper-button-next" slot="button-next"></div>
+		 <div class="swiper-pagination"  slot="pagination"></div>
 	</swiper>
 </template>
 
@@ -21,8 +19,9 @@
 					paginationClickable: true,
 					//					loop:true,
 					spaceBetween: 30,
+					pagination : '.swiper-pagination',
 					centeredSlides: true,
-					autoplay: 2500,
+					autoplay: 3000,
 					observer: true,
 					autoplayDisableOnInteraction: false
 				},

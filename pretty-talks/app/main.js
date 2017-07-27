@@ -14,6 +14,7 @@ Vue.prototype.$ajax = axios;
 
 // 样式
 import "./css/base.css";
+import "./css/weui.css"
 
 // 组件
 import Pindex from './router/pindex.vue';
@@ -205,4 +206,10 @@ new Vue({
     template: `<router-view></router-view>`,
     store,
     router,
+});
+// 指令
+Vue.directive('shift',{
+	bind(el,binding){
+		console.log(el.binding)
+	}
 })
