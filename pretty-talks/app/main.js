@@ -26,16 +26,60 @@ import Regstep1 from "./router/router/regstep1.vue";
 import Regstep2 from "./router/router/regstep2.vue";
 import sub from "./router/pmine.vue";
 import Pchlist from "./component/pchlist.vue";
- import car from "./router/pcar.vue";
+import car from "./router/pcar.vue";
+
+var router = new VueRouter({
+    routes: [{
+            path: '/index',
+            component: Pindex,
+            children: [{
+                path: 'home',
+                component: Phome,
+                children: [{
+                    path: 'list/:sort',
+                    component: Pchlist,
+                }]
+            }, {
+                path: 'category',
+                component: Psort
+            }]
+
+        },
+        {
+            path: '/subCategory',
+            component: sub,
+        }, {
+            path: '/login',
+            component: Plogin
+        }, {
+            path: "/car",
+            component: car
+        }, {
+            path: '/reg',
+            component: Preg,
+            children: [{
+                path: 'step1',
+                component: Regstep1
+            }, {
+                path: 'step2',
+                component: Regstep2
+            }]
+        }, {
+            path: '/',
+            redirect: 'index/home/list/pop'
+        }
+    ]
+})
+
 
 var store = new Vuex.Store({
 
-	state: {
-		carList: [],
-		pid: null,
-		carProId: null,
-		carProNum:null,
-		delList:true,
+    state: {
+        carList: [],
+        pid: null,
+        carProId: null,
+        carProNum: null,
+        delList: true,
         carousel: null,
         special: null,
         liactive: null,
@@ -43,56 +87,56 @@ var store = new Vuex.Store({
         sort: 'pop',
         list: [],
         pid: null,
-	},
-	getters: {
+    },
+    getters: {
 
-	},
-	//分发状态
-	mutations: {
-		//获取购物车列表数据
-		setCarList(state) {
-			axios.get("http://localhost:5555/read")
-				.then((res) => {
-					state.carList = state.carList.concat(res.data);
-					console.log(state.carList);
-				}).catch((err) => {})
-		},
-		//修改购物车列表选中项数据
-		getCarList(state) {
-			axios.get("http://localhost:5555/write", {
-					params: {
-						id: state.carProId,
-						num:state.carProNum,
-					}
-				})
-				.then((res) => {
-					console.log("数据写入成功："+res);
-				}).catch((err) => {})
-		},
-		//删除购物车列表选中项数据
-		delCarList(state) {
-			axios.get("http://localhost:5555/delete", {
-					params: {
-						id: state.carProId,
-					}
-				})
-				.then((res) => {
-					console.log("数据删除成功："+res);
-				}).catch((err) => {})
-		},
-		setNews(state) {
-			axios.get('http://localhost:999/fsort', {
-					params: {
+    },
+    //分发状态
+    mutations: {
+        //获取购物车列表数据
+        setCarList(state) {
+            axios.get("http://localhost:5555/read")
+                .then((res) => {
+                    state.carList = state.carList.concat(res.data);
+                    console.log(state.carList);
+                }).catch((err) => {})
+        },
+        //修改购物车列表选中项数据
+        getCarList(state) {
+            axios.get("http://localhost:5555/write", {
+                    params: {
+                        id: state.carProId,
+                        num: state.carProNum,
+                    }
+                })
+                .then((res) => {
+                    console.log("数据写入成功：" + res);
+                }).catch((err) => {})
+        },
+        //删除购物车列表选中项数据
+        delCarList(state) {
+            axios.get("http://localhost:5555/delete", {
+                    params: {
+                        id: state.carProId,
+                    }
+                })
+                .then((res) => {
+                    console.log("数据删除成功：" + res);
+                }).catch((err) => {})
+        },
+        setNews(state) {
+            axios.get('http://localhost:999/fsort', {
+                    params: {
 
-					},
-				})
-				.then((response) => {
-					//state.news = state.news.concat(response.data.data)
-				})
-				.catch((error) => {
-					console.log(error);
-				});
-		},
+                    },
+                })
+                .then((response) => {
+                    //state.news = state.news.concat(response.data.data)
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
         getActive(state, data) {
             axios.get('http://localhost:999/active').then((data) => {
                 // 轮播图
@@ -107,21 +151,6 @@ var store = new Vuex.Store({
 
             })
         },
-        getActive(state) {
-
-            axios.get("http://localhost:999/tsort", {
-                    params: {
-                        pid: state.pid
-                    }
-                }).then((response) => {
-                    console.log(response)
-                    //state.res = response.data.data
-                    console.log(state.res)
-                })
-                .catch((error) => {
-                    console.log(error)
-                })
-        },
         getList(state, data) {
             axios.get('http://localhost:999/home', {
                 params: {
@@ -135,125 +164,6 @@ var store = new Vuex.Store({
 
             })
         },
-		setChar(state) {
-
-			axios.get("http://localhost:999/tsort", {
-					params: {
-						pid: state.pid
-					}
-				}).then((response) => {
-					console.log(response)
-					//state.res = response.data.data
-					console.log(state.res)
-				})
-				.catch((error) => {
-					console.log(error)
-				})
-
-		}
-	},
-
-	actions: {
-		//提交触发 mutations 的 setCarList 获取数据函数
-		setCarList(context) {
-			context.commit("setCarList");
-		},
-		//提交触发 mutations 的 getCarList 修改数据函数
-		getCarList(context) {
-			context.commit("getCarList");
-		},
-		//提交触发 mutations 的 getCarList 修改数据函数
-		delCarList(context) {
-			context.commit("delCarList");
-		},
-		setNews(context, data) {
-			context.commit('setNews')
-		},
-		setChar(context, data) {
-			context.commit('setChar')
-		},
-        getActive(context, data) {
-            context.commit('getActive')
-        },
-        getList(context, data) {
-            context.commit('getList')
-        },
-	}
-})
-
-var router = new VueRouter({
-	routes: [{
-			path: '/index',
-			component: Pindex,
-			children: [{
-				path: 'home',
-				component: Phome,
-			}, {
-				path: 'category',
-				component: Psort
-			}]
-		},
-		{
-			path: '/subCategory',
-			component: sub,
-		}, {
-			path: '/login',
-			component: Plogin
-		}, {
-			path: "/car",
-			component: car
-		}, {
-			path: '/reg',
-			component: Preg,
-			children:[{
-				path:'step1',
-				component:Regstep1
-			},{
-				path:'step2',
-				component:Regstep2
-			}]
-		}, {
-			path: '/',
-			redirect: 'index/home'
-		}]
-	})
-
-
-
-        /*setNews(state) {
-            axios.get('http://localhost:999/fsort', {
-                    params: {
-
-                    },
-                })
-                .then((response) => {
-                    //state.news = state.news.concat(response.data.data)
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-        },
-        setCarList(state) {
-            axios.get("http://localhost:8080/carlist.json")
-                .then((res) => {
-                    //console.log(res);
-                    state.carList = res.data.data;
-                    console.log(state.carList);
-                }).catch((err) => {})
-        },
-        setNews(state) {
-            axios.get('http://localhost:999/fsort', {
-                    params: {
-
-                    },
-                })
-                .then((response) => {
-                    //					state.news = state.news.concat(response.data.data)
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-        },
         setChar(state) {
 
             axios.get("http://localhost:999/tsort", {
@@ -262,7 +172,7 @@ var router = new VueRouter({
                     }
                 }).then((response) => {
                     console.log(response)
-                    //					state.res = response.data.data
+                    //state.res = response.data.data
                     console.log(state.res)
                 })
                 .catch((error) => {
@@ -270,16 +180,42 @@ var router = new VueRouter({
                 })
 
         }
-    },*/
+    },
+
+    actions: {
+        //提交触发 mutations 的 setCarList 获取数据函数
+        setCarList(context) {
+            context.commit("setCarList");
+        },
+        //提交触发 mutations 的 getCarList 修改数据函数
+        getCarList(context) {
+            context.commit("getCarList");
+        },
+        //提交触发 mutations 的 getCarList 修改数据函数
+        delCarList(context) {
+            context.commit("delCarList");
+        },
+        setNews(context, data) {
+            context.commit('setNews')
+        },
+        setChar(context, data) {
+            context.commit('setChar')
+        },
+        getActive(context, data) {
+            context.commit('getActive')
+        },
+        getList(context, data) {
+            context.commit('getList')
+        },
+    }
+})
+
+
+
+
 new Vue({
     el: '#pretty-talks',
     template: `<router-view></router-view>`,
     store,
     router,
 });
-// 指令
-Vue.directive('shift',{
-	bind(el,binding){
-		console.log(el.binding)
-	}
-})

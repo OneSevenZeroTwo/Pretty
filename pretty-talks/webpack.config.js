@@ -40,7 +40,8 @@ module.exports ={
 	// 服务器
 	devServer:{
 		contentBase:'./public',
-		inline:true
+		inline:true,
+		port:4399
 	}
 		
 }
