@@ -1,5 +1,7 @@
 <template>
-	<lrInput :theInput='inputMsg'></lrInput>
+	<div>
+		<lrInput :theInput='inputMsg'></lrInput>
+	</div>
 </template>
 
 <script>

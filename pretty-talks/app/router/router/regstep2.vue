@@ -7,7 +7,7 @@
 			</div>
 		</div>
 		<form method="POST" id="theform">
-			<input id="upload" type="file" name="file" accept="image/png, image/jpeg, image/jpg">
+			<input id="upload" type="file" name="file" accept="image/png, image/jpeg, image/jpg" @change="getImg">
 		</form>
 		<div class="tips">给自己取个喜欢的昵称，做一朵不一样的烟火</div>
 		<div id="thename">
@@ -49,6 +49,20 @@
 //					})
 //					.catch(err => {})
 			},
+			getImg(){
+				var url = event.currentTarget.value;
+				console.log(url)
+//				let config = {
+//		            headers:{'Content-Type':'multipart/form-data'}
+//		        };
+				this.$ajax.post('http://localhost:999/sethead',{'url':url})
+			    .then(function(res){
+			        console.log(res);
+			    })
+			    .catch(function(err){
+			        console.log(err);
+			    })
+			} 
 		},
 		watch: {
 			topPopup(val) {
@@ -124,13 +138,14 @@
 	}
 	.demo-popup-top {
 		width: 100%;
-		opacity: .8;
+		opacity: .9;
 		height: 48px;
 		line-height: 48px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		max-width: 375px;
-		background-color: #ccc;
+		color: #fff;
+		background-color: #ff5777;
 	}
 </style>

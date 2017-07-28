@@ -5,12 +5,14 @@ import VueAwesomeSwiper from 'vue-awesome-swiper'
 import axios from "axios";
 import MuseUI from 'muse-ui';
 import 'muse-ui/dist/muse-ui.css';
+import lodash from 'lodash';
 
 Vue.use(MuseUI);
 Vue.use(Vuex);
 Vue.use(VueRouter);
 Vue.use(VueAwesomeSwiper);
 Vue.prototype.$ajax = axios;
+Vue.prototype._ = lodash;
 
 // 样式
 import "./css/base.css";
@@ -32,45 +34,52 @@ import address from "./router/paddress.vue";
 import addaddr from "./router/paddaddr.vue";
 
 var router = new VueRouter({
-	routes: [{
-		path: '/index',
-		component: Pindex,
-		children: [{
-			path: 'home',
-			component: Phome,
-			children: [{
-				path: 'list/:sort',
-				component: Pchlist,
-			}]
-		}, {
-			path: 'category',
-			component: Psort
-		}]
-	}, {
-		path: '/subCategory',
-		component: sub,
-	}, {
-		path: '/login',
-		component: Plogin
-	}, {
-		path: "/car",
-		component: car
-	}, {
-		path: "/order",
-		component: order
-	}, {
+    routes: [{
+        path: '/index',
+        component: Pindex,
+        children: [{
+            path: 'home',
+            component: Phome,
+            children: [{
+                path: 'list/:sort',
+                component: Pchlist,
+            }]
+        }, {
+            path: 'category',
+            component: Psort
+        }]
+    }, {
+        path: '/subCategory',
+        component: sub,
+    }, {
+        path: '/login',
+        component: Plogin
+    }, {
+        path: "/car",
+        component: car
+    }, {
+        path: "/order",
+        component: order
+    }, {
 		path: "/address",
 		component: address
 	}, {
 		path: "/addaddr",
 		component: addaddr
 	}, {
-		path: '/reg',
-		component: Preg
-	}, {
-		path: '/',
-		redirect: 'index/home/list/pop'
-	}]
+        path: '/reg',
+        component: Preg,
+        children: [{
+                path: 'step1',
+                component: Regstep1,
+            },{
+                path: 'step2',
+                component: Regstep2,
+            }]
+    }, {
+        path: '/',
+        redirect: 'index/home/list/pop'
+    }]
 })
 
 var store = new Vuex.Store({
@@ -169,21 +178,6 @@ var store = new Vuex.Store({
 			}).catch((err) => {
 
 			})
-		},
-		getActive(state) {
-
-			axios.get("http://localhost:999/tsort", {
-					params: {
-						pid: state.pid
-					}
-				}).then((response) => {
-					console.log(response)
-					//state.res = response.data.data
-					console.log(state.res)
-				})
-				.catch((error) => {
-					console.log(error)
-				})
 		},
 		getList(state, data) {
 			axios.get('http://localhost:999/home', {
