@@ -30,7 +30,14 @@ img {
 
 	overflow: hidden;
 }
+.fmove {
+    height: 230px;
+    position: relative;
+}
 .bomove {
+	position: absolute;
+	height: 100%;
+	left: 0;
 	padding-top: 20px;
 	width: 300%;
 }
@@ -40,6 +47,7 @@ img {
 }
 .bomove li img {
 	width: 100%;
+	height: 140px;
 }
 .bomove p {
 	text-align: center;

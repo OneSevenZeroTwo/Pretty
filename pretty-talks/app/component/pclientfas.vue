@@ -2,53 +2,11 @@
     <div>
         <ul class="clearfix">
         	<h3 class="fas_title">本周流行</h3>
-            <li>
+            <li v-for="(cl,index) of clList" :key="index">
             	<a href="#">
-            		<img src="https://s3.mogucdn.com/mlcdn/c45406/170718_01fj7da0ggab18i7bhilclhg0bl66_225x225.png_160x160.v1cAC.70.webp">
-            		<p class="cl_title">明星衣橱 </p>
+            		<img :src="cl.img">
+            		<p class="cl_title">{{cl.title}} </p>
             	</a>
-            </li>
-             <li>
-            	<a href="#">
-            		<img src="https://s3.mogucdn.com/mlcdn/c45406/170718_01fj7da0ggab18i7bhilclhg0bl66_225x225.png_160x160.v1cAC.70.webp">
-            		<p class="cl_title">明星衣橱</p>
-            	</a>
-            </li>
-             <li>
-            	<a href="#">
-            		<img src="https://s3.mogucdn.com/mlcdn/c45406/170718_01fj7da0ggab18i7bhilclhg0bl66_225x225.png_160x160.v1cAC.70.webp">
-            		<p class="cl_title">明星衣橱</p>
-            	</a>
-            </li>
-             <li>
-            	<a href="#">
-            		<img src="https://s3.mogucdn.com/mlcdn/c45406/170718_01fj7da0ggab18i7bhilclhg0bl66_225x225.png_160x160.v1cAC.70.webp">
-            		<p class="cl_title">明星衣橱</p>
-            	</a>
-            </li>
-             <li>
-                <a href="#">
-                    <img src="https://s3.mogucdn.com/mlcdn/c45406/170718_01fj7da0ggab18i7bhilclhg0bl66_225x225.png_160x160.v1cAC.70.webp">
-                    <p class="cl_title">明星衣橱 </p>
-                </a>
-            </li>
-             <li>
-                <a href="#">
-                    <img src="https://s3.mogucdn.com/mlcdn/c45406/170718_01fj7da0ggab18i7bhilclhg0bl66_225x225.png_160x160.v1cAC.70.webp">
-                    <p class="cl_title">明星衣橱</p>
-                </a>
-            </li>
-             <li>
-                <a href="#">
-                    <img src="https://s3.mogucdn.com/mlcdn/c45406/170718_01fj7da0ggab18i7bhilclhg0bl66_225x225.png_160x160.v1cAC.70.webp">
-                    <p class="cl_title">明星衣橱</p>
-                </a>
-            </li>
-             <li>
-                <a href="#">
-                    <img src="https://s3.mogucdn.com/mlcdn/c45406/170718_01fj7da0ggab18i7bhilclhg0bl66_225x225.png_160x160.v1cAC.70.webp">
-                    <p class="cl_title">明星衣橱</p>
-                </a>
             </li>
         </ul>
     </div>
@@ -56,6 +14,44 @@
 
 <script>
 	export default{
+        data(){
+            return {
+                clList:[{
+                    img:require('../img/c1.jpg'),
+                    title:"职场人气衬衫",
+                    fcid:10063894
+                },{
+                    img:require('../img/c2.jpg'),
+                    title:"舒适T恤裙",
+                    fcid:10057288
+
+                },{
+                    img:require('../img/c3.jpg'),
+                    title:"粉嫩惹人爱",
+                    fcid:10063891
+                },{
+                    img:require('../img/c4.jpg'),
+                    title:"本周热销榜",
+                    fcid:10063885
+                },{
+                    img:require('../img/c5.jpg'),
+                    title:"Chic港风",
+                    fcid:10063895
+                },{
+                    img:require('../img/c6.jpg'),
+                    title:"遮肉收腰美裙",
+                    fcid:10063890
+                },{
+                    img:require('../img/c7.jpg'),
+                    title:"萌妹蝴蝶结",
+                    fcid:10063882
+                },{
+                    img:require('../img/c8.jpg'),
+                    title:"经典黑白配",
+                    fcid:10063842
+                }]
+            }
+        }
 	}
 </script>
 

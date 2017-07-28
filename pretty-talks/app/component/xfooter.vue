@@ -13,7 +13,7 @@
 			<img src="https://s10.mogucdn.com/p2/160802/upload_488lbkj7ll3e92bg3ld1kh5k73l87_34x34.png" alt="" class="weui-tabbar__icon">
 			<p class="weui-tabbar__label">分类</p>
 		</a>
-		<a href="#" class="weui-tabbar__item" >
+		<a href="#/car" class="weui-tabbar__item" >
 			<img src="https://s10.mogucdn.com/p2/160802/upload_0eabagglh39aggl8jihfakfbf70a9_40x38.png" alt="" class="weui-tabbar__icon">
 			<p class="weui-tabbar__label">购物车</p>
 		</a>
