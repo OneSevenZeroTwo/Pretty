@@ -2,7 +2,16 @@ var http = require('http');
 var https = require('https');
 var express = require('express');
 var app = express();
+var mysql = require("mysql");
+var connection;
 
+	connection = mysql.createConnection({
+		host: 'localhost',
+		user: 'root',
+		password: '',
+		database: 'prettytalks-user'
+	});
+require('./loginreg.js').loginreg(app,connection);
 // 首页商品详情
 
 app.get('/home', function(request, response) {
@@ -74,7 +83,6 @@ app.get('/tsort', function(request,response){
         })
         res.on('end', function() {
             response.end(data)
-            console.log(data)
         })
     })
 });

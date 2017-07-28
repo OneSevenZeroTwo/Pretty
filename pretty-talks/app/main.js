@@ -5,12 +5,14 @@ import VueAwesomeSwiper from 'vue-awesome-swiper'
 import axios from "axios";
 import MuseUI from 'muse-ui';
 import 'muse-ui/dist/muse-ui.css';
+import lodash from 'lodash';
 
 Vue.use(MuseUI);
 Vue.use(Vuex);
 Vue.use(VueRouter);
 Vue.use(VueAwesomeSwiper);
 Vue.prototype.$ajax = axios;
+Vue.prototype._ = lodash;
 
 // 样式
 import "./css/base.css";
@@ -145,6 +147,7 @@ var store = new Vuex.Store({
                 state.special = data.data.data['13730'].list;
                 // 限时活动
                 state.liactive = data.data.data['42287'].list;
+                console.log(state.liactive)
                 // 实现时间
                 state.litime = data.data.data['42287'].context.currentTime;
             }).catch((err) => {

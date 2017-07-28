@@ -10,14 +10,13 @@
 		<div id="captcha">
 			<div class="img-code" id="imgCode" style="display: block;">
 				<p> 请点击下方图片，将它们翻转到正确方向
-					<a href="javascript:;">换一组</a>
+					<a href="javascript:;" @click="changeCap" class="changeImg">换一组</a>
 				</p>
 				<ul>
 					<ul>
-						<li class="dego" @click="changeDeg($event)"></li>
-						<li class="degl" @click="changeDeg($event)"></li>
-						<li class="degw" @click="changeDeg($event)"></li>
-						<li class="dege" @click="changeDeg($event)"></li>
+						<li class="dego" @click="changeDeg($event)" v-for="n in theArr" :class="n.class">
+							<img :src="n.url"/>
+						</li>
 					</ul>
 				</ul>
 			</div>
@@ -65,16 +64,6 @@
 		-webkit-transform:rotate(270deg); 
 		-o-transform:rotate(270deg);
 	}
-	.deg{
-		animation:zhuan 0.5s forwards;
-	}
-	@keyframes zhuan{
-		0%{
-		}
-		100%{
-			transform:rotate(90deg);
-		}
-	}
 	#captcha {
 		margin: 0 15px 0 15px;
 	}
@@ -87,15 +76,16 @@
 		float: right;
 	}
 	
-	#captcha li {
+	#captcha li{
 		display: inline-block;
 		width: 80px;
 		height: 80px;
-		background-image: url(../../images/login&reg&mine/test.jpg);
-		background-size: 80px 80px;
-		background-repeat:no-repeat;
+		margin-right: 1.7%;
 	}
-	
+	#captcha li img{
+		width: 100%;
+		height: 100%;
+	}
 	.login_title {
 		padding: 30px 15px 0 15px;
 	}
@@ -169,6 +159,9 @@
 		max-width: 375px;
 		background-color: #ccc;
 	}
+	.changeImg{
+		color: #ff5777;
+	}
 </style>
 
 <script>
@@ -181,12 +174,98 @@
 				dialog: false,
 				bool: 'true',
 				topPopup: false,
-				deg:'',
+				theArr:null,
+				theI:0,
+				first:[{
+						class:'dego',
+						url:require('../../images/login&reg&mine/captcha-img/1.jpg')
+					},
+					{
+						class:'dege fail',
+						url:require('../../images/login&reg&mine/captcha-img/2.jpg')
+					},
+						{
+						class:'degl fail',
+						url:require('../../images/login&reg&mine/captcha-img/3.jpg')
+					},
+					{	
+						class:'degw fail',
+						url:require('../../images/login&reg&mine/captcha-img/4.jpg')
+					}
+				],
+				second:[{
+						class:'dege fail',
+						url:require('../../images/login&reg&mine/captcha-img/5.jpg')
+					},
+					{	
+						class:'degl fail',
+						url:require('../../images/login&reg&mine/captcha-img/6.jpg')
+					},
+						{
+						class:'dego',
+						url:require('../../images/login&reg&mine/captcha-img/7.jpg')
+					},
+					{	
+						class:'degw fail',
+						url:require('../../images/login&reg&mine/captcha-img/8.jpg')
+					}
+				],
+				third:[{
+						class:'degl fail',
+						url:require('../../images/login&reg&mine/captcha-img/9.jpg')
+					},
+					{	
+						class:'degw fail',
+						url:require('../../images/login&reg&mine/captcha-img/10.jpg')
+					},
+						{
+						class:'degl fail',
+						url:require('../../images/login&reg&mine/captcha-img/11.jpg')
+					},
+					{	
+						class:'dego',
+						url:require('../../images/login&reg&mine/captcha-img/12.jpg')
+					}
+				],
+				fourth:[{
+						class:'dege fail',
+						url:require('../../images/login&reg&mine/captcha-img/13.jpg')
+					},
+					{	
+						class:'degl fail',
+						url:require('../../images/login&reg&mine/captcha-img/14.jpg')
+					},
+						{
+						class:'degw fail',
+						url:require('../../images/login&reg&mine/captcha-img/15.jpg')
+					},
+					{
+						class:'dege fail',
+						url:require('../../images/login&reg&mine/captcha-img/16.jpg')
+					}
+				],
+				fifth:[{
+						class:'dege fail',
+						url:require('../../images/login&reg&mine/captcha-img/17.jpg')
+					},
+					{	
+						class:'dego',
+						url:require('../../images/login&reg&mine/captcha-img/18.jpg')
+					},
+						{
+						class:'degw fail',
+						url:require('../../images/login&reg&mine/captcha-img/19.jpg')
+					},
+					{	
+						class:'degl fail',
+						url:require('../../images/login&reg&mine/captcha-img/20.jpg')
+					}
+				]
 			}
 		},
 		methods: {
 			login() {
-				this.$ajax.get('http://localhost:4399/login', {
+				this.$ajax.get('http://localhost:999/login', {
 						params: {
 							'user': this.user,
 							'password': this.password
@@ -214,7 +293,8 @@
 					this.password = '';
 					return false;
 				}
-				this.$ajax.get('http://localhost:4399/reg', {
+				
+				this.$ajax.get('http://localhost:999/reg', {
 						params: {
 							'phone': this.user,
 							'password': this.password
@@ -234,7 +314,57 @@
 				this.dialog = false
 			},
 			changeDeg(event){
-				event.currentTarget.classList.add('deg');
+				clearInterval(this.timer);
+				var ele = event.currentTarget;
+				ele.classList.remove('fail');
+				var arr = window.getComputedStyle(ele).transform.slice(7,-1).split(',');
+				var angle = getmatrix(arr[0],arr[1],arr[2],arr[3],arr[4],arr[5]);
+				var fkAngle = (Number(angle)-90);
+				
+				var timer = setInterval(function(){
+					fkAngle++;					
+					if(fkAngle >= angle){
+						fkAngle = angle;
+						clearInterval(timer);
+					}
+					ele.style.transform = "rotate("+(fkAngle+90)+"deg)";
+				});
+				if(angle != '270'){
+					ele.classList.add('fail');
+				}
+				
+				function getmatrix(a,b,c,d,e,f){
+			        var aa=Math.round(180*Math.asin(a)/ Math.PI);  
+			        var bb=Math.round(180*Math.acos(b)/ Math.PI);  
+			        var cc=Math.round(180*Math.asin(c)/ Math.PI);  
+			        var dd=Math.round(180*Math.acos(d)/ Math.PI);  
+			        var deg=0;  
+			        if(aa==bb||-aa==bb){  
+			            deg=dd;  
+			        }else if(-aa+bb==180){  
+			            deg=180+cc;  
+			        }else if(aa+bb==180){  
+			            deg=360-cc||360-dd;  
+			        }  
+			        return deg>=360?0:deg;   
+			    }
+			},
+			changeCap(){
+				this.theI++;
+				if(this.theI >4){
+					this.theI = 0;
+				}
+				if(this.theI == 0){
+					this.theArr = this.first;
+				}else if(this.theI == 1){
+					this.theArr = this.second;
+				}else if(this.theI == 2){
+					this.theArr = this.third;
+				}else if(this.theI == 3){
+					this.theArr = this.fourth;
+				}else if(this.theI == 4){
+					this.theArr = this.fifth;
+				}
 			}
 		},
 		watch: {
@@ -247,21 +377,16 @@
 			}
 		},
 		mounted() {
+			this.changeCap();
 			switch(this.$route.path) {
 				case '/login':
 					this.bool = true;
-					this.$ajax.get('http://localhost:999/active')
-						.then(res => {
-							console.log(res.data.data['42287'].list)
-						})
-						.catch(err => {
-
-						});
 					break;
 				case '/reg/step1':
 					this.bool = false;
 					break;
 			}
-		}
+		},
+		
 	}
 </script>
