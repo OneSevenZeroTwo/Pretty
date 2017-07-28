@@ -60,7 +60,14 @@ var router = new VueRouter({
         component: order
     }, {
         path: '/reg',
-        component: Preg
+        component: Preg,
+        children: [{
+                path: 'step1',
+                component: Regstep1,
+            },{
+                path: 'step2',
+                component: Regstep2,
+            }]
     }, {
         path: '/',
         redirect: 'index/home/list/pop'
@@ -146,12 +153,7 @@ var store = new Vuex.Store({
                 state.special = data.data.data['13730'].list.slice(0,-1);
                 // 限时活动
                 state.liactive = data.data.data['42287'].list;
-<<<<<<< HEAD
-                console.log(state.liactive)
-                // 实现时间
-=======
-                // 限时时间
->>>>>>> d3eb10b530ac5d4eb948d7d70046bc65ccc597cf
+
                 state.litime = data.data.data['42287'].context.currentTime;
                 // 小图标
                 

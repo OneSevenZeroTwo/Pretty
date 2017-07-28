@@ -14,15 +14,15 @@
 				</p>
 				<ul>
 					<ul>
-						<li class="dego" @click="changeDeg($event)" v-for="n in theArr" :class="n.class">
-							<img :src="n.url"/>
+						<li class="theLi" @click="changeDeg($event)" v-for="n in theArr" :class="n.class">
+							<img :src="n.url" />
 						</li>
 					</ul>
 				</ul>
 			</div>
 		</div>
 		<div id="login">
-			<mu-raised-button v-show="bool" :label="theInput.type" @click="login" class="demo-raised-button" :fullWidth="true" secondary/>
+			<mu-raised-button v-show="bool" :label="theInput.type" @click="login('top')" class="demo-raised-button" :fullWidth="true" secondary/>
 			<mu-raised-button v-show="!bool" :label="theInput.type" @click="reg('top')" class="demo-raised-button" :fullWidth="true" secondary/>
 		</div>
 		<mu-dialog :open="dialog" :title="theInput.dialogTitle">
@@ -30,40 +30,45 @@
 			<mu-flat-button label="关闭" slot="actions" primary @click="closeDialog" />
 		</mu-dialog>
 		<mu-popup position="top" :overlay="false" popupClass="demo-popup-top" :open="topPopup">
-			请输入正确的格式
+			验证失败
 		</mu-popup>
+		<mu-toast v-if="toast" message="请输入正确的格式" @close="hideToast" />
 	</div>
 </template>
 
 <style>
-	.dego{
-		 transform:rotateX(0deg);
-		-ms-transform:rotateX(0deg); 	
-		-moz-transform:rotateX(0deg); 	
-		-webkit-transform:rotateX(0deg); 
-		-o-transform:rotateX(0deg); 
+	.dego {
+		transform: rotateX(0deg);
+		-ms-transform: rotateX(0deg);
+		-moz-transform: rotateX(0deg);
+		-webkit-transform: rotateX(0deg);
+		-o-transform: rotateX(0deg);
 	}
-	.degl{
-		 transform:rotate(90deg);
-		-ms-transform:rotate(90deg); 	
-		-moz-transform:rotate(90deg); 	
-		-webkit-transform:rotate(90deg); 
-		-o-transform:rotate(90deg);
+	
+	.degl {
+		transform: rotate(90deg);
+		-ms-transform: rotate(90deg);
+		-moz-transform: rotate(90deg);
+		-webkit-transform: rotate(90deg);
+		-o-transform: rotate(90deg);
 	}
-	.degw{
-		transform:rotate(180deg);
-		-ms-transform:rotate(180deg); 	
-		-moz-transform:rotate(180deg); 	
-		-webkit-transform:rotate(180deg); 
-		-o-transform:rotate(180deg);
+	
+	.degw {
+		transform: rotate(180deg);
+		-ms-transform: rotate(180deg);
+		-moz-transform: rotate(180deg);
+		-webkit-transform: rotate(180deg);
+		-o-transform: rotate(180deg);
 	}
-	.dege{
-		 transform:rotate(270deg);
-		-ms-transform:rotate(270deg); 	
-		-moz-transform:rotate(270deg); 	
-		-webkit-transform:rotate(270deg); 
-		-o-transform:rotate(270deg);
+	
+	.dege {
+		transform: rotate(270deg);
+		-ms-transform: rotate(270deg);
+		-moz-transform: rotate(270deg);
+		-webkit-transform: rotate(270deg);
+		-o-transform: rotate(270deg);
 	}
+	
 	#captcha {
 		margin: 0 15px 0 15px;
 	}
@@ -76,16 +81,18 @@
 		float: right;
 	}
 	
-	#captcha li{
+	#captcha li {
 		display: inline-block;
 		width: 80px;
 		height: 80px;
 		margin-right: 1.7%;
 	}
-	#captcha li img{
+	
+	#captcha li img {
 		width: 100%;
 		height: 100%;
 	}
+	
 	.login_title {
 		padding: 30px 15px 0 15px;
 	}
@@ -150,17 +157,29 @@
 	
 	.demo-popup-top {
 		width: 100%;
-		opacity: .8;
+		opacity: .9;
 		height: 48px;
 		line-height: 48px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		max-width: 375px;
-		background-color: #ccc;
+		color: #fff;
+		background-color: #ff5777;
 	}
-	.changeImg{
+	
+	.changeImg {
 		color: #ff5777;
+	}
+	
+	.mu-toast{
+		width: 45%;
+		position: absolute;
+		top: 25%;
+		left: 25%;
+		background-color: #ff5777;
+		color: #fff;
+		opacity: 0.9;
 	}
 </style>
 
@@ -174,97 +193,99 @@
 				dialog: false,
 				bool: 'true',
 				topPopup: false,
-				theArr:null,
-				theI:0,
-				first:[{
-						class:'dego',
-						url:require('../../images/login&reg&mine/captcha-img/1.jpg')
+				theArr: null,
+				theI: 0,
+				toast: false,
+				first: [{
+						class: 'dego',
+						url: require('../../images/login&reg&mine/captcha-img/1.jpg')
 					},
 					{
-						class:'dege fail',
-						url:require('../../images/login&reg&mine/captcha-img/2.jpg')
-					},
-						{
-						class:'degl fail',
-						url:require('../../images/login&reg&mine/captcha-img/3.jpg')
-					},
-					{	
-						class:'degw fail',
-						url:require('../../images/login&reg&mine/captcha-img/4.jpg')
-					}
-				],
-				second:[{
-						class:'dege fail',
-						url:require('../../images/login&reg&mine/captcha-img/5.jpg')
-					},
-					{	
-						class:'degl fail',
-						url:require('../../images/login&reg&mine/captcha-img/6.jpg')
-					},
-						{
-						class:'dego',
-						url:require('../../images/login&reg&mine/captcha-img/7.jpg')
-					},
-					{	
-						class:'degw fail',
-						url:require('../../images/login&reg&mine/captcha-img/8.jpg')
-					}
-				],
-				third:[{
-						class:'degl fail',
-						url:require('../../images/login&reg&mine/captcha-img/9.jpg')
-					},
-					{	
-						class:'degw fail',
-						url:require('../../images/login&reg&mine/captcha-img/10.jpg')
-					},
-						{
-						class:'degl fail',
-						url:require('../../images/login&reg&mine/captcha-img/11.jpg')
-					},
-					{	
-						class:'dego',
-						url:require('../../images/login&reg&mine/captcha-img/12.jpg')
-					}
-				],
-				fourth:[{
-						class:'dege fail',
-						url:require('../../images/login&reg&mine/captcha-img/13.jpg')
-					},
-					{	
-						class:'degl fail',
-						url:require('../../images/login&reg&mine/captcha-img/14.jpg')
-					},
-						{
-						class:'degw fail',
-						url:require('../../images/login&reg&mine/captcha-img/15.jpg')
+						class: 'dege fail',
+						url: require('../../images/login&reg&mine/captcha-img/2.jpg')
 					},
 					{
-						class:'dege fail',
-						url:require('../../images/login&reg&mine/captcha-img/16.jpg')
+						class: 'degl fail',
+						url: require('../../images/login&reg&mine/captcha-img/3.jpg')
+					},
+					{
+						class: 'degw fail',
+						url: require('../../images/login&reg&mine/captcha-img/4.jpg')
 					}
 				],
-				fifth:[{
-						class:'dege fail',
-						url:require('../../images/login&reg&mine/captcha-img/17.jpg')
+				second: [{
+						class: 'dege fail',
+						url: require('../../images/login&reg&mine/captcha-img/5.jpg')
 					},
-					{	
-						class:'dego',
-						url:require('../../images/login&reg&mine/captcha-img/18.jpg')
+					{
+						class: 'degl fail',
+						url: require('../../images/login&reg&mine/captcha-img/6.jpg')
 					},
-						{
-						class:'degw fail',
-						url:require('../../images/login&reg&mine/captcha-img/19.jpg')
+					{
+						class: 'dego',
+						url: require('../../images/login&reg&mine/captcha-img/7.jpg')
 					},
-					{	
-						class:'degl fail',
-						url:require('../../images/login&reg&mine/captcha-img/20.jpg')
+					{
+						class: 'degw fail',
+						url: require('../../images/login&reg&mine/captcha-img/8.jpg')
+					}
+				],
+				third: [{
+						class: 'degl fail',
+						url: require('../../images/login&reg&mine/captcha-img/9.jpg')
+					},
+					{
+						class: 'degw fail',
+						url: require('../../images/login&reg&mine/captcha-img/10.jpg')
+					},
+					{
+						class: 'degl fail',
+						url: require('../../images/login&reg&mine/captcha-img/11.jpg')
+					},
+					{
+						class: 'dego',
+						url: require('../../images/login&reg&mine/captcha-img/12.jpg')
+					}
+				],
+				fourth: [{
+						class: 'dege fail',
+						url: require('../../images/login&reg&mine/captcha-img/13.jpg')
+					},
+					{
+						class: 'degl fail',
+						url: require('../../images/login&reg&mine/captcha-img/14.jpg')
+					},
+					{
+						class: 'degw fail',
+						url: require('../../images/login&reg&mine/captcha-img/15.jpg')
+					},
+					{
+						class: 'dege fail',
+						url: require('../../images/login&reg&mine/captcha-img/16.jpg')
+					}
+				],
+				fifth: [{
+						class: 'dege fail',
+						url: require('../../images/login&reg&mine/captcha-img/17.jpg')
+					},
+					{
+						class: 'dego',
+						url: require('../../images/login&reg&mine/captcha-img/18.jpg')
+					},
+					{
+						class: 'degw fail',
+						url: require('../../images/login&reg&mine/captcha-img/19.jpg')
+					},
+					{
+						class: 'degl fail',
+						url: require('../../images/login&reg&mine/captcha-img/20.jpg')
 					}
 				]
 			}
 		},
 		methods: {
-			login() {
+			login(position) {
+				this.thePass(position);
 				this.$ajax.get('http://localhost:999/login', {
 						params: {
 							'user': this.user,
@@ -283,88 +304,105 @@
 					})
 			},
 			reg(position) {
+				this.thePass(position);
 				if(!/^1[3-57-9]\d{9}$/.test(this.user)) {
-					this[position + 'Popup'] = true;
+					this.showToast();
 					this.user = '';
 					return false;
 				}
 				if(!/^\S{1,19}$/.test(this.password)) {
-					this[position + 'Popup'] = true;
+					this.showToast();
 					this.password = '';
 					return false;
 				}
-				
+
 				this.$ajax.get('http://localhost:999/reg', {
 						params: {
 							'phone': this.user,
 							'password': this.password
 						}
-				})
-				.then(res => {
-					if(res.data == '0') {
-						window.location.href = 'http://localhost:4399/#/reg/step2/?phone='+this.user;
-					} else if(res.data == '1') {
-						this.dialog = true;
-					}
-				})
-				.catch(err => {
-				})
+					})
+					.then(res => {
+						if(res.data == '0') {
+							window.location.href = 'http://localhost:4399/#/reg/step2/?phone=' + this.user;
+						} else if(res.data == '1') {
+							this.dialog = true;
+						}
+					})
+					.catch(err => {})
 			},
 			closeDialog() {
 				this.dialog = false
 			},
-			changeDeg(event){
+			changeDeg(event) {
 				clearInterval(this.timer);
 				var ele = event.currentTarget;
 				ele.classList.remove('fail');
-				var arr = window.getComputedStyle(ele).transform.slice(7,-1).split(',');
-				var angle = getmatrix(arr[0],arr[1],arr[2],arr[3],arr[4],arr[5]);
-				var fkAngle = (Number(angle)-90);
-				
-				var timer = setInterval(function(){
-					fkAngle++;					
-					if(fkAngle >= angle){
+				var arr = window.getComputedStyle(ele).transform.slice(7, -1).split(',');
+				var angle = getmatrix(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5]);
+				var fkAngle = (Number(angle) - 90);
+
+				var timer = setInterval(function() {
+					fkAngle++;
+					if(fkAngle >= angle) {
 						fkAngle = angle;
 						clearInterval(timer);
 					}
-					ele.style.transform = "rotate("+(fkAngle+90)+"deg)";
+					ele.style.transform = "rotate(" + (fkAngle + 90) + "deg)";
 				});
-				if(angle != '270'){
+				if(angle != '270') {
 					ele.classList.add('fail');
 				}
-				
-				function getmatrix(a,b,c,d,e,f){
-			        var aa=Math.round(180*Math.asin(a)/ Math.PI);  
-			        var bb=Math.round(180*Math.acos(b)/ Math.PI);  
-			        var cc=Math.round(180*Math.asin(c)/ Math.PI);  
-			        var dd=Math.round(180*Math.acos(d)/ Math.PI);  
-			        var deg=0;  
-			        if(aa==bb||-aa==bb){  
-			            deg=dd;  
-			        }else if(-aa+bb==180){  
-			            deg=180+cc;  
-			        }else if(aa+bb==180){  
-			            deg=360-cc||360-dd;  
-			        }  
-			        return deg>=360?0:deg;   
-			    }
+
+				function getmatrix(a, b, c, d, e, f) {
+					var aa = Math.round(180 * Math.asin(a) / Math.PI);
+					var bb = Math.round(180 * Math.acos(b) / Math.PI);
+					var cc = Math.round(180 * Math.asin(c) / Math.PI);
+					var dd = Math.round(180 * Math.acos(d) / Math.PI);
+					var deg = 0;
+					if(aa == bb || -aa == bb) {
+						deg = dd;
+					} else if(-aa + bb == 180) {
+						deg = 180 + cc;
+					} else if(aa + bb == 180) {
+						deg = 360 - cc || 360 - dd;
+					}
+					return deg >= 360 ? 0 : deg;
+				}
 			},
-			changeCap(){
+			changeCap() {
 				this.theI++;
-				if(this.theI >4){
+				if(this.theI > 4) {
 					this.theI = 0;
 				}
-				if(this.theI == 0){
+				if(this.theI == 0) {
 					this.theArr = this.first;
-				}else if(this.theI == 1){
+				} else if(this.theI == 1) {
 					this.theArr = this.second;
-				}else if(this.theI == 2){
+				} else if(this.theI == 2) {
 					this.theArr = this.third;
-				}else if(this.theI == 3){
+				} else if(this.theI == 3) {
 					this.theArr = this.fourth;
-				}else if(this.theI == 4){
+				} else if(this.theI == 4) {
 					this.theArr = this.fifth;
 				}
+			},
+			thePass(position) {
+				if(document.querySelector('.theLi').classList.value.indexOf('fail') != '-1') {
+					this[position + 'Popup'] = true;
+					return false;
+				}
+			},
+			showToast() {
+				this.toast = true
+				if(this.toastTimer) clearTimeout(this.toastTimer)
+				this.toastTimer = setTimeout(() => {
+					this.toast = false
+				}, 2000)
+			},
+			hideToast() {
+				this.toast = false
+				if(this.toastTimer) clearTimeout(this.toastTimer)
 			}
 		},
 		watch: {
@@ -387,6 +425,6 @@
 					break;
 			}
 		},
-		
+
 	}
 </script>
