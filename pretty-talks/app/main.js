@@ -5,16 +5,18 @@ import VueAwesomeSwiper from 'vue-awesome-swiper'
 import axios from "axios";
 import MuseUI from 'muse-ui';
 import 'muse-ui/dist/muse-ui.css';
+import lodash from 'lodash';
 
 Vue.use(MuseUI);
 Vue.use(Vuex);
 Vue.use(VueRouter);
 Vue.use(VueAwesomeSwiper);
 Vue.prototype.$ajax = axios;
+Vue.prototype._ = lodash;
 
 // 样式
 import "./css/base.css";
-import "./css/weui.css"
+import "./css/weui.css";
 
 // 组件
 import Pindex from './router/pindex.vue';
@@ -30,6 +32,9 @@ import car from "./router/pcar.vue";
 import Plist from "./router/plist.vue";
 import Plong from "./router/pdate.vue";
 import Plisting from "./router/plisting.vue";
+import order from "./router/porder.vue";
+import address from "./router/paddress.vue";
+import addaddr from "./router/paddaddr.vue";
 
 //路由
 var router = new VueRouter({
@@ -40,16 +45,25 @@ var router = new VueRouter({
                 path: 'home',
                 component: Phome,
                 children: [{
+
+                    path: 'home',
+                    component: Phome,
+                    children: [{
+                        path: 'list/:sort/:page',
+                        component: Pchlist,
+                    }]
+                }, {
+
                     path: 'list/:sort',
                     component: Pchlist,
+
                 }]
             }, {
                 path: 'category',
                 component: Psort
             }]
-
         },
-        {
+         {
             path: '/subCategory/:pid',
             component: sub,
         }, {
@@ -59,16 +73,26 @@ var router = new VueRouter({
             path: "/car",
             component: car
         }, {
+            path: "/order",
+            component: order
+        }, {
+            path: "/address",
+            component: address
+        }, {
+            path: "/addaddr",
+            component: addaddr
+        }, {
             path: '/reg',
             component: Preg,
             children: [{
                 path: 'step1',
-                component: Regstep1
+                component: Regstep1,
             }, {
                 path: 'step2',
-                component: Regstep2
+                component: Regstep2,
             }]
-        }, {
+        },
+        {
             path: '/',
             redirect: 'index/home/list/pop'
         },{
@@ -79,9 +103,8 @@ var router = new VueRouter({
         	component:Plong
         },{
         	path:'/listing/:pcid',
-        	component:Plisting
-        }
-    ]
+        	component:Plisting,
+    }]
 })
 
 //vuex
@@ -91,7 +114,7 @@ var store = new Vuex.Store({
         pid: null,
         carProId: null,
         carProNum: null,
-        delList: true,
+        // delList: null,
         carousel: null,
         special: null,
         liactive: null,
@@ -108,8 +131,17 @@ var store = new Vuex.Store({
         chin:null,
         sented:true,
         rus:null,
-    },
-    getters: {
+        isChecked: [],
+        orderList: [],
+        addressPid: null,
+        addressCid: null,
+        addressDid: null,
+        isshowmore: true,
+        isshowsearch: false,
+        isshowtsea: true
+    },  
+
+    getters:{
 
     },
     //分发状态
@@ -119,7 +151,10 @@ var store = new Vuex.Store({
             axios.get("http://localhost:5555/read")
                 .then((res) => {
                     state.carList = state.carList.concat(res.data);
-                    console.log(state.carList);
+                    state.isChecked = state.carList.map(function(item) {
+                        return item.id;
+                    });
+                    console.log(state.isChecked);
                 }).catch((err) => {})
         },
         //修改购物车列表选中项数据
@@ -145,7 +180,20 @@ var store = new Vuex.Store({
                     console.log("数据删除成功：" + res);
                 }).catch((err) => {})
         },
+
 		//分类1
+
+        // 获取城市列表
+        setCityList(state) {
+            axios.get("http://s17.mogucdn.com/new1/v1/bmisc/82c3fb334ddbd3af52bc4f148fbb4a67/199792409494.json")
+                .then((res) => {
+                    state.addressPid = res.data.result.location['0'];
+                    // state.addressCid = state.addressPid.province;
+                    // state.addressDid = state.addressCid.municipality;
+                    console.log(state.addressPid);
+                }).catch((err) => {})
+        },
+
         setNews(state) {
             axios.get('http://localhost:999/fsort', {
                     params: {
@@ -239,17 +287,21 @@ var store = new Vuex.Store({
     },
 
     actions: {
-        //提交触发 mutations 的 setCarList 获取数据函数
+        //提交触发 mutations 的 setCarList 获取购物车列表数据函数
         setCarList(context) {
             context.commit("setCarList");
         },
-        //提交触发 mutations 的 getCarList 修改数据函数
+        //提交触发 mutations 的 getCarList 修改购物车数据函数
         getCarList(context) {
             context.commit("getCarList");
         },
-        //提交触发 mutations 的 getCarList 修改数据函数
+        //提交触发 mutations 的 getCarList 修改购物车数据函数
         delCarList(context) {
             context.commit("delCarList");
+        },
+        //提交触发 mutations 的 setCityList 获取城市列表数据函数
+        setCityList(context) {
+            context.commit("setCityList");
         },
         setNews(context, data) {
             context.commit('setNews')
@@ -275,11 +327,9 @@ var store = new Vuex.Store({
     }
 })
 
-
-//构造器
 new Vue({
     el: '#pretty-talks',
     template: `<router-view></router-view>`,
     store,
     router,
-});
+})

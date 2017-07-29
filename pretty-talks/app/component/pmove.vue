@@ -3,9 +3,9 @@
     <div class="move">
         <div class="mo_content">
             <p class="mo_con">-- 限时特惠距活动结束仅剩 --</p>
-            <div class="mo_time">
+            <div class="mo_time" v-time="time">
                 <span class="time time1">0</span>
-                <span class="time time2">1</span>
+                <span class="time time2">0</span>
                 <span class="time3">时</span>
                 <span class="time time4">2</span>
                 <span class="time time5">3</span>
@@ -14,12 +14,12 @@
                 <span class="time time8">3</span>
                 <span class="time9">秒</span>
                 <span class="time time10">4</span>
-                <span class="time time11">6</span>
+                <span class="time time11">1</span>
             </div>
         </div>
         <div class="fmove">
             <ul class="bomove clearfix" v-shift="">
-                <li v-for="lia of liactive">
+                <li v-for="(lia,index) of liactive" :key="index">
                     <a href="javascript:;">
 						<img :src="lia.image">
 						<p class="mo_price">{{lia.discountPrice}} <span class="old_price">{{lia.price}}</span></p>
@@ -32,61 +32,142 @@
 </template>
 <script>
 export default {
-	data(){
-		return {
-			acolor:'red'
-		}
-	},
-    mounted() {
-        this.$store.dispatch('getActive');
+    data() {
+        return {
+            acolor: 'red',
+        }
     },
     computed: {
         liactive() {
             return this.$store.state.liactive
         },
-        litime() {
-            return this.$store.state.litime
+        time() {
+            var time = new Date();
+            return time = time.setHours(time.getHours() + 5);
         }
     },
+    methods: {
+        showTime() {}
+    },
+    mounted() {
+        this.$store.dispatch('getActive');
+    },
     directives: {
+        // shift有点蠢，反应迟钝！！！
         shift: {
             bind(el, binding) {
-            	var start = null;
-            	var end = null;
-            	var ways = null;
-            	var res = null
-            	var width = 100*10;
-            	el.style.width = width + 'px';
-                el.ontouchstart = function(data1) {
-                	start = data1.changedTouches['0'].pageX;
-                	this.ontouchmove = function(data2){
-                		console.log('sa')
-                		end = data2.changedTouches['0'].pageX;
-                		if(end<start){
-                			ways = this.style.left.slice(0,-2);
-                			res = ways*1+(end-start);
-                			// console.log(document.body.offsetWidth-width,res)
-                			if(document.body.offsetWidth-width >=res ){
-                				res = document.body.offsetWidth-width
-                			}
-                			
-                			this.style.left =  res +'px'
-                		}else{
-                			ways = this.style.left.slice(0,-2);
-                			res = ways*1 + (end-start);
-                			if(res >= 0){
-                				res = 0
-                			}
-                			this.style.left = res + 'px'
-                		}
-                		
-                	}
-                }
+                var start = null;
+                var end = null;
+                var ways = null;
+                var res = null;
+                var timer;
+                var width = 100 * 10;
+                el.style.width = width + 'px';
+                el.addEventListener("touchstart", function(data1, eve) {
+                    start = data1.changedTouches['0'].pageX;
+                    this.addEventListener("touchmove", function(data2) {
 
-                // }
+                        end = data2.changedTouches['0'].pageX;
+                        var speed = 10;
+
+                        if (end < start) {
+                            clearInterval(this.timer);
+                            var first = this.offsetLeft
+                            this.timer = setInterval(() => {
+                                // 实时需要移动的距离
+                                ways = this.offsetLeft
+                                ways -= speed;
+                                res = end - start;
+                                // clearInterval(this.timer)
+                                // 实时获取当前的位置
+
+
+                                if (ways <= document.body.offsetWidth - width) {
+                                    clearInterval(this.timer);
+                                    ways = document.body.offsetWidth - width;
+                                }
+                                if (ways <= res + first) {
+                                    clearInterval(this.timer);
+                                    ways = res + first;
+
+                                }
+                                this.style.left = ways + 'px'
+                            }, 10)
+
+                        } else if (end > start) {
+                            clearInterval(this.timer);
+                            var first = this.offsetLeft;
+                            this.timer = setInterval(() => {
+                                // 实时需要移动的距离
+                                ways = this.offsetLeft;
+                                ways += speed;
+                                res = end - start;
+                                // clearInterval(this.timer)
+                                // 实时获取当前的位置
+                                if (ways >= 0) {
+                                    clearInterval(this.timer);
+                                    ways = 0;
+                                }
+                                if (ways >= res + first) {
+                                    clearInterval(this.timer);
+                                    ways = res + first;
+
+                                }
+                                this.style.left = ways + 'px'
+                            }, 10)
+                        }
+
+                    })
+                });
+            }
+        },
+        //抢购活动时间
+        time: {
+            bind(el, binding) {
+                var actime = binding.value;
+                var tlist = el.querySelectorAll('.time');
+                var ss = 1;
+                var timer = setInterval(function() {
+                    var now = Date.parse(new Date());
+                    // 小时
+                    var hour = Math.floor((actime - now)/1000/60/60%60) + '';
+                    if (hour.length == 1) {
+                        hour = '0' + hour
+                    }
+                    // 分钟
+                    var min = Math.floor((actime - now)/1000/60%60) + '';
+                    if(min.length == 1){
+                    	min = '0'+min
+                    }
+                    // 秒
+                    var se = Math.floor((actime - now)/1000%60) + '';
+                    if(se.length == 1){
+                    	se = '0'+se
+                    }
+                   
+                    // 毫秒
+                    ss++;
+                    if(ss==100){
+                    	ss=1;
+                    }
+                    ss = ss+'';
+                    if(ss.length == 1){
+                    	ss = '0'+ss
+                    }
+
+
+                    tlist[0].innerHTML = hour[0];
+                    tlist[1].innerHTML = hour[1];
+                    tlist[2].innerHTML = min[0];
+                    tlist[3].innerHTML = min[1];
+                    tlist[4].innerHTML = se[0];
+                    tlist[5].innerHTML = se[1];
+                    tlist[6].innerHTML = ss[0];
+                    tlist[7].innerHTML = ss[1];
+                }, 10)
             }
         }
-    }
+    },
 }
 </script>
 <style scoped>
@@ -103,10 +184,9 @@ export default {
 }
 
 .bomove {
-	width: 1000px;
     position: absolute;
-    /*top:10px;*/
-    left: /0;
+    height: 100%;
+    left: 0;
 }
 
 .move div {
