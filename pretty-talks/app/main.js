@@ -6,6 +6,11 @@ import axios from "axios";
 import MuseUI from 'muse-ui';
 import 'muse-ui/dist/muse-ui.css';
 import lodash from 'lodash';
+import $ from "jquery";
+
+
+
+
 
 Vue.use(MuseUI);
 Vue.use(Vuex);
@@ -13,6 +18,7 @@ Vue.use(VueRouter);
 Vue.use(VueAwesomeSwiper);
 Vue.prototype.$ajax = axios;
 Vue.prototype._ = lodash;
+Vue.prototype.$ = $;
 
 // 样式
 import "./css/base.css";
@@ -45,50 +51,50 @@ var router = new VueRouter({
                 path: 'home',
                 component: Phome,
                 children: [{
-
-                    path: 'home',
-                    component: Phome,
-                    children: [{
-                        path: 'list/:sort/:page',
-                        component: Pchlist,
-                    }]
-                }, {
-
-                    path: 'list/:sort',
+                    path: 'list/:sort/:page',
                     component: Pchlist,
-
                 }]
             }, {
                 path: 'category',
                 component: Psort
+
             }]
         },
          {
+           
+        },
+        {
             path: '/subCategory/:pid',
             component: sub,
-        }, {
+        },
+        {
             path: '/login',
             component: Plogin
-        }, {
+        },
+        {
             path: "/car",
             component: car
-        }, {
+        },
+        {
             path: "/order",
             component: order
-        }, {
+        },
+        {
             path: "/address",
             component: address
-        }, {
+        },
+        {
             path: "/addaddr",
             component: addaddr
-        }, {
+        },
+        {
             path: '/reg',
             component: Preg,
             children: [{
                 path: 'step1',
                 component: Regstep1,
             }, {
-                path: 'step2',
+                path: 'step2/:phone',
                 component: Regstep2,
             }]
         },
@@ -142,6 +148,9 @@ var store = new Vuex.Store({
     },  
 
     getters:{
+
+    },
+    getters: {
 
     },
     //分发状态
@@ -312,6 +321,7 @@ var store = new Vuex.Store({
         getActive(context, data) {
             context.commit('getActive')
         },
+
         getList(context, data) {
             context.commit('getList')
         },
@@ -324,6 +334,8 @@ var store = new Vuex.Store({
         setChing(context, data) {
             context.commit('setChing')
         },
+
+
     }
 })
 
