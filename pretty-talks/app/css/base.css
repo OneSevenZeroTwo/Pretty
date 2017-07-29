@@ -5,6 +5,9 @@ body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fiel
 * {
 	box-sizing: border-box;
 }
+body{
+    background: #f4f4f4;
+}
 ul, li {
 	list-style: none;
 }
@@ -22,6 +25,9 @@ a {
 }
 img {
 	display: block;
+}
+i,em{
+	font-style: normal;
 }
 .move li, .bomove li {
 	margin: 10px 0 10px 10px;

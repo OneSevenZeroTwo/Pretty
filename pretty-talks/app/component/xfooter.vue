@@ -5,7 +5,7 @@
 
 	</div>
 	<div class="weui-tabbar">
-		<a href="#/index/home/list/pop" class="weui-tabbar__item">
+		<a href="#/index/home/list/pop/0" class="weui-tabbar__item">
 			<img src="https://s10.mogucdn.com/p2/160802/upload_439ak5453ih43h5d2a109dhe71agg_36x39.png" alt="" class="weui-tabbar__icon">
 			<p class="weui-tabbar__label">主页</p>
 		</a>
@@ -38,7 +38,7 @@
 		bottom:0;
 		left:0;
 		width: 100%;
-		z-index: 10;
+		z-index: 2000;
 		height: 43px;
 		background: #fafafa;
 		border-top: 1px solid #fafafa;

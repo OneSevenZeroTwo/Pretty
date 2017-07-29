@@ -1,15 +1,15 @@
 <!--首页商品列表-->
 <template>
-    <div class="list">
+    <div :class="{list:!isontop,listTop:isontop}">
         <ul class="lnav clearfix">
             <li @click="shownav(0)">
-                <a href="#/index/home/list/pop"><span :class="{active:isshownav==0}" >流行</span></a>
+                <a href="#/index/home/list/pop/0"><span :class="{active:isshownav==0}" >流行</span></a>
             </li>
             <li @click="shownav(1)">
-                <a href="#/index/home/list/sell" ><span :class="{active:isshownav==1}">新款</span></a>
+                <a href="#/index/home/list/sell/0"><span :class="{active:isshownav==1}">新款</span></a>
             </li>
             <li @click="shownav(2)">
-                <a href="#/index/home/list/new"><span :class="{active:isshownav==2}">精选</span></a>
+                <a href="#/index/home/list/new/0"><span :class="{active:isshownav==2}">精选</span></a>
             </li>
         </ul>
     </div>
@@ -20,39 +20,51 @@ export default {
     data() {
         return {
             isshownav: 0,
+            isontop: false,
         }
     },
     methods: {
         shownav(num) {
             this.isshownav = num;
             this.$store.state.list = [];
-            this.$store.state.page = 0;
-            if (this.$route.path == '/index/home/list/pop') {
-                this.isshownav = 0;
-                this.$store.state.sort = 'pop';
-                this.$store.dispatch('getList');
-            } else if (this.$route.path == '/index/home/list/sell') {
-                this.isshownav = 1;
-                this.$store.state.sort = 'sell';
-                this.$store.dispatch('getList');
-            } else if (this.$route.path == '/index/home/list/new') {
-                this.isshownav = 2;
-                this.$store.state.sort = 'new';
-                this.$store.dispatch('getList');
-            }
-            
-           
+        },
+        onTop() {
+            window.addEventListener('scroll', () => {
+                if (window.scrollY >= 2567) {
+                    this.isontop = true;
+                } else {
+                    this.isontop = false;
+                }
+            })
         }
+
     },
     mounted() {
-       this.$store.dispatch('getList');
+        this.onTop();
+        if (this.$route.path == '/index/home/list/pop/0') {
+            this.isshownav = 0;
+        } else if (this.$route.path == '/index/home/list/sell/0') {
+            this.isshownav = 1;
+        } else if (this.$route.path == '/index/home/list/new/0') {
+            this.isshownav = 2;
+        }
     }
+
 }
 </script>
 <style>
 .list {
+
     background: #fff;
     margin-top: 10px;
+}
+
+.listTop {
+    background: #fff;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    margin-top: 0;
 }
 
 .lnav li {

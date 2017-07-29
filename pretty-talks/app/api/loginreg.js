@@ -27,4 +27,17 @@ var Rconnection;
 		Rconnection.end();
 		});
 	});
+	
+	app.get('/search', function(req,res){
+		res.append("Access-Control-Allow-Origin", "*");
+		Rconnection = createConnection();
+		Rconnection.query('SELECT * FROM users where phone = "'+req.query.phone+'"', function(error, results, fields) {	
+		if(results.length != 0){
+			res.send(results);
+		}else if(results.length == 0){
+			res.send('0');
+		}
+		Rconnection.end();
+		});
+	});
 }

@@ -1,46 +1,66 @@
 <template>
 	<header class="warpper">
-		<form action="post" id="js_form">
+		<form action="post" id="js_form clearfix">
 			<a href="#" class="home_btn"></a>
-			<input type="text" placeholder="套装" class="js_input" />
-			<div class="js_right"></div>
+			<input type="text" placeholder="套装" class="js_input" @focus="showSea" @input="showtsea" v-model="text"/>
+			<span class="close" v-show="!isshowtsea" @click="hidetsea" v-focus="">&times;</span>
+			<a href="javascript:;" :class="{tsou:isshowtsea,sou:!isshowtsea}" v-show="isshowsearch" @click="act">{{title}}</a>
+			<a href="javascript:;" class="js_right" v-show="!isshowsearch"></a>
 		</form>
 	</header>
-	<!--<div class="seek">
-		<div class="init-box">
-			<span class="init_a"></span>
-			<h3 class="init_b">热门搜索</h3>
-			<ul class="list">
-				<li class="list-a">
-					<a href="#">连衣裙</a>
-				</li>
-				<li class="list-a">
-					<a href="#">小白鞋</a>
-				</li>
-				<li class="list-a">
-					<a href="#">省心套装</a>
-				</li>
-				<li class="list-a">
-					<a href="#">碎花连衣裙</a>
-				</li>
-				<li class="list-a">
-					<a href="#">明星同款</a>
-				</li>
-				<li class="list-a">
-					<a href="#">高跟鞋</a>
-				</li>
-				<li class="list-a">
-					<a href="#">美妆</a>
-				</li>
-				<li class="list-a">
-					<a href="#">墨镜</a>
-				</li>
-			</ul>
-		</div>
-	</div>-->
 </template>
 
 <script>
+	export default{
+		data(){
+			return{
+				text:'',
+				title:'',
+			}
+		},
+		computed:{
+			isshowtsea(){
+				return this.$store.state.isshowtsea
+			},
+			isshowsearch(){
+				return this.$store.state.isshowsearch
+			}
+		},
+		methods:{
+			showSea(){
+				this.$store.state.isshowsearch = true;	
+				this.title = '取消';		
+			},
+			showtsea(){
+				if(this.text.length>0){
+					this.$store.state.isshowtsea = false;
+					this.title = '搜索';
+				}else{
+					this.$store.state.isshowtsea = true;
+					this.title = '取消';
+				}
+			},
+			hidetsea(){
+				this.text = '';
+				this.$store.state.isshowtsea = true;
+			},
+			act(){
+				if(this.title == '取消'){
+					this.$store.state.isshowsearch = false;
+				}
+			}
+		},
+		directives:{
+			focus:{
+				bind(el,binding){
+					el.onclick = function(){
+						document.querySelector('.js_input').focus();
+					}
+				}
+			}
+		}
+		
+	}
 </script>
 
 <style scoped>
@@ -52,7 +72,9 @@
 		font-size: 12px;
 		z-index: 100;
 	}
-	
+	#js_form{
+		position: relative;
+	}
 	.home_btn {
 		float: left;
 		width: 25px;
@@ -85,63 +107,35 @@
 		width:32px;
 		height:28px;
 		float: right;
-		margin-top: 0.15rem;
-		margin-right: 5px;
+		margin-top: 6px;
+		margin-right: 0.3%;
 		line-height: 28px;
 		text-align: center;
 		background: url('../img/right.png') no-repeat center center;
 		background-size: 15px 12px;
 	}
-	
-	.seek {
-		font-size: 0.24rem;
-		padding-top: 1rem;
-		background-color: #FFF;
+	.close{
 		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		z-index: 99;
-		min-height: 100%;
+		right: 16%;
+		top:50%;
+		line-height: 16px;
+		font-size: 16px;
+		margin-top: -8px;
+		font-weight: 600;
+		color:blue;
 	}
-	
-	.init-box {
+	.sou{
+		position: absolute;
+		right: 2%;
+		top:50%;
+		margin-top: -8px;
+		color:#f36;
+	}
+	.tsou{
+		position: absolute;
+		right: 2%;
+		top:50%;
+		margin-top: -8px;
 		color: #666;
-		position: relative;
-		margin-left: 0.3rem;
-		padding-top: 0.3rem;
-		padding-bottom: 0.5rem;
-	}
-	
-	.init_a {
-		position: absolute;
-		left: -0.07rem;
-		display: inline-block;
-		width: 0.22rem;
-		height: 0.3rem;
-		background: url('../img/huo.png') no-repeat;
-		background-size: contain;
-	}
-	
-	.init_b {
-		font-size: 0.3rem;
-		font-weight: normal;
-		padding-left: 0.3rem;
-		margin-bottom: 0.05rem;
-	}
-	
-	.list-a {
-		float: left;
-		padding: .08rem .22rem;
-		margin-top: 0.25rem;
-		background-color: #F4F4F4;
-		margin-left: 0.2rem;
-		border-radius: 0.4rem;
-	}
-	
-	.list-a a {
-		color: #f36;
-		text-decoration: none;
 	}
 </style>

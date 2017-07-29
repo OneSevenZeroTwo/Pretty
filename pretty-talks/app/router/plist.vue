@@ -1,7 +1,6 @@
 <template>
 	<div>
 		<xseek></xseek>
-		<router-view></router-view>
 	</div>
 </template>
 
