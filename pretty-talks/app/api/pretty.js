@@ -38,21 +38,6 @@ app.use(bodyParser.urlencoded({
     extended: false
 }))
 
-
-<<<<<<< HEAD
-var createConnection =function(){
-	connection = mysql.createConnection({
-		host: 'localhost',
-		user: 'root',
-		password: '',
-		database: 'prettytalks-user'
-	});
-	
-	return connection;
-}
-=======
->>>>>>> a970a2691f8f54b6208e8348882a936a754acf6c
-
 require('./loginreg.js').loginreg(app, createConnection);
 // 首页商品详情
 
@@ -130,7 +115,6 @@ app.get('/tsort', function(request, response) {
     })
 });
 
-<<<<<<< HEAD
 //详情页
 app.get('/main', function(request,response){
 	response.append("Access-Control-Allow-Origin", "*");
@@ -164,12 +148,6 @@ app.get('/choose', function(request,response){
         })
     })
     
-app.post('/sethead', upload.any(), function(req, res, next) {	
-	res.append('Access-Control-Allow-Origin','*');
-	res.send({
-		fileFormat
-	})
-=======
 app.post('/sethead', upload.any(), function(req, res, next) {
     res.append("Access-Control-Allow-Origin", "*");
     res.send({
@@ -188,7 +166,6 @@ app.get('/newsimg', function(req, res) {
     });
 
     connection.end();
->>>>>>> a970a2691f8f54b6208e8348882a936a754acf6c
 });
 
 app.listen(999, function() {
