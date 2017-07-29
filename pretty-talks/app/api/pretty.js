@@ -66,7 +66,7 @@ app.get('/fsort', function(request,response){
 app.get('/tsort', function(request,response){
 	response.append("Access-Control-Allow-Origin", "*");
     var tatol = request.query
-    console.log(tatol)
+//  console.log(tatol)
     https.get(`https://simba-api.meilishuo.com/venus/mce/v1/urlMakeUpChange/h5?channel=wap&page=1&pageSize=30&pid=${tatol.pid}&_=1500982611007`, function(res) {
         var data = '';
         res.on('data', function(chunk) {
@@ -84,7 +84,7 @@ app.get('/main', function(request,response){
 	response.append("Access-Control-Allow-Origin", "*");
     var getId = request.query
     console.log(getId)
-    https.get(`http://m.meilishuo.com/detail/mls/v1/h5?iid=${getId.iid}`, function(res) {
+    https.get(`https://m.meilishuo.com/detail/mls/v1/h5?iid=${getId.iid}`, function(res) {
         var data = '';
         res.on('data', function(chunk) {
             data += chunk;
@@ -100,7 +100,7 @@ app.get('/main', function(request,response){
 app.get('/choose', function(request,response){
 	response.append("Access-Control-Allow-Origin", "*");
     var Id = request.query
-    console.log(Id)
+//  console.log(Id)
     https.get(`https://list.meilishuo.com/search?frame=1&page=2&sort=pop&cKey=wap-cate&tag=&maxPrice=&minPrice=&wxPrice=&uq=&_mgjuuid=0c4bc0f3-120f-4ac1-9cc7-1baef82f0505&fcid=${Id.fcid}&trace=0&cpc_offset=0&_=1501228522843`, function(res) {
         var data = '';
         res.on('data', function(chunk) {

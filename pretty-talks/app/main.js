@@ -102,11 +102,12 @@ var store = new Vuex.Store({
         res:null,
         now:null,
         iid:null,
-        goods:null,
+        gooding:null,
         choose:null,
         pcid:null,
         chin:null,
         sented:true,
+        rus:null,
     },
     getters: {
 
@@ -211,8 +212,10 @@ var store = new Vuex.Store({
                     }
                 }).then((response) => {
                     console.log(response)
-//                  state.goods = response.data.value.category_1.list
-//                  console.log(state.res)
+                    state.gooding = response.data.result
+                    state.rus = response.data.result.detailInfo.detailImage
+                    console.log(state.gooding)
+                    console.log(state.rus)
                 })
                 .catch((error) => {
                     console.log(error)

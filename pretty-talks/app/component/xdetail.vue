@@ -1,14 +1,12 @@
 <template>
-	<div class="screen">
+	<div class="screen" >
 		<!--轮播图-->
 			<swiper :options="swiperOption" ref="mySwiper">
-				<swiper-slide><img src="../img/2.jpg" alt="" /></swiper-slide>
-				<swiper-slide><img src="../img/8.jpg" alt="" /></swiper-slide>
-				<swiper-slide><img src="../img/2.jpg" alt="" /></swiper-slide>
-				<swiper-slide><img src="../img/8.jpg" alt="" /></swiper-slide>
-				<swiper-slide><img src="../img/2.jpg" alt="" /></swiper-slide>
-				<swiper-slide><img src="../img/8.jpg" alt="" /></swiper-slide>
-				<swiper-slide><img src="../img/2.jpg" alt="" /></swiper-slide>
+				<swiper-slide><img :src="gooding.itemInfo.topImages[0]" alt="" /></swiper-slide>
+				<swiper-slide><img :src="gooding.itemInfo.topImages[1]" alt="" /></swiper-slide>
+				<swiper-slide><img :src="gooding.itemInfo.topImages[2]" alt="" /></swiper-slide>
+				<swiper-slide><img :src="gooding.itemInfo.topImages[3]" alt="" /></swiper-slide>
+				<swiper-slide><img :src="gooding.itemInfo.topImages[4]" alt="" /></swiper-slide>
 
 				<div class="swiper-pagination choose" slot="pagination">
 					
@@ -17,16 +15,16 @@
 			<!--商品详情-->
 		<div class="info">
 			<div class="info_a">
-				（新品）假两件气质修身露肩蕾丝漏肩挂脖连衣裙
+				{{gooding.itemInfo.title}}
 			</div>
 			<div class="info_b">
-				<span class="now">¥67.50</span>
+				<span class="now">{{gooding.itemInfo.price}}</span>
 			</div>
 			<div class="info_c">
-				<span class="item">销量 53</span>
-				<span class="item">收藏343人</span>
-				<span class="item">72小时发货</span>
-				<span class="item">广东 广州</span>
+				<span class="item">{{gooding.columns[0]}}</span>
+				<span class="item">{{gooding.columns[1]}}</span>
+				<span class="item">{{gooding.itemInfo.extra.deliveryTime}}小时发货</span>
+				<span class="item">{{gooding.itemInfo.extra.sendAddress}}</span>
 			</div>
 			<div class="info_d">
 				<ul class="ing">
@@ -128,26 +126,26 @@
 				<!--详情-->
 				<div class="pics">
 					<dl class="pic-box">  
-						<dt class="pic-title">穿着效果</dt>   
-						<dt class="pic-desc">是否有弹性：无弹 是否含配件：不包含配件 内衬：有内衬 </dt>  
+						<dt class="pic-title">{{gooding.detailInfo.detailImage[0].key}}</dt>   
+						<dt class="pic-desc">{{gooding.detailInfo.detailImage[0].desc}} </dt>  
 						<dd class="pic-list">  
-							<img class="fadeIn" src="http://s3.mogucdn.com/p2/170721/10000000_76b11khgk9kldd69l7h9hgbg76cjf_1500x300.jpg_750x999.jpg">  
-							<img class="fadeIn" src="http://s3.mogucdn.com/p2/170721/10000000_3e2953id05dddf7h991llj7eh1k6l_1500x437.jpg_750x999.jpg">  
-							<img class="fadeIn" src="http://s3.mogucdn.com/p2/170717/upload_6a96ef0dc0ifc43bgl13ch013gj70_723x252.jpg_750x999.jpg">  
-							<img class="fadeIn" src="http://s11.mogucdn.com/mlcdn/c45406/170714_2kg1dia4abcl6dj2i1h33iag16a42_640x960.jpg_750x999.jpg">  
-							<img class="fadeIn" src="http://s3.mogucdn.com/mlcdn/c45406/170714_27hf137e9d642l2c9h76kl1jdi709_640x960.jpg_750x999.jpg">  
-							<img class="fadeIn" src="http://s3.mogucdn.com/mlcdn/c45406/170714_25ja7c13b1ii16lc3a0kgd8906ca6_640x960.jpg_750x999.jpg">  
-							<img class="fadeIn" src="http://s3.mogucdn.com/mlcdn/c45406/170714_1jg4f13e5ik8gk033g253l9eijdff_887x640.jpg_750x999.jpg">  
-							<img class="fadeIn" src="http://s11.mogucdn.com/mlcdn/c45406/170714_4k5h24j1ci30dae642h9edck2208i_720x640.jpg_750x999.jpg">  
-							<img class="fadeIn" src="http://s3.mogucdn.com/mlcdn/c45406/170714_850bcc13433765g5dfe6i8cb35lh9_856x640.jpg_750x999.jpg">  
-							<img class="fadeIn" src="http://s3.mogucdn.com/mlcdn/c45406/170714_5fhah4d9a343k9bh3b7ljljgc9cbh_650x866.jpg_750x999.jpg">  
-							<img class="fadeIn" src="http://s3.mogucdn.com/mlcdn/c45406/170714_55ec0glc5k0kl373c6d4k903l84df_640x960.jpg_750x999.jpg">  
-							<img class="fadeIn" src="http://s11.mogucdn.com/mlcdn/c45406/170714_6gdfc64l4723blkl4hjliadai9af0_643x640.jpg_750x999.jpg">  
-							<img class="fadeIn" src="http://s3.mogucdn.com/mlcdn/c45406/170714_70e1kh8bd564agjjf07170e2059jd_799x800.jpg_750x999.jpg">  
-							<img class="fadeIn" src="http://s3.mogucdn.com/mlcdn/c45406/170714_44g6j544bjl74a00c43je0d4bbc2b_791x640.jpg_750x999.jpg">  
-							<img class="fadeIn" src="http://s11.mogucdn.com/mlcdn/c45406/170714_24gib1idaa56f8l731d2706b4lb0j_800x800.jpg_750x999.jpg">  
-							<img class="fadeIn" src="http://s3.mogucdn.com/mlcdn/c45406/170714_29fje1i34jh3j82k65h1b0h7i2i9k_729x640.jpg_750x999.jpg">  
-							<img class="fadeIn" src="http://s3.mogucdn.com/p2/170606/upload_5f969c6jf9ic7l37fe8kch1b8ac27_750x335.png_750x999.jpg">  
+							<img class="fadeIn" v-for="rute in rus" :src="rute.list[1]">  
+							<!--<img class="fadeIn" :src="{{gooding.detailInfo.detailImage[1].list}}">  
+							<img class="fadeIn" :src="{{gooding.detailInfo.detailImage[2].list}}">  
+							<img class="fadeIn" :src="{{gooding.detailInfo.detailImage[3].list}}">  
+							<img class="fadeIn" :src="{{gooding.detailInfo.detailImage[4].list}}">  
+							<img class="fadeIn" :src="{{gooding.detailInfo.detailImage[5].list}}">  
+							<img class="fadeIn" :src="{{gooding.detailInfo.detailImage[6].list}}">  
+							<img class="fadeIn" :src="{{gooding.detailInfo.detailImage[7].list}}">  
+							<img class="fadeIn" :src="{{gooding.detailInfo.detailImage[8].list}}">  
+							<img class="fadeIn" :src="{{gooding.detailInfo.detailImage[9].list}}">  
+							<img class="fadeIn" :src="{{gooding.detailInfo.detailImage[10].list}}">  
+							<img class="fadeIn" :src="{{gooding.detailInfo.detailImage[11].list}}">  
+							<img class="fadeIn" :src="{{gooding.detailInfo.detailImage[12].list}}">  
+							<img class="fadeIn" :src="{{gooding.detailInfo.detailImage[13].list}}">  
+							<img class="fadeIn" :src="{{gooding.detailInfo.detailImage[14].list}}">  
+							<img class="fadeIn" :src="{{gooding.detailInfo.detailImage[15].list}}">  
+							<img class="fadeIn" :src="{{gooding.detailInfo.detailImage[16].list}}">  -->
 						</dd> 
 					</dl>
 				</div>
@@ -295,13 +293,21 @@
 		return {
 			swiperOption: {
 
-			}
+			},
+			aaa:null,
+			bbb:null,
 		}
 	},
 	computed: {
-			goods() {
-				return this.$store.state.goods;
-				
+			gooding(){
+//				console.log(this.$store.state.gooding)
+				this.aaa = this.$store.state.gooding;
+				return this.aaa;	
+			},
+			rus(){
+				console.log(this.$store.state.rue)
+				this.bbb = this.$store.state.rus;
+				return this.bbb;
 			}
 	},
 	methods:{
@@ -310,8 +316,11 @@
 			},
 	},
 	mounted() {
+		 this.$store.state.iid = this.$route.params.iid;
+		 console.log(this.$store.state.iid)
          this.mores();
 	},
+	
 }
 </script>
 

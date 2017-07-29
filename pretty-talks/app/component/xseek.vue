@@ -36,7 +36,7 @@
 		<div class="list">
 			<ul class="list_ch clearfix">
 				<li v-for="good in choose">
-					<a href="#/detail/">
+                         <a :href="'#/detail/'+good.iid">
 						<img :src="good.show.img">
 						<div class="youhui">
 						<img :src="good.leftbottom_taglist" alt=""  />
