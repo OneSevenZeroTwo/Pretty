@@ -30,6 +30,8 @@ import sub from "./router/pmine.vue";
 import Pchlist from "./component/pchlist.vue";
 import car from "./router/pcar.vue";
 import order from "./router/porder.vue";
+import Pmycenter from "./router/pmycenter.vue";
+
 
 var router = new VueRouter({
     routes: [{
@@ -68,6 +70,9 @@ var router = new VueRouter({
                 path: 'step2',
                 component: Regstep2,
             }]
+    },{
+        path: "/mycenter",
+        component: Pmycenter
     }, {
         path: '/',
         redirect: 'index/home/list/pop'
