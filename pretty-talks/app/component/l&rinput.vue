@@ -324,7 +324,7 @@
 					})
 					.then(res => {
 						if(res.data == '0') {
-							window.location.href = 'http://localhost:4399/#/reg/step2/?phone=' + this.user;
+							window.location.href = 'http://localhost:4399/#/reg/step2/' + this.user;
 						} else if(res.data == '1') {
 							this.dialog = true;
 						}
@@ -415,6 +415,7 @@
 			}
 		},
 		mounted() {
+			this.theI = parseInt(Math.random()*5);			
 			this.changeCap();
 			switch(this.$route.path) {
 				case '/login':

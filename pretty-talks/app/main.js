@@ -6,6 +6,7 @@ import axios from "axios";
 import MuseUI from 'muse-ui';
 import 'muse-ui/dist/muse-ui.css';
 import lodash from 'lodash';
+import $ from "jquery";
 
 Vue.use(MuseUI);
 Vue.use(Vuex);
@@ -13,6 +14,7 @@ Vue.use(VueRouter);
 Vue.use(VueAwesomeSwiper);
 Vue.prototype.$ajax = axios;
 Vue.prototype._ = lodash;
+Vue.prototype.$ = $;
 
 // 样式
 import "./css/base.css";
@@ -30,53 +32,68 @@ import sub from "./router/pmine.vue";
 import Pchlist from "./component/pchlist.vue";
 import car from "./router/pcar.vue";
 import order from "./router/porder.vue";
+import address from "./router/paddress.vue";
+import addaddr from "./router/paddaddr.vue";
 import Pmycenter from "./router/pmycenter.vue";
-
 
 var router = new VueRouter({
     routes: [{
-        path: '/index',
-        component: Pindex,
-        children: [{
-            path: 'home',
-            component: Phome,
+            path: '/index',
+            component: Pindex,
             children: [{
-                path: 'list/:sort',
-                component: Pchlist,
-            }]
-        }, {
-            path: 'category',
-            component: Psort
-        }]
-    }, {
-        path: '/subCategory',
-        component: sub,
-    }, {
-        path: '/login',
-        component: Plogin
-    }, {
-        path: "/car",
-        component: car
-    }, {
-        path: "/order",
-        component: order
-    }, {
-        path: '/reg',
-        component: Preg,
-        children: [{
+                path: 'home',
+                component: Phome,
+                children: [{
+                    path: 'list/:sort/:page',
+                    component: Pchlist,
+                }]
+            }, {
+                path: 'category',
+                component: Psort
+            }, ]
+        },
+        {
+            path: '/subCategory',
+            component: sub,
+        },
+        {
+            path: '/login',
+            component: Plogin
+        },
+        {
+            path: "/car",
+            component: car
+        },
+        {
+            path: "/order",
+            component: order
+        },
+        {
+            path: "/address",
+            component: address
+        },
+        {
+            path: "/addaddr",
+            component: addaddr
+        },
+        {
+            path: '/reg',
+            component: Preg,
+            children: [{
                 path: 'step1',
                 component: Regstep1,
-            },{
-                path: 'step2',
+            }, {
+                path: 'step2/:phone',
                 component: Regstep2,
             }]
-    },{
-        path: "/mycenter",
-        component: Pmycenter
-    }, {
-        path: '/',
-        redirect: 'index/home/list/pop'
-    }]
+        },{
+	        path: "/mycenter",
+	        component: Pmycenter
+        },{
+            path: '/',
+            redirect: 'index/home/list/pop/0'
+        }
+    ]
 })
 
 var store = new Vuex.Store({
@@ -95,8 +112,13 @@ var store = new Vuex.Store({
         list: [],
         pid: null,
         isChecked: [],
-        page:0
-
+        orderList: [],
+        addressPid: null,
+        addressCid: null,
+        addressDid: null,
+        isshowmore: true,
+        isshowsearch: false,
+        isshowtsea: true
     },
     getters: {
 
@@ -137,6 +159,16 @@ var store = new Vuex.Store({
                     console.log("数据删除成功：" + res);
                 }).catch((err) => {})
         },
+        // 获取城市列表
+        setCityList(state) {
+            axios.get("http://s17.mogucdn.com/new1/v1/bmisc/82c3fb334ddbd3af52bc4f148fbb4a67/199792409494.json")
+                .then((res) => {
+                    state.addressPid = res.data.result.location['0'];
+                    // state.addressCid = state.addressPid.province;
+                    // state.addressDid = state.addressCid.municipality;
+                    console.log(state.addressPid);
+                }).catch((err) => {})
+        },
         setNews(state) {
             axios.get('http://localhost:999/fsort', {
                     params: {
@@ -155,41 +187,11 @@ var store = new Vuex.Store({
                 // 轮播图
                 state.carousel = data.data.data['43542'].list;
                 // 9.9包邮活动
-                state.special = data.data.data['13730'].list.slice(0,-1);
+                state.special = data.data.data['13730'].list;
                 // 限时活动
                 state.liactive = data.data.data['42287'].list;
-
+                // 实现时间
                 state.litime = data.data.data['42287'].context.currentTime;
-                // 小图标
-                
-            }).catch((err) => {
-
-            })
-        },
-        getActive(state) {
-
-            axios.get("http://localhost:999/tsort", {
-                    params: {
-                        pid: state.pid
-                    }
-                }).then((response) => {
-                    console.log(response)
-                        //state.res = response.data.data
-                    console.log(state.res)
-                })
-                .catch((error) => {
-                    console.log(error)
-                })
-        },
-        getList(state, data) {
-            axios.get('http://localhost:999/home', {
-                params: {
-                    page: 1,
-                    sort: state.sort
-                }
-            }).then((data) => {
-                state.list = state.list.concat(data.data.data.list);
-                // console.log(data.data.data.list)
             }).catch((err) => {
 
             })
@@ -202,7 +204,7 @@ var store = new Vuex.Store({
                     }
                 }).then((response) => {
                     console.log(response)
-                        //state.res = response.data.data
+                    //state.res = response.data.data
                     console.log(state.res)
                 })
                 .catch((error) => {
@@ -213,17 +215,21 @@ var store = new Vuex.Store({
     },
 
     actions: {
-        //提交触发 mutations 的 setCarList 获取数据函数
+        //提交触发 mutations 的 setCarList 获取购物车列表数据函数
         setCarList(context) {
             context.commit("setCarList");
         },
-        //提交触发 mutations 的 getCarList 修改数据函数
+        //提交触发 mutations 的 getCarList 修改购物车数据函数
         getCarList(context) {
             context.commit("getCarList");
         },
-        //提交触发 mutations 的 getCarList 修改数据函数
+        //提交触发 mutations 的 getCarList 修改购物车数据函数
         delCarList(context) {
             context.commit("delCarList");
+        },
+        //提交触发 mutations 的 setCityList 获取城市列表数据函数
+        setCityList(context) {
+            context.commit("setCityList");
         },
         setNews(context, data) {
             context.commit('setNews')
@@ -234,9 +240,6 @@ var store = new Vuex.Store({
         getActive(context, data) {
             context.commit('getActive')
         },
-        getList(context, data) {
-            context.commit('getList')
-        },
     }
 })
 
@@ -246,14 +249,3 @@ new Vue({
     store,
     router,
 })
-
-
-
-
-// window.onload = function(){
-// 	var bomove = document.querySelector('.bomove');
-// 	bomove.ontouchstart = function(data1) {
-// 		console.log(data1)
-// 	}
-// }
-
