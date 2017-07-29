@@ -2,13 +2,13 @@
 	<div class="mode">
 		<div class="wallTop">
 			<div class="tags">
-				<a href="" class="tags-a">
+				<a href="#" class="tags-a">
 					<span class="tags-b">流行</span>
 				</a>
-				<a href="" class="tags-a">
+				<a href="#" class="tags-a">
 					<span class="tags-b">热销</span>
 				</a>
-				<a href="" class="tags-a">
+				<a href="#" class="tags-a">
 					<span class="tags-b">价格
 					</span>
 				</a>
@@ -18,7 +18,7 @@
 				</a>
 				</div>
 			</div>
-			<div class="hide-tab">
+			<div class="hide-tab" v-show="sented">
 				<div class="price">
 					<p class="price-b">0-30</p>
 					<p class="price-b">30-60</p>
@@ -36,7 +36,7 @@
 		<div class="list">
 			<ul class="list_ch clearfix">
 				<li v-for="good in choose">
-                         <a :href="'#/detail/'+good.iid">
+					<a href="#/detail/">
 						<img :src="good.show.img">
 						<div class="youhui">
 						<img :src="good.leftbottom_taglist" alt=""  />
@@ -52,6 +52,11 @@
 </template>
 <script>
 	export default {
+		data(){
+			return{
+				sented:true,
+			}
+		},
 		computed: {
 			choose() {
 //				console.log(this)
@@ -62,6 +67,15 @@
 			moring() {
 				this.$store.dispatch("setChoose")
 			},
+			loading(){
+//				if(this.$store.state.sented==true){
+//					this.$store.state.sented=false;
+//				}else{
+//					this.$store.state.sented=true
+//				}
+//				console.log(this.$store.state.sented)
+               
+			}
 		},
 		mounted() {
 			this.moring();
@@ -69,6 +83,9 @@
 	}
 </script>
 <style>
+	.mode{
+		overflow: hidden;
+	}
 	.wallTop {
 		width: 100%;
 		height: 10%;
@@ -98,7 +115,12 @@
 		width: 17px;
 		height: 21px;
 		float: right;
-		background: url('../img/packup.png') no-repeat;
+		z-index: 100;
+		margin-top: -9%;
+		margin-right:4% ;
+	}
+	.arrow img{
+		width: 100%;
 	}
 	
 	.hide-tab {

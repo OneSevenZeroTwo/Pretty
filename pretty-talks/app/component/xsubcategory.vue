@@ -8,7 +8,8 @@
 		<div class="list">
 			<ul class="list_log">
 				<li v-for="n in res">
-					<a href="">
+<!--					<p class="aaa">{{n.link|timer}}</p>-->
+					<a v-sore="n.link">
 						<div class="list_a">
 							<img :src="n.image" alt="" />
 						</div>
@@ -27,7 +28,7 @@
 		<div class="list">
 			<ul class="list_log">
 				<li v-for="item in now">
-					<a href="" >
+					<a v-sing="item.link" >
 						<div class="list_a">
 							<img :src="item.image" alt="" />
 						</div>
@@ -57,9 +58,13 @@
 				return this.$store.state.now
 			}
 		},
+
 		methods:{
-			mach() {
-				
+			mach(input) {
+				var main = (input.split('='))[1].split('&')[0]
+				console.log(main)
+				return main
+				console.log(111)
 			},
 			
 		},
@@ -67,6 +72,23 @@
 			this.$store.state.pid = this.$route.params.pid;
 			this.$store.dispatch("setChar")
 		},
+		directives:{
+			sore:{
+				bind(el,binding){
+					var input = binding.value;
+					var time = (input.split('='))[1].split('&')[0]
+					el.setAttribute('href','#/listed/'+time)
+				}
+			},
+			sing:{
+				bind(el,binding){
+					var input = binding.value;
+					var timer = (input.split('='))[1].split('&')[0]
+					el.setAttribute('href','#/listing/'+timer)
+				}
+			}
+		}
+		
 	}
 </script>
 

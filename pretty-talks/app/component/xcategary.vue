@@ -8,7 +8,7 @@
 			<ul class="list_log">
 				<li v-for="n in news">
 					<!--<p class="getId">{{n.link|time}}</p>-->
-					<a  v-vid="n.link">
+					<a v-vid="n.link">
 						<div class="list_a">
 							<img :src="n.image" alt="" />
 						</div>
@@ -44,13 +44,7 @@
 		},
 		mounted(){
 			this.load();
-		},
-		filters: {
-			time(input) {
-				var main = (input.split('='))[1].split('&')[0]
-//				console.log(main);
-				return main
-			},
+			
 		},
 		directives:{
 			vid:{

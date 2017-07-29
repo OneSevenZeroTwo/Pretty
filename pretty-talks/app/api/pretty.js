@@ -39,6 +39,19 @@ app.use(bodyParser.urlencoded({
 }))
 
 
+<<<<<<< HEAD
+var createConnection =function(){
+	connection = mysql.createConnection({
+		host: 'localhost',
+		user: 'root',
+		password: '',
+		database: 'prettytalks-user'
+	});
+	
+	return connection;
+}
+=======
+>>>>>>> a970a2691f8f54b6208e8348882a936a754acf6c
 
 require('./loginreg.js').loginreg(app, createConnection);
 // 首页商品详情
@@ -105,7 +118,7 @@ app.get('/fsort', function(request, response) {
 app.get('/tsort', function(request, response) {
     response.append("Access-Control-Allow-Origin", "*");
     var tatol = request.query
-    console.log(tatol)
+//  console.log(tatol)
     https.get(`https://simba-api.meilishuo.com/venus/mce/v1/urlMakeUpChange/h5?channel=wap&page=1&pageSize=30&pid=${tatol.pid}&_=1500982611007`, function(res) {
         var data = '';
         res.on('data', function(chunk) {
@@ -117,6 +130,46 @@ app.get('/tsort', function(request, response) {
     })
 });
 
+<<<<<<< HEAD
+//详情页
+app.get('/main', function(request,response){
+	response.append("Access-Control-Allow-Origin", "*");
+    var getId = request.query
+    console.log(getId)
+    https.get(`https://m.meilishuo.com/detail/mls/v1/h5?iid=${getId.iid}`, function(res) {
+        var data = '';
+        res.on('data', function(chunk) {
+            data += chunk;
+        })
+        res.on('end', function() {
+            response.end(data)
+            console.log(data)
+        })
+    })
+});
+
+//列表页1
+app.get('/choose', function(request,response){
+	response.append("Access-Control-Allow-Origin", "*");
+    var Id = request.query
+//  console.log(Id)
+    https.get(`https://list.meilishuo.com/search?frame=1&page=2&sort=pop&cKey=wap-cate&tag=&maxPrice=&minPrice=&wxPrice=&uq=&_mgjuuid=0c4bc0f3-120f-4ac1-9cc7-1baef82f0505&fcid=${Id.fcid}&trace=0&cpc_offset=0&_=1501228522843`, function(res) {
+        var data = '';
+        res.on('data', function(chunk) {
+            data += chunk;
+        })
+        res.on('end', function() {
+            response.end(data)
+            console.log(data)
+        })
+    })
+    
+app.post('/sethead', upload.any(), function(req, res, next) {	
+	res.append('Access-Control-Allow-Origin','*');
+	res.send({
+		fileFormat
+	})
+=======
 app.post('/sethead', upload.any(), function(req, res, next) {
     res.append("Access-Control-Allow-Origin", "*");
     res.send({
@@ -135,6 +188,7 @@ app.get('/newsimg', function(req, res) {
     });
 
     connection.end();
+>>>>>>> a970a2691f8f54b6208e8348882a936a754acf6c
 });
 
 app.listen(999, function() {
