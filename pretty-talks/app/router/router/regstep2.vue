@@ -36,7 +36,7 @@ export default {
                 return false;
             }
             this.$.ajax({
-                url: 'http://localhost:9990/newsimg',
+                url: 'http://localhost:999/newsimg',
                 type: 'GET',
                 data: {
                     username: this.user,
@@ -44,14 +44,23 @@ export default {
                     headerImgUrl: this.headerImgUrl
                 },
                 success: (data) => {
-                    console.log(data)
-
+                    this.$.ajax({
+		                url: 'http://localhost:999/search',
+		                type: 'GET',
+		                data: {
+		                    phone: this.$route.params.phone,
+		                },
+		                success: (data) => {
+		                    console.log(data[0].id);
+//		                    document.cookie = 
+		                }
+		            })
                 }
             })
         },
         getImg() {
             this.$.ajax({
-                url: 'http://localhost:9990/sethead',
+                url: 'http://localhost:999/sethead',
                 type: 'POST',
                 cache: false, //不必须
                 data: new FormData(this.$('#theform')[0]),

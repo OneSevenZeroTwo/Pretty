@@ -415,6 +415,7 @@
 			}
 		},
 		mounted() {
+			this.theI = parseInt(Math.random()*5);			
 			this.changeCap();
 			switch(this.$route.path) {
 				case '/login':
