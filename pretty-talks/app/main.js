@@ -27,7 +27,11 @@ import Regstep2 from "./router/router/regstep2.vue";
 import sub from "./router/pmine.vue";
 import Pchlist from "./component/pchlist.vue";
 import car from "./router/pcar.vue";
+import Plist from "./router/plist.vue";
+import Plong from "./router/pdate.vue";
+import Plisting from "./router/plisting.vue";
 
+//路由
 var router = new VueRouter({
     routes: [{
             path: '/index',
@@ -46,7 +50,7 @@ var router = new VueRouter({
 
         },
         {
-            path: '/subCategory',
+            path: '/subCategory/:pid',
             component: sub,
         }, {
             path: '/login',
@@ -67,13 +71,21 @@ var router = new VueRouter({
         }, {
             path: '/',
             redirect: 'index/home/list/pop'
+        },{
+        	path:'/listed/:pcid',
+        	component:Plist,
+        },{
+        	path:'/detail/:iid',
+        	component:Plong
+        },{
+        	path:'/listing/:pcid',
+        	component:Plisting
         }
     ]
 })
 
-
+//vuex
 var store = new Vuex.Store({
-
     state: {
         carList: [],
         pid: null,
@@ -86,7 +98,15 @@ var store = new Vuex.Store({
         litime: null,
         sort: 'pop',
         list: [],
-        pid: null,
+        news:null,
+        res:null,
+        now:null,
+        iid:null,
+        goods:null,
+        choose:null,
+        pcid:null,
+        chin:null,
+        sented:true,
     },
     getters: {
 
@@ -124,6 +144,7 @@ var store = new Vuex.Store({
                     console.log("数据删除成功：" + res);
                 }).catch((err) => {})
         },
+		//分类1
         setNews(state) {
             axios.get('http://localhost:999/fsort', {
                     params: {
@@ -131,7 +152,8 @@ var store = new Vuex.Store({
                     },
                 })
                 .then((response) => {
-                    //state.news = state.news.concat(response.data.data)
+//              	console.log(response)
+                      state.news = response.data.value
                 })
                 .catch((error) => {
                     console.log(error);
@@ -164,6 +186,7 @@ var store = new Vuex.Store({
 
             })
         },
+        // 分类2
         setChar(state) {
 
             axios.get("http://localhost:999/tsort", {
@@ -171,15 +194,45 @@ var store = new Vuex.Store({
                         pid: state.pid
                     }
                 }).then((response) => {
-                    console.log(response)
-                    //state.res = response.data.data
-                    console.log(state.res)
+//                  console.log(response)
+                    state.res = response.data.value.category_1.list
+					state.now = response.data.value.category_2.list
+//                  console.log(state.res)
                 })
                 .catch((error) => {
                     console.log(error)
                 })
-
-        }
+        },
+        //详情页
+        setDetail(state) {
+            axios.get("http://localhost:999/main", {
+                    params: {
+                        iid: state.iid
+                    }
+                }).then((response) => {
+                    console.log(response)
+//                  state.goods = response.data.value.category_1.list
+//                  console.log(state.res)
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+        },
+        //列表页1
+        setChoose(state) {
+            axios.get("http://localhost:999/choose", {
+                    params: {
+                        pcid: state.pcid
+                    }
+                }).then((response) => {
+//                  console.log(response)
+                    state.choose = response.data.data.list
+                    console.log(state.choose)
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+        },
     },
 
     actions: {
@@ -207,12 +260,20 @@ var store = new Vuex.Store({
         getList(context, data) {
             context.commit('getList')
         },
+        setDetail(context, data) {
+            context.commit('setDetail')
+        },
+        setChoose(context, data) {
+            context.commit('setChoose')
+        },
+        setChing(context, data) {
+            context.commit('setChing')
+        },
     }
 })
 
 
-
-
+//构造器
 new Vue({
     el: '#pretty-talks',
     template: `<router-view></router-view>`,

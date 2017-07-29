@@ -1,15 +1,13 @@
 <template>
-	<div>
-		<xseek></xseek>
-	</div>
+	<xsend></xsend>
 </template>
 
 <script>
-	import xseek from '../component/xseek.vue';
+	import xsend from '../component/xsend.vue';
 	
 	export default{
 		components:{
-			xseek,
+			xsend,
 		}
 	}
 </script>
