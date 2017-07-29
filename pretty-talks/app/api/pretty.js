@@ -2,7 +2,36 @@ var http = require('http');
 var https = require('https');
 var express = require('express');
 var app = express();
+var mysql = require("mysql");
+var fs = require("fs");
+var multer = require('multer');
+var connection;
 
+var fileFormat;
+var storage = multer.diskStorage({
+	destination: function(req, file, cb) {
+		cb(null, '../../images/headImg')
+	},
+	filename: function(req, file, cb) {
+		fileFormat = (file.originalname)
+		cb(null,fileFormat);
+	}
+});
+var upload = multer({
+	storage: storage
+});
+
+var createConnection =function(){
+	connection = mysql.createConnection({
+		host: 'localhost',
+		user: 'root',
+		password: '',
+		database: 'prettytalks-user'
+	});
+	return connection;
+}
+
+require('./loginreg.js').loginreg(app,createConnection);
 // 首页商品详情
 
 app.get('/home', function(request, response) {
@@ -75,9 +104,15 @@ app.get('/tsort', function(request,response){
         })
         res.on('end', function() {
             response.end(data)
-            console.log(data)
         })
     })
+});
+
+app.post('/sethead', upload.any(), function(req, res, next) {	
+	res.append('Access-Control-Allow-Origin','*');
+	res.send({
+		fileFormat
+	});
 });
 
 app.listen(999, function() {

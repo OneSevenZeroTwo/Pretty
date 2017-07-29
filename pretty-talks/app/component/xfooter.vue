@@ -5,7 +5,7 @@
 
 	</div>
 	<div class="weui-tabbar">
-		<a href="#/index/home/list/pop" class="weui-tabbar__item">
+		<a href="#/index/home/list/pop/0" class="weui-tabbar__item">
 			<img src="https://s10.mogucdn.com/p2/160802/upload_439ak5453ih43h5d2a109dhe71agg_36x39.png" alt="" class="weui-tabbar__icon">
 			<p class="weui-tabbar__label">主页</p>
 		</a>
@@ -13,7 +13,7 @@
 			<img src="https://s10.mogucdn.com/p2/160802/upload_488lbkj7ll3e92bg3ld1kh5k73l87_34x34.png" alt="" class="weui-tabbar__icon">
 			<p class="weui-tabbar__label">分类</p>
 		</a>
-		<a href="#" class="weui-tabbar__item" >
+		<a href="#/car" class="weui-tabbar__item" >
 			<img src="https://s10.mogucdn.com/p2/160802/upload_0eabagglh39aggl8jihfakfbf70a9_40x38.png" alt="" class="weui-tabbar__icon">
 			<p class="weui-tabbar__label">购物车</p>
 		</a>

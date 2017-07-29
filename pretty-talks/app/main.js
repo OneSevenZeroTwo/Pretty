@@ -5,16 +5,18 @@ import VueAwesomeSwiper from 'vue-awesome-swiper'
 import axios from "axios";
 import MuseUI from 'muse-ui';
 import 'muse-ui/dist/muse-ui.css';
+import lodash from 'lodash';
 
 Vue.use(MuseUI);
 Vue.use(Vuex);
 Vue.use(VueRouter);
 Vue.use(VueAwesomeSwiper);
 Vue.prototype.$ajax = axios;
+Vue.prototype._ = lodash;
 
 // 样式
 import "./css/base.css";
-import "./css/weui.css"
+import "./css/weui.css";
 
 // 组件
 import Pindex from './router/pindex.vue';
@@ -27,6 +29,9 @@ import Regstep2 from "./router/router/regstep2.vue";
 import sub from "./router/pmine.vue";
 import Pchlist from "./component/pchlist.vue";
 import car from "./router/pcar.vue";
+import order from "./router/porder.vue";
+import address from "./router/paddress.vue";
+import addaddr from "./router/paddaddr.vue";
 
 var router = new VueRouter({
     routes: [{
@@ -36,16 +41,24 @@ var router = new VueRouter({
                 path: 'home',
                 component: Phome,
                 children: [{
-                    path: 'list/:sort/:page',
+
+                    path: 'home',
+                    component: Phome,
+                    children: [{
+                        path: 'list/:sort/:page',
+                        component: Pchlist,
+                    }]
+                }, {
+
+                    path: 'list/:sort',
                     component: Pchlist,
+
                 }]
             }, {
                 path: 'category',
                 component: Psort
             }]
-
-        },
-        {
+        }, {
             path: '/subCategory',
             component: sub,
         }, {
@@ -55,22 +68,31 @@ var router = new VueRouter({
             path: "/car",
             component: car
         }, {
+            path: "/order",
+            component: order
+        }, {
+            path: "/address",
+            component: address
+        }, {
+            path: "/addaddr",
+            component: addaddr
+        }, {
             path: '/reg',
             component: Preg,
             children: [{
                 path: 'step1',
-                component: Regstep1
+                component: Regstep1,
             }, {
                 path: 'step2',
-                component: Regstep2
+                component: Regstep2,
             }]
-        }, {
+        },
+        {
             path: '/',
             redirect: 'index/home/list/pop/0'
         }
-    ]
+    }]
 })
-
 
 var store = new Vuex.Store({
 
@@ -79,7 +101,7 @@ var store = new Vuex.Store({
         pid: null,
         carProId: null,
         carProNum: null,
-        delList: true,
+        // delList: null,
         carousel: null,
         special: null,
         liactive: null,
@@ -87,10 +109,15 @@ var store = new Vuex.Store({
         sort: 'pop',
         list: [],
         pid: null,
-        isshowmore:true,
-        isshowsearch:false,
-        isshowtsea:true
-    },
+        isChecked: [],
+        orderList: [],
+        addressPid: null,
+        addressCid: null,
+        addressDid: null,
+        isshowmore: true,
+        isshowsearch: false,
+        isshowtsea: true
+    },  
     getters: {
 
     },
@@ -101,7 +128,10 @@ var store = new Vuex.Store({
             axios.get("http://localhost:5555/read")
                 .then((res) => {
                     state.carList = state.carList.concat(res.data);
-                    console.log(state.carList);
+                    state.isChecked = state.carList.map(function(item) {
+                        return item.id;
+                    });
+                    console.log(state.isChecked);
                 }).catch((err) => {})
         },
         //修改购物车列表选中项数据
@@ -127,6 +157,16 @@ var store = new Vuex.Store({
                     console.log("数据删除成功：" + res);
                 }).catch((err) => {})
         },
+        // 获取城市列表
+        setCityList(state) {
+            axios.get("http://s17.mogucdn.com/new1/v1/bmisc/82c3fb334ddbd3af52bc4f148fbb4a67/199792409494.json")
+                .then((res) => {
+                    state.addressPid = res.data.result.location['0'];
+                    // state.addressCid = state.addressPid.province;
+                    // state.addressDid = state.addressCid.municipality;
+                    console.log(state.addressPid);
+                }).catch((err) => {})
+        },
         setNews(state) {
             axios.get('http://localhost:999/fsort', {
                     params: {
@@ -145,13 +185,11 @@ var store = new Vuex.Store({
                 // 轮播图
                 state.carousel = data.data.data['43542'].list;
                 // 9.9包邮活动
-                state.special = data.data.data['13730'].list.slice(0,-1);
+                state.special = data.data.data['13730'].list;
                 // 限时活动
                 state.liactive = data.data.data['42287'].list;
-                // 限时时间
+                // 实现时间
                 state.litime = data.data.data['42287'].context.currentTime;
-                // 小图标s
-                
             }).catch((err) => {
 
             })
@@ -175,17 +213,21 @@ var store = new Vuex.Store({
     },
 
     actions: {
-        //提交触发 mutations 的 setCarList 获取数据函数
+        //提交触发 mutations 的 setCarList 获取购物车列表数据函数
         setCarList(context) {
             context.commit("setCarList");
         },
-        //提交触发 mutations 的 getCarList 修改数据函数
+        //提交触发 mutations 的 getCarList 修改购物车数据函数
         getCarList(context) {
             context.commit("getCarList");
         },
-        //提交触发 mutations 的 getCarList 修改数据函数
+        //提交触发 mutations 的 getCarList 修改购物车数据函数
         delCarList(context) {
             context.commit("delCarList");
+        },
+        //提交触发 mutations 的 setCityList 获取城市列表数据函数
+        setCityList(context) {
+            context.commit("setCityList");
         },
         setNews(context, data) {
             context.commit('setNews')
@@ -196,26 +238,12 @@ var store = new Vuex.Store({
         getActive(context, data) {
             context.commit('getActive')
         },
-        getList(context, data) {
-            context.commit('getList')
-        },
-    }
+    } 
 })
-
-
-
 
 new Vue({
     el: '#pretty-talks',
     template: `<router-view></router-view>`,
     store,
     router,
-});
-
-
-// window.onload = function(){
-// 	var bomove = document.querySelector('.bomove');
-// 	bomove.ontouchstart = function(data1) {
-// 		console.log(data1)
-// 	}
-// }
+})
