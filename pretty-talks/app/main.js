@@ -5,14 +5,12 @@ import VueAwesomeSwiper from 'vue-awesome-swiper'
 import axios from "axios";
 import MuseUI from 'muse-ui';
 import 'muse-ui/dist/muse-ui.css';
-import lodash from 'lodash';
 
 Vue.use(MuseUI);
 Vue.use(Vuex);
 Vue.use(VueRouter);
 Vue.use(VueAwesomeSwiper);
 Vue.prototype.$ajax = axios;
-Vue.prototype._ = lodash;
 
 // 样式
 import "./css/base.css";
@@ -34,52 +32,45 @@ import address from "./router/paddress.vue";
 import addaddr from "./router/paddaddr.vue";
 
 var router = new VueRouter({
-    routes: [{
-        path: '/index',
-        component: Pindex,
-        children: [{
-            path: 'home',
-            component: Phome,
-            children: [{
-                path: 'list/:sort',
-                component: Pchlist,
-            }]
-        }, {
-            path: 'category',
-            component: Psort
-        }]
-    }, {
-        path: '/subCategory',
-        component: sub,
-    }, {
-        path: '/login',
-        component: Plogin
-    }, {
-        path: "/car",
-        component: car
-    }, {
-        path: "/order",
-        component: order
-    }, {
+	routes: [{
+		path: '/index',
+		component: Pindex,
+		children: [{
+			path: 'home',
+			component: Phome,
+			children: [{
+				path: 'list/:sort',
+				component: Pchlist,
+			}]
+		}, {
+			path: 'category',
+			component: Psort
+		}]
+	}, {
+		path: '/subCategory',
+		component: sub,
+	}, {
+		path: '/login',
+		component: Plogin
+	}, {
+		path: "/car",
+		component: car
+	}, {
+		path: "/order",
+		component: order
+	}, {
 		path: "/address",
 		component: address
 	}, {
 		path: "/addaddr",
 		component: addaddr
 	}, {
-        path: '/reg',
-        component: Preg,
-        children: [{
-                path: 'step1',
-                component: Regstep1,
-            },{
-                path: 'step2',
-                component: Regstep2,
-            }]
-    }, {
-        path: '/',
-        redirect: 'index/home/list/pop'
-    }]
+		path: '/reg',
+		component: Preg
+	}, {
+		path: '/',
+		redirect: 'index/home/list/pop'
+	}]
 })
 
 var store = new Vuex.Store({
@@ -89,7 +80,6 @@ var store = new Vuex.Store({
 		pid: null,
 		carProId: null,
 		carProNum: null,
-		// delList: null,
 		carousel: null,
 		special: null,
 		liactive: null,
@@ -99,9 +89,11 @@ var store = new Vuex.Store({
 		pid: null,
 		isChecked: [],
 		orderList: [],
-		addressPid: null,
-		addressCid: null,
-		addressDid: null,
+		userAddr:null,
+		addrListId:null,
+		addrList:null,
+		useAddrId:null,
+		isAddrDefault:"0",
 	},
 	getters: {
 
@@ -109,7 +101,7 @@ var store = new Vuex.Store({
 	//分发状态
 	mutations: {
 		//获取购物车列表数据
-		setCarList(state) {
+		getCarList(state) {
 			axios.get("http://localhost:5555/read")
 				.then((res) => {
 					state.carList = state.carList.concat(res.data);
@@ -120,7 +112,7 @@ var store = new Vuex.Store({
 				}).catch((err) => {})
 		},
 		//修改购物车列表选中项数据
-		getCarList(state) {
+		setCarList(state) {
 			axios.get("http://localhost:5555/write", {
 					params: {
 						id: state.carProId,
@@ -142,14 +134,87 @@ var store = new Vuex.Store({
 					console.log("数据删除成功：" + res);
 				}).catch((err) => {})
 		},
-		// 获取城市列表
-		setCityList(state) {
-			axios.get("http://s17.mogucdn.com/new1/v1/bmisc/82c3fb334ddbd3af52bc4f148fbb4a67/199792409494.json")
+		//设置收货地址
+		setAddrList(state) {
+			axios.get("http://localhost:5555/setAddr", {
+					params: {
+						address: state.userAddr,
+					}
+				})
 				.then((res) => {
-					state.addressPid = res.data.result.location['0'];
-					// state.addressCid = state.addressPid.province;
-					// state.addressDid = state.addressCid.municipality;
-					console.log(state.addressPid);
+					console.log("设置收货地址成功：" + res);
+				}).catch((err) => {})
+		},
+		//获取收货地址列表
+		getAddrList(state) {
+			axios.get("http://localhost:5555/getAddr")
+				.then((res) => {
+					console.log(state.useAddrId);
+					if(state.useAddrId == null){
+						console.log("res.data",res.data);
+						state.addrList = res.data;
+					}else{
+						res.data.forEach((item)=>{
+							if(item.id == state.useAddrId){
+								state.addrList = item;
+								console.log(state.addrList);
+							}
+						})
+					}
+				}).catch((err) => {})
+		},
+		//获取订单页收货地址
+		getOrderAddr(state) {
+			axios.get("http://localhost:5555/getAddr")
+				.then((res) => {
+					res.data.forEach((item)=>{
+						if(item.isDefault == 1){
+							state.addrList = item;
+							console.log(state.addrList);
+						}
+					})
+					
+				}).catch((err) => {})
+		},
+		//修改收货地址
+		modifyAddrList(state) {
+			axios.get("http://localhost:5555/modifyAddr", {
+					params: {
+						id: state.useAddrId,
+						address: state.userAddr,
+					}
+				})
+				.then((res) => {
+					console.log("修改收货地址成功：" + res);
+				}).catch((err) => {})
+		},
+		//修改收货地址默认值0
+		isnomodifyAddr(state) {
+			axios.get("http://localhost:5555/isnomodifyAddr")
+				.then((res) => {
+					console.log("默认值写入成功：" + res);
+				}).catch((err) => {})
+		},
+		//修改收货地址默认值1
+		ismodifyAddr(state) {
+			axios.get("http://localhost:5555/ismodifyAddr",{
+				params:{
+					id:state.useAddrId
+				}
+			})
+				.then((res) => {
+					console.log("默认值写入成功：" + res);
+				}).catch((err) => {})
+		},
+		//删除收货地址
+		delAddrList(state) {
+			axios.get("http://localhost:5555/delAddr", {
+					params: {
+						id: state.addrListId,
+					}
+				})
+				.then((res) => {
+					console.log("数据删除成功：" + res);
 				}).catch((err) => {})
 		},
 		setNews(state) {
@@ -178,6 +243,21 @@ var store = new Vuex.Store({
 			}).catch((err) => {
 
 			})
+		},
+		getActive(state) {
+
+			axios.get("http://localhost:999/tsort", {
+					params: {
+						pid: state.pid
+					}
+				}).then((response) => {
+					console.log(response)
+					//state.res = response.data.data
+					console.log(state.res)
+				})
+				.catch((error) => {
+					console.log(error)
+				})
 		},
 		getList(state, data) {
 			axios.get('http://localhost:999/home', {
@@ -211,21 +291,49 @@ var store = new Vuex.Store({
 	},
 
 	actions: {
-		//提交触发 mutations 的 setCarList 获取购物车列表数据函数
-		setCarList(context) {
-			context.commit("setCarList");
-		},
-		//提交触发 mutations 的 getCarList 修改购物车数据函数
+		//提交触发 mutations 的 setCarList 获取 购物车 列表数据函数
 		getCarList(context) {
 			context.commit("getCarList");
 		},
-		//提交触发 mutations 的 getCarList 修改购物车数据函数
+		//修改购物车数据函数
+		setCarList(context) {
+			context.commit("setCarList");
+		},
+		//修改购物车数据函数
 		delCarList(context) {
 			context.commit("delCarList");
 		},
-		//提交触发 mutations 的 setCityList 获取城市列表数据函数
+		//获取 城市 列表数据函数
 		setCityList(context) {
 			context.commit("setCityList");
+		},
+		//设置地址列表数据函数
+		setAddrList(context) {
+			context.commit("setAddrList");
+		},
+		//获取 地址 列表数据函数
+		getAddrList(context) {
+			context.commit("getAddrList");
+		},
+		//获取 地址 列表数据函数
+		getOrderAddr(context) {
+			context.commit("getOrderAddr");
+		},
+		//修改地址列表数据函数
+		modifyAddrList(context) {
+			context.commit("modifyAddrList");
+		},
+		//取消地址列为默认
+		isnomodifyAddr(context) {
+			context.commit("isnomodifyAddr");
+		},
+		//设置地址列为默认
+		ismodifyAddr(context) {
+			context.commit("ismodifyAddr");
+		},
+		//删除地址列表数据函数
+		delAddrList(context) {
+			context.commit("delAddrList");
 		},
 		setNews(context, data) {
 			context.commit('setNews')
