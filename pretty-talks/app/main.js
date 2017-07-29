@@ -36,7 +36,7 @@ var router = new VueRouter({
                 path: 'home',
                 component: Phome,
                 children: [{
-                    path: 'list/:sort',
+                    path: 'list/:sort/:page',
                     component: Pchlist,
                 }]
             }, {
@@ -66,7 +66,7 @@ var router = new VueRouter({
             }]
         }, {
             path: '/',
-            redirect: 'index/home/list/pop'
+            redirect: 'index/home/list/pop/0'
         }
     ]
 })
@@ -87,7 +87,9 @@ var store = new Vuex.Store({
         sort: 'pop',
         list: [],
         pid: null,
-        page:0
+        isshowmore:true,
+        isshowsearch:false,
+        isshowtsea:true
     },
     getters: {
 
@@ -148,21 +150,8 @@ var store = new Vuex.Store({
                 state.liactive = data.data.data['42287'].list;
                 // 限时时间
                 state.litime = data.data.data['42287'].context.currentTime;
-                // 小图标
+                // 小图标s
                 
-            }).catch((err) => {
-
-            })
-        },
-        getList(state, data) {
-            axios.get('http://localhost:999/home', {
-                params: {
-                    page: 1,
-                    sort: state.sort
-                }
-            }).then((data) => {
-                state.list = state.list.concat(data.data.data.list);
-                // console.log(data.data.data.list)
             }).catch((err) => {
 
             })

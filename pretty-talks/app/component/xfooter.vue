@@ -38,7 +38,7 @@
 		bottom:0;
 		left:0;
 		width: 100%;
-		z-index: 10;
+		z-index: 2000;
 		height: 43px;
 		background: #fafafa;
 		border-top: 1px solid #fafafa;
