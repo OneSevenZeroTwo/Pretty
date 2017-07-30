@@ -136,7 +136,6 @@ app.get('/main', function(request,response){
 app.get('/choose', function(request,response){
 	response.append("Access-Control-Allow-Origin", "*");
     var Id = request.query
-//  console.log(Id)
     https.get(`https://list.meilishuo.com/search?frame=1&page=2&sort=pop&cKey=wap-cate&tag=&maxPrice=&minPrice=&wxPrice=&uq=&_mgjuuid=0c4bc0f3-120f-4ac1-9cc7-1baef82f0505&fcid=${Id.fcid}&trace=0&cpc_offset=0&_=1501228522843`, function(res) {
         var data = '';
         res.on('data', function(chunk) {
@@ -147,7 +146,7 @@ app.get('/choose', function(request,response){
             console.log(data)
         })
     })
-    
+});    
 app.post('/sethead', upload.any(), function(req, res, next) {
     res.append("Access-Control-Allow-Origin", "*");
     res.send({
@@ -163,12 +162,11 @@ app.get('/newsimg', function(req, res) {
     connection.query(`UPDATE users SET username="${tatol.username}", headerImgUrl="${tatol.headerImgUrl}" WHERE phone="${tatol.phone}"`, function(error, results, fields) {
         if (error) { throw error };
         res.send('complete');
-    });
+    })
 
-    connection.end();
+    connection.end()
 });
 
 app.listen(999, function() {
     console.log('打开999端口')
 })
-

@@ -56,35 +56,25 @@ var router = new VueRouter({
                 component: Psort
 
             }]
-        },
-         {
-           
-        },
-        {
+        },{
             path: '/subCategory/:pid',
             component: sub,
-        },
-        {
+        },{
             path: '/login',
             component: Plogin
-        },
-        {
+        },{
             path: "/car",
             component: car
-        },
-        {
+        },{
             path: "/order",
             component: order
-        },
-        {
+        },{
             path: "/address",
             component: address
-        },
-        {
+        },{
             path: "/addaddr",
             component: addaddr
-        },
-        {
+        },{
             path: '/reg',
             component: Preg,
             children: [{
@@ -99,7 +89,7 @@ var router = new VueRouter({
 	        component: Pmycenter
         },{
             path: '/',
-            redirect: 'index/home/list/pop'
+            redirect: 'index/home/list/pop/0'
         },{
         	path:'/listed/:pcid',
         	component:Plist,

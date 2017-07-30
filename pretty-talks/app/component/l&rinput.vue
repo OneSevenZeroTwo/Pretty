@@ -285,7 +285,9 @@
 		},
 		methods: {
 			login(position) {
-				this.thePass(position);
+				if(this.thePass(position) == '0'){
+					return false;
+				}
 				this.$ajax.get('http://localhost:999/login', {
 						params: {
 							'user': this.user,
@@ -293,10 +295,13 @@
 						}
 					}, )
 					.then(res => {
-						if(res.data == '0') {
+						if(res.data.length == '0') {
 							this.dialog = true
-						} else if(res.data == '1') {
-
+						} else if(res.data.length == '1') {
+							var now = new Date();
+						    now.setDate(now.getDate() + 7);
+		                    document.cookie = 'id='+ res.data[0].id +';expires='+ now;
+		                    window.location.href = 'http://localhost:4399';
 						}
 					})
 					.catch(err => {
@@ -304,7 +309,6 @@
 					})
 			},
 			reg(position) {
-				this.thePass(position);
 				if(!/^1[3-57-9]\d{9}$/.test(this.user)) {
 					this.showToast();
 					this.user = '';
@@ -315,7 +319,9 @@
 					this.password = '';
 					return false;
 				}
-
+				if(this.thePass(position) == '0'){
+					return false;
+				}
 				this.$ajax.get('http://localhost:999/reg', {
 						params: {
 							'phone': this.user,
@@ -390,7 +396,7 @@
 			thePass(position) {
 				if(document.querySelector('.theLi').classList.value.indexOf('fail') != '-1') {
 					this[position + 'Popup'] = true;
-					return false;
+					return '0';
 				}
 			},
 			showToast() {

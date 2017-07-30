@@ -4,9 +4,9 @@
 		<div id="userInfo">
 			<div class="img_wrap">
 				<div class="img_innner">
-					<img src="../../images/login&reg&mine/test.jpg">
+					<img :src="userimg">
 				</div>
-				<p>钢板花旦</p>
+				<p>{{username}}</p>
 			</div>
 			<div class="list">
 				<a href=""><span class="num" id="myLove">0</span>收藏的宝贝</a>
@@ -30,69 +30,41 @@
 		</div>
 		<div class="list_wrap">
 			<div class="tab_content">
-				<!--<div class="noOrder">
+				<div class="noOrder" v-show="show">
 					<img src="../../images/login&reg&mine/list.png">
 					<p>你还没有相关的订单</p>
-				</div>-->
-				<div class="orderlist">
-					<ul>
-						<li class="otitle">
-							<span class="oleft">商家 : 美丽优选</span>
-							<span class="oright">代付款</span>
-						</li>
-						<li class="goods">
-							<a href="javascript;">
-								<div class="oleft">
-									<img src="../../images/login&reg&mine/captcha-img/2.jpg" />
-								</div>
-								<div class="odetail">
-									<p class="deTitle">2017夏季新款韩版镂空条纹短袖T恤连衣裙女装中长款针织衫上</p>
-									<p class="desc">
-										<span class="num">数量：1</span>
-										<span class="price">￥62.50</span>
-									</p>
-								</div>
-								<div></div>
-							</a>
-						</li>
-						<li class="pay">
-							<p class="totalPrice">合计：<span>￥22.50</span></p>
-							<div class="order_btn">
-								<mu-raised-button label="取消订单" class="cancle"/>
-								<mu-raised-button label="付款" class="buy"/>
-							</div>
-						</li>
-					</ul>
 				</div>
-				<div class="orderlist">
-					<ul>
-						<li class="otitle">
-							<span class="oleft">商家 : 美丽优选</span>
-							<span class="oright">代付款</span>
-						</li>
-						<li class="goods">
-							<a href="javascript;">
-								<div class="oleft">
-									<img src="../../images/login&reg&mine/captcha-img/2.jpg" />
+				<div v-show="!show">
+					<div class="orderlist" v-for="n in orderData">
+						<ul>
+							<li class="otitle">
+								<span class="oleft" id="ordertitle">商家 : 美丽优选</span>
+								<span class="oright">代付款</span>
+							</li>
+							<li class="goods">
+								<a href="javascript:;">
+									<div class="oleft">
+										<img :src="n.imgUrl" class="orderimg"/>
+									</div>
+									<div class="odetail">
+										<p class="deTitle">{{n.title}}</p>
+										<p class="desc">
+											<span class="num">数量：{{n.num}}</span>
+											<span class="price">￥{{n.price}}</span>
+										</p>
+									</div>
+									<div></div>
+								</a>
+							</li>
+							<li class="pay">
+								<p class="totalPrice">合计：<span>￥{{n.num*n.price}}</span></p>
+								<div class="order_btn">
+									<mu-raised-button label="取消订单" class="cancle" @click="cancle(n.id)"/>
+									<mu-raised-button label="付款" class="buy" />
 								</div>
-								<div class="odetail">
-									<p class="deTitle">2017夏季新款韩版镂空条纹短袖T恤连衣裙女装中长款针织衫上</p>
-									<p class="desc">
-										<span class="num">数量：1</span>
-										<span class="price">￥62.50</span>
-									</p>
-								</div>
-								<div></div>
-							</a>
-						</li>
-						<li class="pay">
-							<p class="totalPrice">合计：<span>￥22.50</span></p>
-							<div class="order_btn">
-								<mu-raised-button label="取消订单" class="cancle"/>
-								<mu-raised-button label="付款" class="buy"/>
-							</div>
-						</li>
-					</ul>
+							</li>
+						</ul>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -106,32 +78,75 @@
 	export default {
 		data() {
 			return {
+				orderData:null,
+				show: true,
+				username: '未登录',
+				userimg: require('../../images/login&reg&mine/step2.png'),
 				activeTab: 'tab1',
 				headerMsg: {
 					title: '个人中心',
 					rightBtn: '退出',
-					//					theHref:'http://localhost:4399/#/reg/step1',
 				},
 			}
 		},
 		methods: {
 			handleTabChange(val) {
 				this.activeTab = val
+			},
+			cancle(id){
+				console.log(id);
 			}
 		},
 		components: {
 			lrHeader,
 			xfooter
+		},
+		mounted() {
+			var theId = document.cookie.split('=')[1];
+			if(theId) {
+				this.show = false;
+				this.$ajax.get('http://localhost:999/search', {
+					params: {
+						'phone': theId,
+					}
+				}, )
+				.then(res => {
+					this.username = res.data[0].username;
+					this.userimg = res.data[0].headerImgUrl;
+					this.$ajax.get('http://localhost:999/orders', {
+						params: {
+							'id': theId,
+						}
+					}, )
+					.then(res => {
+						if(res.data.length == '0'){
+							this.show = true;
+						}else{
+							this.show = false;
+							this.orderData = res.data;
+						}
+					})
+					.catch(err => {})
+					})
+				.catch(err => {})
+				
+			} else {
+				this.show = true;
+			}
 		}
 	}
 </script>
 
 <style scoped>
-	.list_wrap{
+	#ordertitle{
+		width: 50%;
+	}
+	.list_wrap {
 		overflow: auto;
 		margin-bottom: 20%;
 		margin-top: 3%;
 	}
+	
 	.orderlist {
 		margin-top: 1%;
 		background-color: #fff;
@@ -156,10 +171,12 @@
 	
 	.oleft {
 		float: left;
+		display: block;
+		width: 20%;
 	}
 	
 	.oleft img {
-		width: 85%;
+		width: 100%;
 	}
 	
 	.oright {
@@ -177,7 +194,7 @@
 	}
 	
 	.goods {
-		overflow: hidden;	
+		overflow: hidden;
 	}
 	
 	.desc {
@@ -212,19 +229,23 @@
 	.tab_content {
 		position: relative;
 	}
-	.order_btn{
+	
+	.order_btn {
 		margin-top: 3%;
 	}
-	.cancle{
+	
+	.cancle {
 		border-radius: 10%;
 		color: #888;
 	}
-	.buy{
+	
+	.buy {
 		border-radius: 10%;
 		background-color: #ff7a9a;
 		color: #fff;
 		margin-left: 4%;
 	}
+	
 	.noOrder {
 		text-align: center;
 		padding-top: 8%;

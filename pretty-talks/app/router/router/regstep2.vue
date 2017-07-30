@@ -30,7 +30,7 @@ export default {
     },
     methods: {
         setName(position) {
-            if (!/^\w{6,20}$/.test(this.user)) {
+            if (!/^.{3,15}$/.test(this.user)) {
                 this[position + 'Popup'] = true;
                 this.user = '';
                 return false;
@@ -51,8 +51,10 @@ export default {
 		                    phone: this.$route.params.phone,
 		                },
 		                success: (data) => {
-		                    console.log(data[0].id);
-//		                    document.cookie = 
+						    var now = new Date();
+						    now.setDate(now.getDate() + 7);
+		                    document.cookie = 'id='+ data[0].id +';expires='+ now;
+		                    window.location.href = 'http://localhost:4399';
 		                }
 		            })
                 }
@@ -84,9 +86,6 @@ export default {
             }
         }
     },
-    mounted(){
-    	console.log(this.$route.params.phone)
-    }
 }
 </script>
 <style>
