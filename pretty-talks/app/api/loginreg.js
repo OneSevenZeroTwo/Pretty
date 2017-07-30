@@ -19,11 +19,25 @@ var Rconnection;
 		res.append("Access-Control-Allow-Origin", "*");
 		Rconnection = createConnection();
 		Rconnection.query('SELECT * FROM users where (username = "'+req.query.user+'" or phone = "'+req.query.user+'" or email = "'+req.query.user+'") and password = "'+req.query.password+'"', function(error, results, fields) {	
-		if(results.length != 0){
-			res.send('1');
-		}else if(results.length == 0){
-			res.send('0');
-		}
+		res.send(results);
+		Rconnection.end();
+		});
+	});
+	
+	app.get('/search', function(req,res){
+		res.append("Access-Control-Allow-Origin", "*");
+		Rconnection = createConnection();
+		Rconnection.query('SELECT * FROM users where phone = "'+req.query.phone+'" or id = "'+req.query.phone+'"', function(error, results, fields) {	
+		res.send(results);
+		Rconnection.end();
+		});
+	});
+	
+	app.get('/orders', function(req,res){
+		res.append("Access-Control-Allow-Origin", "*");
+		Rconnection = createConnection();
+		Rconnection.query('SELECT * FROM carlist where user_id = "'+req.query.id+'" and orders = "1"', function(error, results, fields) {	
+		res.send(results);
 		Rconnection.end();
 		});
 	});

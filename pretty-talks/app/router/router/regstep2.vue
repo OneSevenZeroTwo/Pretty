@@ -30,13 +30,13 @@ export default {
     },
     methods: {
         setName(position) {
-            if (!/^\w{6,20}$/.test(this.user)) {
+            if (!/^.{3,15}$/.test(this.user)) {
                 this[position + 'Popup'] = true;
                 this.user = '';
                 return false;
             }
             this.$.ajax({
-                url: 'http://localhost:9990/newsimg',
+                url: 'http://localhost:999/newsimg',
                 type: 'GET',
                 data: {
                     username: this.user,
@@ -44,14 +44,25 @@ export default {
                     headerImgUrl: this.headerImgUrl
                 },
                 success: (data) => {
-                    console.log(data)
-
+                    this.$.ajax({
+		                url: 'http://localhost:999/search',
+		                type: 'GET',
+		                data: {
+		                    phone: this.$route.params.phone,
+		                },
+		                success: (data) => {
+						    var now = new Date();
+						    now.setDate(now.getDate() + 7);
+		                    document.cookie = 'id='+ data[0].id +';expires='+ now;
+		                    window.location.href = 'http://localhost:4399';
+		                }
+		            })
                 }
             })
         },
         getImg() {
             this.$.ajax({
-                url: 'http://localhost:9990/sethead',
+                url: 'http://localhost:999/sethead',
                 type: 'POST',
                 cache: false, //不必须
                 data: new FormData(this.$('#theform')[0]),
@@ -75,9 +86,6 @@ export default {
             }
         }
     },
-    mounted(){
-    	console.log(this.$route.params.phone)
-    }
 }
 </script>
 <style>

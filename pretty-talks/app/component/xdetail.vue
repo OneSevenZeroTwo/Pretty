@@ -399,6 +399,7 @@
 	html,
 	body {
 		height: 100%;
+		background: #fff;
 	}
 	
 	.screen {

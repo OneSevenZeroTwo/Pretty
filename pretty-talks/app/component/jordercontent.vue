@@ -44,7 +44,7 @@
 		</div>
 	</section>
 </template>
-<script>
+<script scoped>
 	export default {
 		data() {
 			return {
@@ -52,7 +52,7 @@
 			}
 		},
 		mounted() {
-			console.log(this.$store.state.orderList)
+			//console.log(this.$store.state.orderList)
 		},
 		computed: {
 			orderList() {
@@ -60,7 +60,7 @@
 			},
 			//计算总价
 			totalPrice() {
-				console.log(this.orderList);
+				//console.log(this.orderList);
 				var total = 0;
 				this.orderList.map((goods) => {
 					//如果选中，计算总价
