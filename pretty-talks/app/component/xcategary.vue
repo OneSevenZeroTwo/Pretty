@@ -109,15 +109,16 @@
 	}
 	.wrap_a{
 		width:100%;
+		height: 31px;
 		overflow: hidden;
-		padding: .2rem;
+		margin: 4% 2%;
 	}
 	.wrap_a h3{
 		color: #333;
 		font-size: 0.64rem;
 		font-weight: normal;
 		float: left;
-		margin-bottom:20px;
+		/*margin-bottom:20px;*/
 	}
 	.wrap_a p{
 		color: #666;

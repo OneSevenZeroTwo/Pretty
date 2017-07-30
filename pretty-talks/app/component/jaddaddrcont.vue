@@ -25,29 +25,29 @@
 			</p>
 			<p class="item_wrap">
 				<label for="addressPid" class="select_box">
-                    <span class="notice note_show">所在省份</span>
-                    <select id="addressPid" name="province" v-model="catyList">
-                        <option v-for="(li,index) in catyList" :value="li.id">{{li.name}}</option>
+                    <span class="notice note_show" v-show="isPidShow">所在省份</span>
+                    <select id="addressPid" name="province" v-model="addressPid" v-on:change="selectChangeP">
+                        <option v-for="(li,index) in province" :key="li.id" :value="li.id">{{li.name}}</option>
                     </select>
                     <span class="select_btn">请选择</span>
                 </label>
 			</p>
 			<p class="item_wrap">
 				<label for="addressCid" class="select_box">
-                    <span class="notice note_show">所在城市</span>
-                    <select id="addressCid" name="city" v-model="catyList">
-                        <!-- <option :value="{catyList.municipality}"></option> -->
-                    </select>
+                    <span class="notice note_show" v-show="isCidShow">所在城市</span>
+                     <select id="addressCid" name="city" v-model="addressCid" v-on:change="selectChangeC">
+                        <option v-for="(li,index) in city" :value="li.id">{{li.name}}</option>
+                    </select> 
                     <span class="select_btn">请选择</span>
                 </label>
 			</p>
 			<p> </p>
 			<p class="item_wrap">
 				<label for="addressDid" class="select_box">
-                    <span class="notice note_show">所在地区</span>
-                    <select id="addressDid" name="area" v-model="catyList">
-                        <option value="0"></option>
-                    </select>
+                    <span class="notice note_show" v-show="isDidShow">所在地区</span>
+                     <select id="addressDid" name="area" v-model="addressDid" v-on:change="selectChangeD">
+                        <option v-for="(li,index) in area" :value="li.id">{{li.name}}</option>
+                    </select> 
                     <span class="select_btn">请选择</span>
                 </label>
 			</p>
@@ -66,7 +66,7 @@
 				<div class="set_wrap">
 					<span>设为默认地址</span>
 					<input type="checkbox" name="isDefault" id="is_default" value="" style="display:none">
-					<span class="switch_btn" :class="{'switch_check':isCheck,'switch_uncheck':!isCheck}" @click="isuncheck">               
+					<span class="switch_btn" :class="{'switch_check':isDefault==1,'switch_uncheck':isDefault!=1}" @click="isuncheck">               
                         <i class="inner_circle"></i>                
                     </span>
 				</div>
@@ -74,84 +74,189 @@
 			<div class="submitBox" style="display:none">
 				<input class="addressBtn button" type="submit" value="保存地址">
 			</div>
-			<div class="remove_addr_btn" v-show="isAddrBtnShow"> 删除此地址 </div>
+			<div class="remove_addr_btn" v-show="isAddrBtnShow" @click="delAddr"> 删除此地址 </div>
 		</form>
 	</div>
 </template>
 <script>
+
+ 	import cityList from "../api/city.js";
+
 	export default {
 		data() {
 			return {
-				isCheck: false,
 				isAddrBtnShow: false,
 				addressErrorMessage: "",
 				addressUser: "",
 				addressPhone: "",
-				// addressPid: "",
-				// addressCid: "",
-				// addressDid: "",
+				addressPid: null,
+				addressCid: null,
+				addressDid: null,
+				addressPname:null,
+				addressCname:null,
+				addressDname:null,
 				addressStreet: "",
 				addressPostcode: "",
-
+				isDefault:0,
+				isPidShow:true,
+				isCidShow:true,
+				isDidShow:true,
+ 				isaddress:null,
 			}
 		},
 		methods: {
 			isuncheck() {
-				this.isCheck = !this.isCheck;
+				if(this.isDefault == 0){
+					this.isDefault = 1;
+				}else{
+					this.isDefault = 0;
+				}
 			},
 			saveaddress() {
-				console.log(6666);
+				var onoff = true;
 				if(this.addressUser == "") {
 					this.addressErrorMessage = "你还没有填写收货人姓名哦。"
+					onoff = false;
 					return;
 				}
 				console.log(this.addressUser.length);
 				if(this.addressUser.length > 10) {
 					this.addressErrorMessage = "收货人姓名不能大于10个字。"
+					onoff = false;
 					return;
 				}
 				if(this.addressPhone == "") {
 					this.addressErrorMessage = "你还没有填写联系电话哦。"
+					onoff = false;
 					return;
 				}
 				if(!/^[1][3-9]\d{9}$/.test(this.addressPhone)) {
 					this.addressErrorMessage = "请填写11位有效的手机号码"
+					onoff = false;
 					return;
 				}
-				if(this.addressPid == "") {
+				if(this.addressPid == null) {
 					this.addressErrorMessage = "地址 省份校验失败"
+					onoff = false;
 					return;
 				}
-				if(this.addressPid == "") {
+				if(this.addressCid == null) {
 					this.addressErrorMessage = "地址 城市不能为空"
+					onoff = false;
 					return;
 				}
-				if(this.addressDid == "") {
+				if(this.addressDid == null) {
 					this.addressErrorMessage = "地址 区不能为空"
+					onoff = false;
 					return;
 				}
 				if(this.addressStreet == "") {
 					this.addressErrorMessage = "地址详细信息不能为空"
+					onoff = false;
 					return;
 				}
+				if(onoff){
+					console.log("可以保存")
+					this.addressErrorMessage = "";
+					this.$store.state.userAddr = {
+						user_id:"",
+						user_name:"",
+						addressUser:this.addressUser,
+						addressPhone:this.addressPhone,
+						addressPname:this.addressPname,
+						addressCname:this.addressCname,
+						addressDname:this.addressDname,
+						addressStreet:this.addressStreet,
+						addressPostcode:this.addressPostcode,
+						isDefault:this.isDefault,
+					}
+					if(this.isDefault == 1){
+			 			this.$store.dispatch("isnomodifyAddr");
+			 			this.$store.dispatch("ismodifyAddr");
+					}
+					console.log(this.$store.state.useAddrId);
+					this.$store.dispatch("modifyAddrList");
+					window.location.href = "#/address";
+				}
+			},
+			selectChangeP(){
+				// console.log(this.addressPid)
+				cityList.result.location['0'].forEach((item)=>{
+					if(this.addressPid == item.id){
+						this.addressPname = item.name;
+						console.log(this.addressPname)
+					}
+				})
+				this.isPidShow = false;
+			},
+			selectChangeC(){
+				this.isCidShow = false;
+				cityList.result.location[this.addressPid].forEach((item)=>{
+					if(this.addressCid == item.id){
+						this.addressCname = item.name;
+						console.log(this.addressCname)
+					}
+				})
+			},
+			selectChangeD(){
+				this.isDidShow = false;
+				cityList.result.location[this.addressCid].forEach((item)=>{
+					if(this.addressDid == item.id){
+						this.addressDname = item.name;
+						console.log(this.addressDname)
+					}
+				})
+			},
+			delAddr(){
+				this.$store.state.addrListId = this.$store.state.useAddrId;
+				this.$store.dispatch("delAddrList");
+				this.$store.state.addrListId = null;
+				window.location.href = "#/address";
 			}
 		},
 		computed: {
-			catyList() {
-                console.log(this.$store.state.addressPid);
-				return this.$store.state.addressPid;
-			}
+			province(){
+				//console.log(cityList.result.location['0'])
+				return cityList.result.location['0'];
+			},
+			city(){
+				//console.log("市ID",this.addressPid)
+				return cityList.result.location[this.addressPid];
+			},
+			area(){
+				//console.log("区ID",this.addressCid)
+				return cityList.result.location[this.addressCid];
+			},
+
 		},
 		mounted() {
-			this.$store.dispatch("setCityList");
+ 			//console.log(this.$route.params)
+			if(this.$store.state.useAddrId != null){
+				this.isAddrBtnShow = true;
+				this.$store.dispatch("getAddrList");
+				console.log(this.$store.state.useAddrId)
+				this.$store.state.addrList.forEach((item)=>{
+					if(item.id == this.$store.state.useAddrId){
+ 						this.addressUser = item.addressUser;
+						this.addressPhone = item.addressPhone;
+						this.addressPname = item.addressPname;
+						this.addressCname = item.addressCname;
+						this.addressDname = item.addressDname;
+						this.addressStreet = item.addressStreet;
+						this.addressPostcode = item.addressPostcode;
+						this.isDefault = item.isDefault;
+
+					}
+				});
+			}
+
 		},
 
 	}
 </script>
 <style scoped>
-	input[type=password],
-	input[type=submit],
-	input[type=text],
+	input,
+	select,
 	textarea {
 		-webkit-appearance: none;
 		outline: 0;
@@ -213,8 +318,6 @@
 		top: 50%;
 		margin-top: -15px;
 		left: 0;
-		-webkit-appearance: none;
-		appearance: none;
 	}
 	
 	.addr_new .select_box .select_btn {
@@ -287,6 +390,7 @@
 		width: 95%;
 		outline: 0;
 		height: 30px;
+		line-height: 30px;
 		border: 0;
 		text-indent: 0;
 		padding: 0;
@@ -296,12 +400,12 @@
 	}
 	
 	.remove_addr_btn {
-		margin-top: .12rem;
+		margin-top: 10px;
 		background: #fff;
-		font-size: .26rem;
+		font-size: 14px;
 		color: #f66;
-		padding: 0 .28rem;
-		line-height: .8rem;
+		padding: 0 15px;
+		line-height: 47px;
 	}
 	/*=============header===========*/
 	

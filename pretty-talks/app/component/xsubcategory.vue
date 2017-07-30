@@ -93,6 +93,9 @@
 </script>
 
 <style>
+	.box{
+		overflow: hidden;
+	}
 	.box-wrap{
 		width:100%;
 	     height: 100%;
@@ -144,14 +147,14 @@
 	.wrap_a{
 		width:100%;
 		overflow: hidden;
-		padding: .2rem;
+		margin: 4% 2%;
 	}
 	.wrap_a h3{
 		color: #333;
 		font-size: 0.64rem;
 		font-weight: normal;
 		float: left;
-		margin:20px 0;
+		/*margin:20px 0;*/
 	}
 	.wrap_a p{
 		color: #666;
@@ -162,7 +165,7 @@
 	.aaa{
 		width:100%;
 		height: 10px;
-		/*background: #eee;*/
-		/*margin-top: 376px;*/
+		background: #eee;
+		margin-top: 413px;
 	}
 </style>

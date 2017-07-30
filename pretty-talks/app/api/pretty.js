@@ -38,6 +38,18 @@ app.use(bodyParser.urlencoded({
     extended: false
 }))
 
+
+var createConnection =function(){
+	connection = mysql.createConnection({
+		host: 'localhost',
+		user: 'root',
+		password: '',
+		database: 'prettytalks-user'
+	});
+	
+	return connection;
+}
+
 require('./loginreg.js').loginreg(app, createConnection);
 // 首页商品详情
 
@@ -121,7 +133,7 @@ app.get('/tsort', function(request, response) {
 app.get('/main', function(request, response) {
     response.append("Access-Control-Allow-Origin", "*");
     var getId = request.query
-    console.log(getId)
+//  console.log(getId)
     https.get(`https://m.meilishuo.com/detail/mls/v1/h5?iid=${getId.iid}`, function(res) {
         var data = '';
         res.on('data', function(chunk) {
@@ -129,7 +141,6 @@ app.get('/main', function(request, response) {
         })
         res.on('end', function() {
             response.end(data)
-            console.log(data)
         })
     })
 });
@@ -138,7 +149,6 @@ app.get('/main', function(request, response) {
 app.get('/choose', function(request, response) {
     response.append("Access-Control-Allow-Origin", "*");
     var Id = request.query
-    //  console.log(Id)
     https.get(`https://list.meilishuo.com/search?frame=1&page=2&sort=pop&cKey=wap-cate&tag=&maxPrice=&minPrice=&wxPrice=&uq=&_mgjuuid=0c4bc0f3-120f-4ac1-9cc7-1baef82f0505&fcid=${Id.fcid}&trace=0&cpc_offset=0&_=1501228522843`, function(res) {
         var data = '';
         res.on('data', function(chunk) {
@@ -146,17 +156,19 @@ app.get('/choose', function(request, response) {
         })
         res.on('end', function() {
             response.end(data)
-            console.log(data)
         })
     })
+
 })
 // 下载头像到本地
-app.post('/sethead', upload.any(), function(req, res, next) {
-    res.append("Access-Control-Allow-Origin", "*");
-    res.send({
-        imgurl
-    });
+
+app.post('/sethead', upload.any(), function(req, res, next) {	
+	res.append('Access-Control-Allow-Origin','*');
+	res.send({
+		fileFormat
+	})
 });
+  
 
 app.get('/newsimg', function(req, res) {
     res.append('Access-Control-Allow-Origin', '*');
@@ -165,9 +177,29 @@ app.get('/newsimg', function(req, res) {
     var tatol = req.query;
     connection.query(`UPDATE users SET username="${tatol.username}", headerImgUrl="${tatol.headerImgUrl}" WHERE phone="${tatol.phone}"`, function(error, results, fields) {
         if (error) { throw error };
-        res.send('complete');
-    });
 
+        res.send(results);
+
+    });
+    connection.end();
+});
+
+//评论
+app.get('/discuss', function(req, res) {
+    res.append('Access-Control-Allow-Origin', '*');
+    createConnection();
+    connection.connect();
+    var IId = req.query;
+    console.log(IId)
+    connection.query(`SELECT * FROM discuss where iid="${IId.iid}"`, function(error, results, fields) {
+        if (error) { throw error };
+        
+        if(results == ''){
+        	res.send('id为空')
+        }else{
+        	res.send(results);
+        }
+    });
     connection.end();
 });
 

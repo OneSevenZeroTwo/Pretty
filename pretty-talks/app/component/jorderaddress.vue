@@ -1,20 +1,46 @@
 <template>
 	<section class="address-box" @click="toAddress">
 		<b></b>
-		<!-- <p class="name">收件人：2313123<i>18811111111</i></p> -->
-		<p class="address">请填写收货地址</p>
+		<p class="name" v-show="hasAddresss">收件人：{{addrList.addressUser}}<i>{{addrList.addressPhone}}</i></p>
+		<p class="address">{{noAddress}}{{addrList.addressPname}} {{addrList.addressCname}} {{addrList.addressDname}} {{addrList.addressStreet}}</p>
 		<b></b>
 		<span class="arrow"></span>
 	</section>
 </template>
 
-<script>
+<script scoped>
 	export default {
+		data(){
+ 			return{
+ 				hasAddresss:false,
+ 				noAddress:"",
+ 				addrLists:null,
+ 			}
+		},
 		methods: {
 			toAddress() {
 				window.location.href = "#/address"
 			}
-		}
+		},
+	 	mounted(){
+	 		// this.$store.state.addrList = null;
+	 		this.$store.dispatch("getOrderAddr");
+	 	},
+	 	computed:{
+	 		addrList(){
+	 			//获取所有地址
+				if(this.$store.state.addrList != null){
+					this.hasAddresss = true;
+					this.noAddress = "";
+					return this.$store.state.addrList;
+				}else{
+					this.hasAddresss = false;
+					this.noAddress = "请设置你的收货地址";
+				}
+	 		}
+	 	},
+	
+	 	
 	}
 </script>
 

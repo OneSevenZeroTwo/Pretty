@@ -7,7 +7,7 @@
 			<a href="">{{theHeader.title}}</a>
 		</div>
 		<div>
-			<a :href='theHeader.theHref'>{{theHeader.rightBtn}}</a>
+			<a :href='theHeader.theHref' @click="quit">{{theHeader.rightBtn}}</a>
 		</div>
 	</header>
 </template>
@@ -45,5 +45,23 @@
 <script>
 	export default {
 		props:['theHeader'],
+		data(){
+			return{
+			}
+		},
+		methods:{
+			quit(){
+				if(this.theHeader.rightBtn =='退出'){
+					var now = new Date();
+					now.setDate(now.getDate()-1);
+					now = now.toUTCString();
+					document.cookie = 'id=null;expires=' + now;
+					window.location.href = 'http://localhost:4399/#/login';
+				}else{
+
+				}
+				
+			}
+		},
 	}
 </script>

@@ -41,7 +41,7 @@
 						<span>超时赔付</span>
 					</li>
 				</ul>
-				<img src="https://s10.mogucdn.com/mlcdn/c45406/170711_701e7hcfi1j9fe76hgd560bj28d87_14x22.png"  @click="openBottomSheet" alt="" class="good" />
+				<img src="https://s10.mogucdn.com/mlcdn/c45406/170711_701e7hcfi1j9fe76hgd560bj28d87_14x22.png" @click="openBottomSheet" alt="" class="good" />
 			</div>
 			<div>
 				<!--<mu-raised-button @click="openBottomSheet" label="Open Bottom Sheet" />-->
@@ -110,24 +110,24 @@
 		<!--选项卡-->
 		<div class="tab">
 			<div class="tab_a">
-				<nav class="tabs">
+				<ul class="tab clearfix">
 					<li class="tab-item">
-						<span>图文详情</span>
+						<span @click="dating(1)">图文详情</span>
 						<i></i>
 					</li>
 					<li class="tab-item">
-						<span>商品参数</span>
+						<span @click="dating(2)">商品参数</span>
 						<i></i>
 					</li>
 					<li class="tab-item">
-						<span>评价()</span>
+						<span @click="dating(3)">评价()</span>
 						<i></i>
 					</li>
 					<li class="tab-item">
-						<span>热卖推荐</span>
+						<span @click="dating(4)">热卖推荐</span>
 						<i></i>
 					</li>
-				</nav>
+				</ul>
 			</div>
 		</div>
 		<div class="panel">
@@ -223,23 +223,25 @@
 						</span>
 					</a>
 				</div>
+				<div class="rate-root" v-does="cuss">暂无评价</div>
 				<div class="rate-list">
-					<div class="rate-user">
+					
+					<div class="rate-user" >
 						<!--<span class="user-info">-->
-						<img src="http://s3.mogucdn.com/p2/161214/103488673_0l1ff9kf2hbc32fe4a2g05l77d89d_140x140.png_100x100.jpg" alt="" />
-						<span class="name">能怪淳</span>
+						<img :src="cuss[0].image==null?'':cuss[0].image" alt="" />
+						<span class="name">{{cuss[0].name=='null'?'':cuss[0].name}}</span>
 						<!--</span>-->
 					</div>
 					<div class="rate-cont">
-						哈哈，收到啦，刚试穿了一下，L码很合身，我虽然长得胖，但是穿着很显瘦，腰部有收腰的效果，而且很显腿长，面料很舒服，穿上很亲肤。
+						{{cuss[0].title==null?'':cuss[0].title}}
 					</div>
 					<div class="rate-attr">
-						<span class="time">2017-07-24</span>
-						<span class="sku">颜色:灰蓝色 尺码:【S】 </span>
+						<span class="time">{{cuss[0].time==null?'':cuss[0].time}}</span>
+						<span class="sku">颜色:{{cuss[0].color==null?'':cuss[0].color}} 尺码:【{{cuss[0].size==null?'':cuss[0].size}}】 </span>
 					</div>
 					<div class="rate-imgs">
 						<a href="">
-							<img src="http://s3.mogucdn.com/mlcdn/c45406/170724_318c591ga0472ife5if18egkfe255_300x400.jpg_100x100.jpg" alt="" />
+							<img :src="cuss[0].img==null?'':cuss[0].img" alt="" />
 						</a>
 					</div>
 				</div>
@@ -299,7 +301,6 @@
 				<span class="buy-now">购买</span>
 			</div>
 		</div>
-
 	</div>
 </template>
 
@@ -313,7 +314,9 @@
 				},
 				aaa: null,
 				bbb: null,
+				ccc: null,
 				bottomSheet: false,
+				noon: true,
 			}
 		},
 		computed: {
@@ -322,8 +325,13 @@
 				this.aaa = this.$store.state.gooding;
 				return this.aaa;
 			},
+			cuss() {
+				console.log(this.$store.state.cuss)
+				//				this.ccc = this.$store.state.cuss;
+				return this.$store.state.cuss;
+			},
 			rus() {
-				console.log(this.$store.state.rue)
+				console.log(this.$store.state.rus)
 				this.bbb = this.$store.state.rus;
 				return this.bbb;
 			}
@@ -332,19 +340,58 @@
 			mores() {
 				this.$store.dispatch("setDetail")
 			},
+			discuss() {
+				this.$store.dispatch("setCuss")
+			},
 			closeBottomSheet() {
 				this.bottomSheet = false
 			},
 			openBottomSheet() {
 				this.bottomSheet = true
-			}
+			},
+			dating(data) {
+				switch (data){
+				    case 1:
+					window.scorllTop = this.$('.panel_a').offset().top + 'px';
+					console.log(this.$('.panel_a').offset().top)
+					break;
+				    case 2:
+				    window.scorllTop = this.$('.panel_b').offset().top + 'px';
+				    console.log(this.$('.panel_b').offset().top)
+				    break;
+                    case 3:
+                    window.scorllTop = this.$('.panel_c').offset().top + 'px';
+                    console.log(this.$('.panel_c').offset().top)
+                    break;
+                    case 4:
+                    window.scorllTop = this.$('.panel_d').offset().top + 'px';
+                    console.log(this.$('.panel_d').offset().top)
+                    break;
+			   }
+			},
 		},
 		mounted() {
 			this.$store.state.iid = this.$route.params.iid;
-			console.log(this.$store.state.iid)
+			//			console.log(this.$store.state.iid)
 			this.mores();
+			this.discuss();
 		},
-
+		directives: {
+			does: {
+				bind: function(el, binding, vnode) {
+					setTimeout(function(){
+						if(binding.value== 'id为空') {
+							el.style.display = 'block';
+							document.querySelector('.rate-list').style.display = 'none';
+						} else {
+							el.style.display = 'none';
+							document.querySelector('.rate-list').style.display = 'block';
+						}
+					},20)
+						
+				}
+			}
+		}
 	}
 </script>
 
@@ -352,6 +399,7 @@
 	html,
 	body {
 		height: 100%;
+		background: #fff;
 	}
 	
 	.screen {
@@ -393,7 +441,7 @@
 		color: #999;
 		font-size: 12px;
 		float: left;
-		margin-right: 8.5%;
+		margin-right: 8.1%;
 	}
 	
 	.info_d {
@@ -631,11 +679,13 @@
 	
 	.tabs {
 		display: -webkit-box;
+		height: 6%;
 		-webkit-box-orient: horizontal;
 		-webkit-box-align: center;
 	}
 	
 	.tab-item {
+		float: left;
 		width: 25%;
 		padding: 0 2% 3.5% 2%;
 		border-bottom: 1px solid #e5e5e5;
@@ -1054,17 +1104,22 @@
 	.count {
 		color: #ccc;
 	}
-	.ccc{
-		padding:0 5%;
+	
+	.ccc {
+		padding: 0 5%;
 		text-align: center;
 	}
-	.btn{
+	
+	.btn {
 		background: #f69;
 		height: 38px;
 		line-height: 38px;
-		font-size:14px;
+		font-size: 14px;
 		text-align: center;
 		color: #fff;
 		margin-top: 4%;
+	}
+	.rate-root{
+		padding:5% 5%;
 	}
 </style>

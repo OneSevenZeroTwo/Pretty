@@ -60,28 +60,22 @@ var router = new VueRouter({
         {
             path: '/subCategory/:pid',
             component: sub,
-        },
-        {
+        }, {
             path: '/login',
             component: Plogin
-        },
-        {
+        }, {
             path: "/car",
             component: car
-        },
-        {
+        }, {
             path: "/order",
             component: order
-        },
-        {
+        }, {
             path: "/address",
             component: address
-        },
-        {
+        }, {
             path: "/addaddr",
             component: addaddr
-        },
-        {
+        }, {
             path: '/reg',
             component: Preg,
             children: [{
@@ -91,22 +85,23 @@ var router = new VueRouter({
                 path: 'step2/:phone',
                 component: Regstep2,
             }]
-        },{
-	        path: "/mycenter",
-	        component: Pmycenter
-        },{
-        	path:'/listed/:pcid',
-        	component:Plist,
-        },{
-        	path:'/detail/:iid',
-        	component:Plong
-        },{
-        	path:'/listing/:pcid',
-        	component:Plisting,
-        },{
+        }, {
+            path: "/mycenter",
+            component: Pmycenter
+        }, {
+            path: '/listed/:pcid',
+            component: Plist,
+        }, {
+            path: '/detail/:iid',
+            component: Plong
+        }, {
+            path: '/listing/:pcid',
+            component: Plisting,
+        }, {
             path: '/',
             redirect: 'index/home/list/pop/1'
-        }]
+        }
+    ]
 })
 
 //vuex
@@ -123,37 +118,40 @@ var store = new Vuex.Store({
         litime: null,
         sort: 'pop',
         list: [],
-        news:null,
-        res:null,
-        now:null,
-        iid:null,
-        gooding:null,
-        choose:null,
-        pcid:null,
-        chin:null,
-        sented:true,
-        rus:null,
+        news: null,
+        res: null,
+        now: null,
+        iid: null,
+        gooding: null,
+        choose: null,
+        pcid: null,
+        chin: null,
+        sented: true,
+        rus: null,
         isChecked: [],
         orderList: [],
         addressPid: null,
         addressCid: null,
         addressDid: null,
+        userAddr: null,
+        addrListId: null,
+        addrList: null,
+        useAddrId: null,
+        isAddrDefault: "0",
         isshowmore: true,
         isshowsearch: false,
         isshowtsea: true,
-        searchlist:[]
-    },  
-
-    getters:{
-
+        searchlist: []
     },
+
     getters: {
 
     },
+
     //分发状态
     mutations: {
         //获取购物车列表数据
-        setCarList(state) {
+        getCarList(state) {
             axios.get("http://localhost:5555/read")
                 .then((res) => {
                     state.carList = state.carList.concat(res.data);
@@ -164,7 +162,7 @@ var store = new Vuex.Store({
                 }).catch((err) => {})
         },
         //修改购物车列表选中项数据
-        getCarList(state) {
+        setCarList(state) {
             axios.get("http://localhost:5555/write", {
                     params: {
                         id: state.carProId,
@@ -186,9 +184,89 @@ var store = new Vuex.Store({
                     console.log("数据删除成功：" + res);
                 }).catch((err) => {})
         },
+        //设置收货地址
+        setAddrList(state) {
+            axios.get("http://localhost:5555/setAddr", {
+                    params: {
+                        address: state.userAddr,
+                    }
+                })
+                .then((res) => {
+                    console.log("设置收货地址成功：" + res);
+                }).catch((err) => {})
+        },
+        //获取收货地址列表
+        getAddrList(state) {
+            axios.get("http://localhost:5555/getAddr")
+                .then((res) => {
+                    console.log(state.useAddrId);
+                    if (state.useAddrId == null) {
+                        console.log("res.data", res.data);
+                        state.addrList = res.data;
+                    } else {
+                        res.data.forEach((item) => {
+                            if (item.id == state.useAddrId) {
+                                state.addrList = item;
+                                console.log(state.addrList);
+                            }
+                        })
+                    }
+                }).catch((err) => {})
+        },
+        //获取订单页收货地址
+        getOrderAddr(state) {
+            axios.get("http://localhost:5555/getAddr")
+                .then((res) => {
+                    res.data.forEach((item) => {
+                        if (item.isDefault == 1) {
+                            state.addrList = item;
+                            console.log(state.addrList);
+                        }
+                    })
 
-		//分类1
-
+                }).catch((err) => {})
+        },
+        //修改收货地址
+        modifyAddrList(state) {
+            axios.get("http://localhost:5555/modifyAddr", {
+                    params: {
+                        id: state.useAddrId,
+                        address: state.userAddr,
+                    }
+                })
+                .then((res) => {
+                    console.log("修改收货地址成功：" + res);
+                }).catch((err) => {})
+        },
+        //修改收货地址默认值0
+        isnomodifyAddr(state) {
+            axios.get("http://localhost:5555/isnomodifyAddr")
+                .then((res) => {
+                    console.log("默认值写入成功：" + res);
+                }).catch((err) => {})
+        },
+        //修改收货地址默认值1
+        ismodifyAddr(state) {
+            axios.get("http://localhost:5555/ismodifyAddr", {
+                    params: {
+                        id: state.useAddrId
+                    }
+                })
+                .then((res) => {
+                    console.log("默认值写入成功：" + res);
+                }).catch((err) => {})
+        },
+        //删除收货地址
+        delAddrList(state) {
+            axios.get("http://localhost:5555/delAddr", {
+                    params: {
+                        id: state.addrListId,
+                    }
+                })
+                .then((res) => {
+                    console.log("数据删除成功：" + res);
+                }).catch((err) => {})
+        },
         // 获取城市列表
         setCityList(state) {
             axios.get("http://s17.mogucdn.com/new1/v1/bmisc/82c3fb334ddbd3af52bc4f148fbb4a67/199792409494.json")
@@ -199,7 +277,6 @@ var store = new Vuex.Store({
                     console.log(state.addressPid);
                 }).catch((err) => {})
         },
-
         setNews(state) {
             axios.get('http://localhost:999/fsort', {
                     params: {
@@ -207,8 +284,7 @@ var store = new Vuex.Store({
                     },
                 })
                 .then((response) => {
-//              	console.log(response)
-                      state.news = response.data.value
+                    //state.news = state.news.concat(response.data.data)
                 })
                 .catch((error) => {
                     console.log(error);
@@ -219,7 +295,7 @@ var store = new Vuex.Store({
                 // 轮播图
                 state.carousel = data.data.data['43542'].list;
                 // 9.9包邮活动
-                state.special = data.data.data['13730'].list.slice(0,-1);
+                state.special = data.data.data['13730'].list.slice(0, -1);;
                 // 限时活动
                 state.liactive = data.data.data['42287'].list;
                 // 实现时间
@@ -227,6 +303,22 @@ var store = new Vuex.Store({
             }).catch((err) => {
 
             })
+        }
+
+        getActive(state) {
+
+            axios.get("http://localhost:999/tsort", {
+                    params: {
+                        pid: state.pid
+                    }
+                }).then((response) => {
+                    console.log(response)
+                    //state.res = response.data.data
+                    console.log(state.res)
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
         },
         getList(state, data) {
             axios.get('http://localhost:999/home', {
@@ -241,7 +333,6 @@ var store = new Vuex.Store({
 
             })
         },
-        // 分类2
         setChar(state) {
 
             axios.get("http://localhost:999/tsort", {
@@ -249,14 +340,14 @@ var store = new Vuex.Store({
                         pid: state.pid
                     }
                 }).then((response) => {
-//                  console.log(response)
-                    state.res = response.data.value.category_1.list
-					state.now = response.data.value.category_2.list
-//                  console.log(state.res)
+                    console.log(response)
+                    //state.res = response.data.data
+                    console.log(state.res)
                 })
                 .catch((error) => {
                     console.log(error)
                 })
+
         },
         //详情页
         setDetail(state) {
@@ -275,6 +366,37 @@ var store = new Vuex.Store({
                     console.log(error)
                 })
         },
+
+        //评论
+        setCuss(state) {
+            axios.get("http://localhost:999/discuss", {
+                params: {
+                    iid: state.iid
+                }
+            }).then((response) => {
+                console.log(response)
+                state.cuss = response.data
+                console.log(state.cuss)
+            })
+        },
+        // 分类2
+        setChar(state) {
+
+            axios.get("http://localhost:999/tsort", {
+                    params: {
+                        pid: state.pid
+                    }
+                }).then((response) => {
+                    //                  console.log(response)
+                    state.res = response.data.value.category_1.list
+                    state.now = response.data.value.category_2.list
+                    //                  console.log(state.res)
+
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+        },
         //列表页1
         setChoose(state) {
             axios.get("http://localhost:999/choose", {
@@ -282,7 +404,7 @@ var store = new Vuex.Store({
                         pcid: state.pcid
                     }
                 }).then((response) => {
-//                  console.log(response)
+                    //                  console.log(response)
                     state.choose = response.data.data.list
                     console.log(state.choose)
                 })
@@ -293,21 +415,49 @@ var store = new Vuex.Store({
     },
 
     actions: {
-        //提交触发 mutations 的 setCarList 获取购物车列表数据函数
-        setCarList(context) {
-            context.commit("setCarList");
-        },
-        //提交触发 mutations 的 getCarList 修改购物车数据函数
+        //提交触发 mutations 的 setCarList 获取 购物车 列表数据函数
         getCarList(context) {
             context.commit("getCarList");
         },
-        //提交触发 mutations 的 getCarList 修改购物车数据函数
+        //修改购物车数据函数
+        setCarList(context) {
+            context.commit("setCarList");
+        },
+        //修改购物车数据函数
         delCarList(context) {
             context.commit("delCarList");
         },
-        //提交触发 mutations 的 setCityList 获取城市列表数据函数
+        //获取 城市 列表数据函数
         setCityList(context) {
             context.commit("setCityList");
+        },
+        //设置地址列表数据函数
+        setAddrList(context) {
+            context.commit("setAddrList");
+        },
+        //获取 地址 列表数据函数
+        getAddrList(context) {
+            context.commit("getAddrList");
+        },
+        //获取 地址 列表数据函数
+        getOrderAddr(context) {
+            context.commit("getOrderAddr");
+        },
+        //修改地址列表数据函数
+        modifyAddrList(context) {
+            context.commit("modifyAddrList");
+        },
+        //取消地址列为默认
+        isnomodifyAddr(context) {
+            context.commit("isnomodifyAddr");
+        },
+        //设置地址列为默认
+        ismodifyAddr(context) {
+            context.commit("ismodifyAddr");
+        },
+        //删除地址列表数据函数
+        delAddrList(context) {
+            context.commit("delAddrList");
         },
         setNews(context, data) {
             context.commit('setNews')
@@ -318,7 +468,6 @@ var store = new Vuex.Store({
         getActive(context, data) {
             context.commit('getActive')
         },
-
         getList(context, data) {
             context.commit('getList')
         },
@@ -332,8 +481,13 @@ var store = new Vuex.Store({
             context.commit('setChing')
         },
 
+        setCuss(context, data) {
+            context.commit('setCuss')
+        },
 
     }
+
+
 })
 
 new Vue({
