@@ -39,7 +39,6 @@ app.use(bodyParser.urlencoded({
 }))
 
 
-<<<<<<< HEAD
 var createConnection =function(){
 	connection = mysql.createConnection({
 		host: 'localhost',
@@ -50,9 +49,6 @@ var createConnection =function(){
 	
 	return connection;
 }
-=======
->>>>>>> a970a2691f8f54b6208e8348882a936a754acf6c
-
 require('./loginreg.js').loginreg(app, createConnection);
 // 首页商品详情
 
@@ -130,12 +126,11 @@ app.get('/tsort', function(request, response) {
     })
 });
 
-<<<<<<< HEAD
 //详情页
 app.get('/main', function(request,response){
 	response.append("Access-Control-Allow-Origin", "*");
     var getId = request.query
-    console.log(getId)
+//  console.log(getId)
     https.get(`https://m.meilishuo.com/detail/mls/v1/h5?iid=${getId.iid}`, function(res) {
         var data = '';
         res.on('data', function(chunk) {
@@ -143,7 +138,6 @@ app.get('/main', function(request,response){
         })
         res.on('end', function() {
             response.end(data)
-            console.log(data)
         })
     })
 });
@@ -160,22 +154,22 @@ app.get('/choose', function(request,response){
         })
         res.on('end', function() {
             response.end(data)
-            console.log(data)
         })
     })
-    
+  });  
 app.post('/sethead', upload.any(), function(req, res, next) {	
 	res.append('Access-Control-Allow-Origin','*');
 	res.send({
 		fileFormat
 	})
-=======
+});
 app.post('/sethead', upload.any(), function(req, res, next) {
     res.append("Access-Control-Allow-Origin", "*");
     res.send({
         imgurl
     });
 });
+
 
 app.get('/newsimg', function(req, res) {
     res.append('Access-Control-Allow-Origin', '*');
@@ -188,12 +182,28 @@ app.get('/newsimg', function(req, res) {
         res.send(results);
 
     });
-
     connection.end();
->>>>>>> a970a2691f8f54b6208e8348882a936a754acf6c
 });
 
-app.listen(9990, function() {
-    console.log('打开999端口')
-})
+//评论
+app.get('/discuss', function(req, res) {
+    res.append('Access-Control-Allow-Origin', '*');
+    createConnection();
+    connection.connect();
+    var IId = req.query;
+    console.log(IId)
+    connection.query(`SELECT * FROM discuss where iid="${IId.iid}"`, function(error, results, fields) {
+        if (error) { throw error };
+        
+        if(results == ''){
+        	res.send('id为空')
+        }else{
+        	res.send(results);
+        }
+    });
+    connection.end();
+});
 
+app.listen(999, function(){
+    console.log('打开9990端口')
+})

@@ -60,9 +60,6 @@ var router = new VueRouter({
 
             }]
         },
-         {
-           
-        },
         {
             path: '/subCategory/:pid',
             component: sub,
@@ -278,6 +275,21 @@ var store = new Vuex.Store({
                     console.log(error)
                 })
         },
+        //评论
+        setCuss(state) {
+            axios.get("http://localhost:999/discuss", {
+                    params: {
+                        iid: state.iid
+                    }
+                }).then((response) => {
+                    console.log(response)
+                    state.cuss = response.data
+                    console.log(state.cuss)
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+        },
         //列表页1
         setChoose(state) {
             axios.get("http://localhost:999/choose", {
@@ -334,7 +346,9 @@ var store = new Vuex.Store({
         setChing(context, data) {
             context.commit('setChing')
         },
-
+        setCuss(context, data) {
+            context.commit('setCuss')
+        },
 
     }
 })
