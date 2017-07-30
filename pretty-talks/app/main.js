@@ -57,9 +57,6 @@ var router = new VueRouter({
 
             }]
         },
-         {
-           
-        },
         {
             path: '/subCategory/:pid',
             component: sub,
@@ -98,9 +95,6 @@ var router = new VueRouter({
 	        path: "/mycenter",
 	        component: Pmycenter
         },{
-            path: '/',
-            redirect: 'index/home/list/pop'
-        },{
         	path:'/listed/:pcid',
         	component:Plist,
         },{
@@ -109,7 +103,10 @@ var router = new VueRouter({
         },{
         	path:'/listing/:pcid',
         	component:Plisting,
-    }]
+        },{
+            path: '/',
+            redirect: 'index/home/list/pop/1'
+        }]
 })
 
 //vuex
@@ -143,7 +140,8 @@ var store = new Vuex.Store({
         addressDid: null,
         isshowmore: true,
         isshowsearch: false,
-        isshowtsea: true
+        isshowtsea: true,
+        searchlist:[]
     },  
 
     getters:{
@@ -221,7 +219,7 @@ var store = new Vuex.Store({
                 // 轮播图
                 state.carousel = data.data.data['43542'].list;
                 // 9.9包邮活动
-                state.special = data.data.data['13730'].list;
+                state.special = data.data.data['13730'].list.slice(0,-1);
                 // 限时活动
                 state.liactive = data.data.data['42287'].list;
                 // 实现时间

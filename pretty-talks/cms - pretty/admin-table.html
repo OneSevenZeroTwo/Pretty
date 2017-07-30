@@ -103,22 +103,20 @@
                         </div>
                         <div class="am-u-sm-12 am-u-md-3">
                             <div class="am-form-group">
-                                <select data-am-selected="{btnSize: 'sm'}" ng-model="money" >
-                                    <option value="salary" disabled="">salary</option>
-                                    <option value="8k">8k</option>
-                                    <option value="9k">9k</option>
-                                    <option value="10k">10k</option>
-                                    <option value="13k">13k</option>`
-                                    <option value="15k">15k</option>
-                                    <option value="20k">20k</option>
+                                <select data-am-selected="{btnSize: 'sm'}" v-model="type" @change="showtype" >
+                                    <option value="salary" disabled="">类型</option>
+                                    <option value="">全部</option>
+                                    <option value="pop">流行</option>
+                                    <option value="sell">新款</option>
+                                    <option value="new">精选</option>
                                 </select>
                             </div>
                         </div>
                         <div class="am-u-sm-12 am-u-md-3" ng-controller="searchCtrl">
                             <div class="am-input-group am-input-group-sm">
-                                <input type="text" class="am-form-field" ng-model="findmsg">
+                                <input type="text" class="am-form-field" v-model="findmsg">
                                 <span class="am-input-group-btn">
-	            <button class="am-btn am-btn-default" type="button" ng-click="getmsg()">搜索</button>
+	            <button class="am-btn am-btn-default" type="button" @click="showtype()">搜索</button>
 	          </span>
                             </div>
                         </div>
@@ -136,6 +134,7 @@
                                             <th class="table-title">商品标题</th>
                                             <th class="table-type">商品价格</th>
                                             <th class="table-author am-hide-sm-only">货源地</th>
+                                             <th class="table-author am-hide-sm-only">类型</th>
                                             <th class="table-set">操作</th>
                                         </tr>
                                     </thead>
@@ -150,6 +149,7 @@
                                             </td>
                                             <td class="am-hide-sm-only">{{lis.price}}</td>
                                             <td class="am-hide-sm-only">{{lis.city}}</td>
+                                            <td class="am-hide-sm-only">{{lis.sort}}</td>
                                             <td>
                                                 <div class="am-btn-toolbar">
                                                     <div class="am-btn-group am-btn-group-xs">

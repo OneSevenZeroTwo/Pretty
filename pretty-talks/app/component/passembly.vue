@@ -17,7 +17,7 @@
             </div>
         </div>
         <div class="assembly2">
-            <img class="big_img" :src="well2Img" >
+            <img class="big_img" :src="well2Img">
             <div class="fmove">
                 <ul class="bomove clearfix" v-shift="">
                     <li v-for="a2 in aswell2">
@@ -31,7 +31,7 @@
             </div>
         </div>
         <div class="assembly3">
-            <img class="big_img" :src="well3Img" >
+            <img class="big_img" :src="well3Img">
             <div class="fmove">
                 <ul class="bomove clearfix" v-shift="">
                     <li v-for="a3 in aswell3">
@@ -83,72 +83,31 @@ export default {
         // shift有点蠢，反应迟钝！！！
         shift: {
             bind(el, binding) {
-                var start = null;
-                var end = null;
                 var ways = null;
-                var res = null;
                 var timer;
-                var width = 100 * 16;
+                var width = 100 * 18;
                 el.style.width = width + 'px';
                 el.addEventListener("touchstart", function(data1, eve) {
-                    start = data1.changedTouches['0'].pageX;
+                    var start = data1.changedTouches['0'].pageX;
+                    var left = this.offsetLeft
                     this.addEventListener("touchmove", function(data2) {
 
-                        end = data2.changedTouches['0'].pageX;
-                        var speed = 10;
-
-                        if (end < start) {
-                            clearInterval(this.timer);
-                            var first = this.offsetLeft
-                            this.timer = setInterval(() => {
-                                // 实时需要移动的距离
-                                ways = this.offsetLeft
-                                ways -= speed;
-                                res = end - start;
-                                // clearInterval(this.timer)
-                                // 实时获取当前的位置
-
-
-                                if (ways <= document.body.offsetWidth - width) {
-                                    clearInterval(this.timer);
-                                    ways = document.body.offsetWidth - width;
-                                }
-                                if (ways <= res + first) {
-                                    clearInterval(this.timer);
-                                    ways = res + first;
-
-                                }
-                                this.style.left = ways + 'px'
-                            }, 10)
-
-                        } else if (end > start) {
-                            clearInterval(this.timer);
-                            var first = this.offsetLeft;
-                            this.timer = setInterval(() => {
-                                // 实时需要移动的距离
-                                ways = this.offsetLeft;
-                                ways += speed;
-                                res = end - start;
-                                // clearInterval(this.timer)
-                                // 实时获取当前的位置
-                                if (ways >= 0) {
-                                    clearInterval(this.timer);
-                                    ways = 0;
-                                }
-                                if (ways >= res + first) {
-                                    clearInterval(this.timer);
-                                    ways = res + first;
-
-                                }
-                                this.style.left = ways + 'px'
-                            }, 10)
+                        // 移动的位置
+                        var end = data2.changedTouches['0'].pageX;
+                        // 需要移动的距离
+                        var way = left + (end - start)
+                        if (way <= document.body.offsetWidth - width) {
+                            way = document.body.offsetWidth - width
                         }
-
+                        if (way >= 0) {
+                            way = 0
+                        }
+                        this.style.left = way + 'px'
                     })
                 });
             }
-        }
-    },
+        },
+    }
 }
 </script>
 <style scoped>

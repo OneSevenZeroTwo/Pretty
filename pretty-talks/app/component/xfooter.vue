@@ -5,20 +5,20 @@
 
 	</div>
 	<div class="weui-tabbar">
-		<a href="#/index/home/list/pop/0" class="weui-tabbar__item">
-			<img src="https://s10.mogucdn.com/p2/160802/upload_439ak5453ih43h5d2a109dhe71agg_36x39.png" alt="" class="weui-tabbar__icon">
+		<a href="#/index/home/list/pop/1" class="weui-tabbar__item" @click="showfoot(1)">
+			<span  class="weui-tabbar__icon img1" :class="{img11:isshowfoot==1}"></span>
 			<p class="weui-tabbar__label">主页</p>
 		</a>
-		<a href="#" class="weui-tabbar__item"  >
-			<img src="https://s10.mogucdn.com/p2/160802/upload_488lbkj7ll3e92bg3ld1kh5k73l87_34x34.png" alt="" class="weui-tabbar__icon">
+		<a href="#/index/category" class="weui-tabbar__item"  @click="showfoot(2)">
+			<span  class="weui-tabbar__icon img2" :class="{img21:isshowfoot==2}"></span>
 			<p class="weui-tabbar__label">分类</p>
 		</a>
-		<a href="#/car" class="weui-tabbar__item" >
-			<img src="https://s10.mogucdn.com/p2/160802/upload_0eabagglh39aggl8jihfakfbf70a9_40x38.png" alt="" class="weui-tabbar__icon">
+		<a href="#/car" class="weui-tabbar__item" @click="showfoot(3)">
+			<span  class="weui-tabbar__icon img3" :class="{img31:isshowfoot==3}"></span>
 			<p class="weui-tabbar__label">购物车</p>
 		</a>
-		<a href="#" class="weui-tabbar__item" >
-			<img src="https://s10.mogucdn.com/p2/160802/upload_5g85l55d280l94lfg678lcleegf5e_38x38.png" alt="" class="weui-tabbar__icon">
+		<a href="#/mycenter" class="weui-tabbar__item" @click="showfoot(4)">
+			<span  class="weui-tabbar__icon img4" :class="{img41:isshowfoot==4}"></span>
 			<p class="weui-tabbar__label">我</p>
 		</a>
 	</div>
@@ -28,7 +28,29 @@
 
 <script>
 	export default{
+		data(){
+			return {
+				isshowfoot:1,
+			}
+		},
+		methods:{
+			showfoot(num){
 
+				this.isshowfoot =num;
+				console.log(this.isshowfoot)
+			}
+		},
+		mounted(){
+			if(this.$route.path == '/index/home/list/pop/1' || this.$route.path == '/index/home/list/sell/1' || this.$route.path == '/index/home/list/new/1'){
+				this.isshowfoot = 1
+			}else if(this.$route.path == '/index/category'){
+				this.isshowfoot = 2
+			}else if(this.$route.path == '/car'){
+				this.isshowfoot = 3
+			}else if(this.$route.path == '/mycenter'){
+				this.isshowfoot = 4
+			}
+		}
 	}
 </script>
 
@@ -43,11 +65,37 @@
 		background: #fafafa;
 		border-top: 1px solid #fafafa;
 	}
+	
+	.img1{
+		background: url('../img/2.png') no-repeat
+	}
+	.img2{
+		background: url('../img/5.png') no-repeat
+	}
+	.img3{
+		background: url('../img/3.png') no-repeat
+	}
+	.img4{
+		background: url('../img/4.png') no-repeat
+	}
+	.img11{
+		background: url('../img/6.png') no-repeat
+	}
+	.img21{
+		background: url('../img/1.png') no-repeat
+	}
+	.img31{
+		background: url('../img/7.png') no-repeat
+	}
+	.img41{
+		background: url('../img/4.png') no-repeat
+	}
+
 	.weui-tabbar__icon{
-		width:16px;
-		height: 16px;
+		width:18px;
+		height: 18px;
 		margin: 0 32px;
-		margin-top: 8px;
+		margin-top: 6px;
 		/*text-indent: -9999px;*/
         text-align: left;
 	}

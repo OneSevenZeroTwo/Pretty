@@ -2,6 +2,7 @@ var express = require('express');
 var mysql = require('mysql');
 var app = express();
 var fs = require('fs');
+var http = require('http')
 // var multer = require('multer');
 var body = require('body-parser');
 var connection;
@@ -37,7 +38,24 @@ app.get('/allcount', function(req, res) {
     createConnection();
     connection.connect();
     require('./route/allcount.js').count(req, res, connection);
-})
+});
+// 服务器代理，录数据用！
+
+app.get('/lu', function(request, response) {
+    response.append("Access-Control-Allow-Origin", "*");
+    var tatol = request.query
+    http.get(`http://m.meilishuo.com/detail/mls/v1/h5?iid=${tatol.iid}&_ajax=1`, function(res) {
+        var data = '';
+        res.on('data', function(chunk) {
+            data += chunk;
+        })
+        res.on('end', function() {
+            response.end(data);
+            // console.log('执行')
+        })
+    })
+});
+
 // 渲染
 app.get('/check', function(req, res) {
     res.append('Access-Control-Allow-Origin', '*');
@@ -70,13 +88,13 @@ app.get('/change', function(req, res) {
     var tatol = req.query;
     require('./route/change.js').change(req, res, tatol, connection);
 })
-// 获取html
-app.get('/addhtml', function(req, res) {
+// 分类查询
+app.get('/type', function(req, res) {
     res.append('Access-Control-Allow-Origin', '*');
     createConnection();
     connection.connect();
     var tatol = req.query;
-    require('./route/addhtml.js').addhtml(req, res, tatol, connection);
+    require('./route/type.js').type(req, res, tatol, connection);
 })
 
 // 分页
@@ -84,13 +102,38 @@ app.get('/count', function(req, res) {
     res.append('Access-Control-Allow-Origin', '*');
     createConnection();
     connection.connect();
-    connection.query(`select count(*) from jobs`, function(error, results, fields) {
+    var tatol = req.query
+    connection.query(`select count(*) from goodlist  where  sort="${tatol.sort}"`, function(error, results, fields) {
         if (error) throw error;
         res.send(results);
     });
 
     connection.end();
 })
+// 查询分页
+app.get('/seacount', function(req, res) {
+    res.append('Access-Control-Allow-Origin', '*');
+    createConnection();
+    connection.connect();
+    var tatol = req.query
+    connection.query(`SELECT COUNT(*) FROM goodlist WHERE title LIKE "%${tatol.title}%"`, function(error, results, fields) {
+        if (error) throw error;
+        res.send(results);
+    });
+
+    connection.end();
+})
+
+//模糊查询
+app.get('/seek', function(req, res) {
+    res.append('Access-Control-Allow-Origin', '*');
+    createConnection();
+    connection.connect();
+    var tatol = req.query;
+    require('./route/seek.js').seek(req, res, tatol, connection);
+})
+
+
 // var fileFormat;
 // var storage = multer.diskStorage({
 //  //设置上传后文件路径，uploads文件夹会自动创建。

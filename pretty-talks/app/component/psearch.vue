@@ -33,16 +33,7 @@
         </div>
         <div class="psealist" v-show="!isshowtsea">
             <ul>
-                <li><a href="javascript:;">裙子</a></li>
-                <li><a href="javascript:;">裙子</a></li>
-                <li><a href="javascript:;">裙子</a></li>
-                <li><a href="javascript:;">裙子</a></li>
-                <li><a href="javascript:;">裙子</a></li>
-                <li><a href="javascript:;">裙子</a></li>
-                <li><a href="javascript:;">裙子</a></li>
-                <li><a href="javascript:;">裙子</a></li>
-                <li><a href="javascript:;">裙子</a></li>
-                <li><a href="javascript:;">裙子</a></li>
+                <li v-for="(sea,index) of searchlist" :key="index"><a href="javascript:;" >{{sea.title | ten}}</a></li>
             </ul>
         </div>
     </div>
@@ -55,8 +46,17 @@
 			},
 			isshowtsea(){
 				return this.$store.state.isshowtsea
-			}
-		}
+			},
+            searchlist(){
+                return this.$store.state.searchlist
+            }
+		},
+        filters:{
+            ten(input){
+                console.log(input.slice(0,10))
+                return input.slice(0,10)
+            }
+        }
 	}
 </script>
 <style scoped>
