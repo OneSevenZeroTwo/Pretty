@@ -1,10 +1,12 @@
 <template>
 	<div>
 		<Jcarsheader :thisHeader="jheaderMsg"></Jcarsheader>
+		<Jaddresscontent></Jaddresscontent>
 	</div>
 </template>
 <script>
 	import Jcarsheader from "../component/jcarsheader.vue";
+	import Jaddresscontent from "../component/jaddresscontent.vue";
 
 	export default {
 		data(){
@@ -18,6 +20,7 @@
 		},
 		components:{
 			Jcarsheader,
+			Jaddresscontent,
 		}
 	}
 </script>

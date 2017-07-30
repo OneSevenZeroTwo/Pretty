@@ -148,7 +148,7 @@
 					} else {
 						this.$store.state.carProId = this.$store.state.carList[index].id;
 						this.$store.state.carProNum = this.$store.state.carList[index].num;
-						this.$store.dispatch("getCarList");
+						this.$store.dispatch("setCarList");
 					}
 
 				} else if(numChange == 1) {
@@ -160,7 +160,7 @@
 					} else {
 						this.$store.state.carProId = this.$store.state.carList[index].id;
 						this.$store.state.carProNum = this.$store.state.carList[index].num;
-						this.$store.dispatch("getCarList");
+						this.$store.dispatch("setCarList");
 					}
 				}
 			},
@@ -184,8 +184,8 @@
 			}
 		},
 		mounted() {
-			//发送给actions，调用mutations里的setCarList函数通过axios.get获取数据
-			this.$store.dispatch("setCarList");
+			//发送给actions，调用mutations里的getCarList函数通过axios.get获取数据
+			this.$store.dispatch("getCarList");
 			// 如果不清空，返回该页面列表会累加
 			this.$store.state.isChecked = [];
 			this.$store.state.carList = [];

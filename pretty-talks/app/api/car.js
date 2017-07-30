@@ -12,16 +12,16 @@ function createConnection(){
 		database:"prettytalks"
 	})
 }
+createConnection();
+connection.connect();
 
 //读取
 app.get("/read",function(req,res){
 	res.append("Access-Control-Allow-Origin","*");
-	createConnection();
-	connection.connect();
 	connection.query("SELECT * FROM carlist",function(error,results,fields){
 		if(error) throw error;
 		res.send(results);
-		connection.end();
+		// connection.end();
 	})
 })
 
@@ -34,12 +34,10 @@ app.get("/write",function(req,res){
 	var id = req.query.id;
 	var num = req.query.num;
 	
-	createConnection();
-	connection.connect();
 	connection.query(`update carlist set num="${num}" where id="${id}"`,function(error,results,fields){
 		if(error) throw error;
 		res.send(results);
-		connection.end();
+		// connection.end();
 	})
 })
 
@@ -51,14 +49,107 @@ app.get("/delete",function(req,res){
 	
 	var id = req.query.id;
 	
-	createConnection();
-	connection.connect();
 	connection.query(`delete from carlist where id="${id}"`,function(error,results,fields){
 		if(error) throw error;
 		res.send(results);
-		connection.end();
 	})
 })
+
+//设置收货地址
+app.get("/setAddr",function(req,res){
+	res.append("Access-Control-Allow-Origin","*");
+	
+	var address = JSON.parse(req.query.address);
+	console.log("/setAddr",address);
+
+	var user_id = address.user_id;
+	var user_name = address.user_name;
+	var addressUser = address.addressUser;
+	var addressPhone = address.addressPhone;
+	var addressPname = address.addressPname;
+	var addressCname = address.addressCname;
+	var addressDname = address.addressDname;
+	var addressStreet = address.addressStreet;
+	var addressPostcode = address.addressPostcode;
+	var isDefault = address.isDefault;
+
+	connection.query(`insert into addresslist (user_id,user_name,addressUser,addressPhone,addressPname,addressCname,addressDname,addressStreet,addressPostcode,isDefault) values ('${user_id}','${user_name}','${addressUser}','${addressPhone}','${addressPname}','${addressCname}','${addressDname}','${addressStreet}','${addressPostcode}','${isDefault}')`,function(error,results,fields){
+		if(error) throw error;
+		res.send(results);
+	})
+})
+
+//读取收货地址
+app.get("/getAddr",function(req,res){
+	res.append("Access-Control-Allow-Origin","*");
+	connection.query("SELECT * FROM addresslist",function(error,results,fields){
+		if(error) throw error;
+		res.send(results);
+		// connection.end();
+	})
+})
+
+//修改收货地址
+app.get("/modifyAddr",function(req,res){
+	res.append("Access-Control-Allow-Origin","*");
+	
+	console.log("/modifyAddr",req.query.id);
+	
+	var id = req.query.id;
+	var address = JSON.parse(req.query.address);
+	console.log("/modifyAddr",address);
+
+	var user_id = address.user_id;
+	var user_name = address.user_name;
+	var addressUser = address.addressUser;
+	var addressPhone = address.addressPhone;
+	var addressPname = address.addressPname;
+	var addressCname = address.addressCname;
+	var addressDname = address.addressDname;
+	var addressStreet = address.addressStreet;
+	var addressPostcode = address.addressPostcode;
+	var isDefault = address.isDefault;
+	
+	connection.query(`update addresslist set user_id="${user_id}",user_name="${user_name}",addressUser="${addressUser}",addressPhone="${addressPhone}",addressPname="${addressPname}",addressCname="${addressCname}",addressDname="${addressDname}",addressStreet="${addressStreet}",addressPostcode="${addressPostcode}",isDefault="${isDefault}" where id="${id}"`,function(error,results,fields){
+		if(error) throw error;
+		res.send(results);
+		// connection.end();
+	})
+})
+
+//修改收货地址默认值0
+app.get("/isnomodifyAddr",function(req,res){
+	res.append("Access-Control-Allow-Origin","*");
+		connection.query(`update addresslist set isDefault="0"`,function(error,results,fields){
+		if(error) throw error;
+		res.send(results);
+		// connection.end();
+	})
+})
+//修改收货地址默认值1
+app.get("/ismodifyAddr",function(req,res){
+	res.append("Access-Control-Allow-Origin","*");
+	var id = req.query.id;
+	connection.query(`update addresslist set isDefault="1" where id="${id}"`,function(error,results,fields){
+		if(error) throw error;
+		res.send(results);
+		// connection.end();
+	})
+})
+
+//删除收货地址
+app.get("/delAddr",function(req,res){
+	res.append("Access-Control-Allow-Origin","*");
+	
+	console.log("/delAddr",req.query);
+	
+	var id = req.query.id;
+	connection.query(`delete from addresslist where id="${id}"`,function(error,results,fields){
+		if(error) throw error;
+		res.send(results);
+	})
+})
+
 
 //监听端口
 var server = app.listen(5555,function(){
