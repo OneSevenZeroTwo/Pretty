@@ -9,7 +9,7 @@
 				<p>{{username}}</p>
 			</div>
 			<div class="list">
-				<a href="#/mycollect"><span class="num" id="myLove">0</span>收藏的宝贝</a>
+				<a href="#/mycollect"><span class="num" id="myLove">{{this.star}}</span>收藏的宝贝</a>
 				<a href=""><span class="num" id="myShop">0</span>收藏的店铺</a>
 				<a href=""><i class="material-icons">receipt</i></span>优惠券</a>
 				<a href=""><i class="material-icons">place</i></span>收货地址</a>
@@ -81,6 +81,7 @@
 				orderData: null,
 				show: true,
 				username: '未登录',
+				star:'0',
 				userimg: require('../../images/login&reg&mine/step2.png'),
 				activeTab: 'tab1',
 				headerMsg: {
@@ -120,6 +121,8 @@
 					.then(res => {
 						this.username = res.data[0].username;
 						this.userimg = res.data[0].headerImgUrl;
+						this.star = res.data[0].iid.split(',').length;
+						console.log(res.data[0])
 						this.$ajax.get('http://localhost:999/orders', {
 								params: {
 									'id': theId,

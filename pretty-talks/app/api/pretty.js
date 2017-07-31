@@ -219,6 +219,18 @@ app.get('/seek', function(request, response) {
     connection.end();
 });
 
+app.get('/getstar', function(request, response) {
+    response.append("Access-Control-Allow-Origin", "*");
+    createConnection();
+    connection.connect();
+    var tatol = request.query;
+    connection.query(`SELECT * FROM goodlist WHERE iid = "${tatol.iid}"`, function(error, results, fields) {
+        response.send(results);
+    });
+
+    connection.end();
+});
+
 app.listen(999, function() {
     console.log('打开999端口')
 })
