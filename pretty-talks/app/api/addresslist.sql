@@ -4,13 +4,13 @@ Navicat MySQL Data Transfer
 Source Server         : local
 Source Server Version : 50505
 Source Host           : localhost:3306
-Source Database       : prettytalks
+Source Database       : prettytalks-user
 
 Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2017-07-31 09:02:59
+Date: 2017-07-31 20:57:41
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -37,5 +37,5 @@ CREATE TABLE `addresslist` (
 -- ----------------------------
 -- Records of addresslist
 -- ----------------------------
-INSERT INTO `addresslist` VALUES ('8', '', '', '22222222', '13333333333', '重庆市', '重庆市', '梁平县', '1111111', '', '1');
-INSERT INTO `addresslist` VALUES ('10', '', '', '11111111', '13333333333', '山西省', '晋城市', '沁水县', '1111111', '', '0');
+INSERT INTO `addresslist` VALUES ('8', '118', '', '22222222', '13333333333', '重庆市', '重庆市', '梁平县', '1111111', '', '0');
+INSERT INTO `addresslist` VALUES ('10', '118', '', '11111111', '13333333333', '山西省', '晋城市', '沁水县', '1111111', '', '1');
