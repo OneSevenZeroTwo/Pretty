@@ -11,7 +11,7 @@
 		</div>
 	</header>
 </template>
-<style>
+<style scoped>
 	header {
 		height: 45px;
 		width: 100%;

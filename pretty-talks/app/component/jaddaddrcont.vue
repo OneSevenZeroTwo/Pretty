@@ -159,7 +159,7 @@
 					console.log("可以保存")
 					this.addressErrorMessage = "";
 					this.$store.state.userAddr = {
-						user_id:"",
+						user_id:document.cookie.split("=")[1],
 						user_name:"",
 						addressUser:this.addressUser,
 						addressPhone:this.addressPhone,
@@ -230,6 +230,7 @@
 
 		},
 		mounted() {
+			console.log(document.cookie.split("=")[1])
  			//console.log(this.$route.params)
 			if(this.$store.state.useAddrId != null){
 				this.isAddrBtnShow = true;

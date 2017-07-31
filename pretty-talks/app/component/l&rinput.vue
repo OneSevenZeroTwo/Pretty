@@ -341,7 +341,7 @@
 				this.dialog = false
 			},
 			changeDeg(event) {
-				clearInterval(this.timer);
+				clearInterval(timer);
 				var ele = event.currentTarget;
 				ele.classList.remove('fail');
 				var arr = window.getComputedStyle(ele).transform.slice(7, -1).split(',');

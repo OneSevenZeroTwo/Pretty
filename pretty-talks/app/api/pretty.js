@@ -38,19 +38,8 @@ app.use(bodyParser.urlencoded({
     extended: false
 }))
 
-
-var createConnection =function(){
-	connection = mysql.createConnection({
-		host: 'localhost',
-		user: 'root',
-		password: '',
-		database: 'prettytalks-user'
-	});
-	
-	return connection;
-}
-
 require('./loginreg.js').loginreg(app, createConnection);
+require('./car.js').car(app, createConnection);
 // 首页商品详情
 
 app.get('/home', function(request, response) {
