@@ -14,7 +14,7 @@
             <i class="weui-loading"></i>
             <span class="weui-loadmore__tips">正在加载</span>
         </div>
-       <!--  <div class="weui-loadmore weui-loadmore_line">
+        <!--  <div class="weui-loadmore weui-loadmore_line">
             <span class="weui-loadmore__tips">暂无数据</span>
         </div> -->
     </div>
@@ -27,7 +27,7 @@ export default {
         return {
             isshownav: 0,
             wasmore: null,
-            isshownone:false,
+            isshownone: false,
         }
     },
     computed: {
@@ -35,16 +35,16 @@ export default {
             return this.$route.params.sort;
         },
         list() {
-            return this.$store.state.list
+            return this.$store.state.list;
         },
         isshowmore() {
-            return this.$store.state.isshowmore
+            return this.$store.state.isshowmore;
         },
     },
     methods: {
         // 事件莫名失效！！
         loadmore() {
-            
+
             window.addEventListener('scroll', () => {
                 if (document.body.offsetHeight - window.scrollY == 667) {
                     this.wasmore = true;
@@ -56,24 +56,47 @@ export default {
                     }).then((data) => {
                         this.$store.state.list = this.$store.state.list.concat(data.data.list);
                         this.wasmore = false
-                        
-                        console.log(data)
                     }).catch((err) => {
 
                     });
                 }
             })
 
+        },
+        liseek() {
+            this.wasmore = true;
+            this.$ajax.get('http://localhost:999/liseek', {
+                params: {
+                    page: 1,
+                    sort: this.sort,
+                    title:this.title
+                }
+            }).then((data) => {
+                this.$store.state.list = this.$store.state.list.concat(data.data.list);
+                this.wasmore = false
+
+            }).catch((err) => {
+
+            });
         }
+
     },
     mounted() {
-       this.loadmore()
-    }
+        this.loadmore()
+        // if (this.$route.matched[2].path == "/index/filist/pseek/:sort/:page/:title") {
+        //     this.liseek();
+        // }
+        // console.log(document.body.offsetHeight)
+    },
 }
 </script>
 <style scoped>
 .hlist {
     background: #fff;
     margin-bottom: 80px;
+}
+
+.hlist li {
+    height: 300px;
 }
 </style>

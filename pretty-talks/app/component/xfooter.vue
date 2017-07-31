@@ -37,7 +37,10 @@
 			showfoot(num){
 
 				this.isshowfoot =num;
-				console.log(this.isshowfoot)
+				if(num == 1){
+					this.$store.state.isshowsearch = false
+				}
+				// console.log(this.isshowfoot)
 			}
 		},
 		mounted(){
@@ -49,6 +52,8 @@
 				this.isshowfoot = 3
 			}else if(this.$route.path == '/mycenter'){
 				this.isshowfoot = 4
+			}else{
+				this.isshowfoot = 5
 			}
 		}
 	}
@@ -88,7 +93,7 @@
 		background: url('../img/7.png') no-repeat
 	}
 	.img41{
-		background: url('../img/4.png') no-repeat
+		background: url('../img/8.png') no-repeat
 	}
 
 	.weui-tabbar__icon{

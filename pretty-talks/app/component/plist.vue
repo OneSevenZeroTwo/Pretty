@@ -2,18 +2,21 @@
 <template>
     <div :class="{list:!isontop,listTop:isontop}">
         <ul class="lnav clearfix">
-            <li @click="shownav(0)">
-                <a href="#/index/home/list/pop/1"><span :class="{active:isshownav==0}" >流行</span></a>
+            <li @click="shownav(0,'pop')">
+                <a :href="h1"><span :class="{active:isshownav==0}" >流行</span></a>
             </li>
-            <li @click="shownav(1)">
-                <a href="#/index/home/list/sell/1"><span :class="{active:isshownav==1}">新款</span></a>
+            <li @click="shownav(1,'sell')">
+                <a :href="h2"><span :class="{active:isshownav==1}">新款</span></a>
             </li>
-            <li @click="shownav(2)">
-                <a href="#/index/home/list/new/1"><span :class="{active:isshownav==2}">精选</span></a>
+            <li @click="shownav(2,'new')">
+                <a :href="h3"><span :class="{active:isshownav==2}">精选</span></a>
             </li>
         </ul>
     </div>
 </template>
+<!-- #/index/home/list/pop/1 -->
+<!-- #/index/home/list/sell/1 -->
+<!-- #/index/home/list/new/1 -->
 <script>
 export default {
     // sort:pop sell new
@@ -21,12 +24,36 @@ export default {
         return {
             isshownav: 0,
             isontop: false,
+            h1: '',
+            h2: '',
+            h3: '',
         }
     },
     methods: {
-        shownav(num) {
+        shownav(num,sort) {
             this.isshownav = num;
             this.$store.state.list = [];
+
+            if (this.$route.matched[2].path == "/index/home/list/:sort/:page") {
+                this.h1 = '#/index/home/list/pop/1';
+                this.h2 = '#/index/home/list/sell/1';
+                this.h3 = '#/index/home/list/new/1';
+            } else if (this.$route.matched[2].path == "/index/filist/pseek/:sort/:page/:title") {
+                this.$ajax.get('http://localhost:999/liseek', {
+                    params: {
+                        page: 1,
+                        sort: sort,
+                        title: this.$route.params.title
+                    }
+                }).then((data) => {
+                    this.$store.state.list = this.$store.state.list.concat(data.data.list);
+                }).catch((err) => {
+
+                });
+                this.h1 = '#/index/filist/pseek/pop/1/' + this.$route.params.title;
+                this.h2 = '#/index/filist/pseek/sell/1/' + this.$route.params.title;
+                this.h3 = '#/index/filist/pseek/new/1/' + this.$route.params.title;
+            }
         },
         onTop() {
             window.addEventListener('scroll', () => {
@@ -40,14 +67,27 @@ export default {
 
     },
     mounted() {
+        // console.log(this.$route)
         this.onTop();
-        if (this.$route.path == '/index/home/list/pop/1') {
-            this.isshownav = 0;
-        } else if (this.$route.path == '/index/home/list/sell/1') {
-            this.isshownav = 1;
-        } else if (this.$route.path == '/index/home/list/new/1') {
-            this.isshownav = 2;
+        if (this.$route.matched[2].path == "/index/home/list/:sort/:page") {
+            if (this.$route.path == '/index/filist/pseek/pop/1') {
+                this.isshownav = 0;
+            } else if (this.$route.path == '/index/home/list/sell/1') {
+                this.isshownav = 1;
+            } else if (this.$route.path == '/index/home/list/new/1') {
+                this.isshownav = 2;
+            }
+        } else if (this.$route.matched[2].path == "/index/filist/pseek/:sort/:page/:title") {
+            // 正则表达式
+            if (this.$route.path == '/index/filist/pseek/pop/1/' + this.$route.params.title) {
+                this.isshownav = 0;
+            } else if (this.$route.path == '/index/filist/pseek/sell/1/' + this.$route.params.title) {
+                this.isshownav = 1;
+            } else if (this.$route.path == '/index/filist/pseek/new/1/' + this.$route.params.title) {
+                this.isshownav = 2;
+            }
         }
+
     }
 
 }
