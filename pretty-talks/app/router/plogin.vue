@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div id="thebody">
 		<lrHeader :theHeader='headerMsg'></lrHeader>
 		<div id="theCenter">
 			<a href=""></a>
@@ -8,6 +8,9 @@
 	</div>
 </template>
 <style scoped>
+	#thebody{
+		background-color: #fff;
+	}
 	#theCenter {
 		padding: 35px 15px 0 15px;
 	}
@@ -34,6 +37,7 @@
 					title:'登录 - 美丽说',
 					rightBtn:'注册',
 					theHref:'http://localhost:4399/#/reg/step1',
+					car:'false'
 				},
 				inputMsg:{
 					title:'美丽说账号登录',

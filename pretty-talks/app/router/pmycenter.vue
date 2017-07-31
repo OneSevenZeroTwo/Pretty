@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div id="thebody">
 		<lrHeader :theHeader='headerMsg'></lrHeader>
 		<div id="userInfo">
 			<div class="img_wrap">
@@ -9,7 +9,7 @@
 				<p>{{username}}</p>
 			</div>
 			<div class="list">
-				<a href=""><span class="num" id="myLove">0</span>收藏的宝贝</a>
+				<a href="#/mycollect"><span class="num" id="myLove">0</span>收藏的宝贝</a>
 				<a href=""><span class="num" id="myShop">0</span>收藏的店铺</a>
 				<a href=""><i class="material-icons">receipt</i></span>优惠券</a>
 				<a href=""><i class="material-icons">place</i></span>收货地址</a>
@@ -44,7 +44,7 @@
 							<li class="goods">
 								<a href="javascript:;">
 									<div class="oleft">
-										<img :src="n.imgUrl" class="orderimg"/>
+										<img :src="n.imgUrl" class="orderimg" />
 									</div>
 									<div class="odetail">
 										<p class="deTitle">{{n.title}}</p>
@@ -59,7 +59,7 @@
 							<li class="pay">
 								<p class="totalPrice">合计：<span>￥{{n.num*n.price}}</span></p>
 								<div class="order_btn">
-									<mu-raised-button label="取消订单" class="cancle" @click="cancle(n.id)"/>
+									<mu-raised-button label="取消订单" class="cancle" @click="cancle(n.id)" v-del-star/>
 									<mu-raised-button label="付款" class="buy" />
 								</div>
 							</li>
@@ -78,7 +78,7 @@
 	export default {
 		data() {
 			return {
-				orderData:null,
+				orderData: null,
 				show: true,
 				username: '未登录',
 				userimg: require('../../images/login&reg&mine/step2.png'),
@@ -86,6 +86,7 @@
 				headerMsg: {
 					title: '个人中心',
 					rightBtn: '退出',
+					car: 'false'
 				},
 			}
 		},
@@ -93,11 +94,17 @@
 			handleTabChange(val) {
 				this.activeTab = val
 			},
-			cancle(id){
-				console.log(id);
-			}
-		},
-		components: {
+			cancle(id) {
+				this.$ajax.get('http://localhost:999/delorders', {
+					params: {
+						'id': id,
+					}
+				}, )
+				.then(res => {})
+				.catch(err => {})
+			},
+	},
+	components: {
 			lrHeader,
 			xfooter
 		},
@@ -106,41 +113,54 @@
 			if(theId) {
 				this.show = false;
 				this.$ajax.get('http://localhost:999/search', {
-					params: {
-						'phone': theId,
-					}
-				}, )
-				.then(res => {
-					this.username = res.data[0].username;
-					this.userimg = res.data[0].headerImgUrl;
-					this.$ajax.get('http://localhost:999/orders', {
 						params: {
-							'id': theId,
+							'phone': theId,
 						}
 					}, )
 					.then(res => {
-						if(res.data.length == '0'){
-							this.show = true;
-						}else{
-							this.show = false;
-							this.orderData = res.data;
-						}
+						this.username = res.data[0].username;
+						this.userimg = res.data[0].headerImgUrl;
+						this.$ajax.get('http://localhost:999/orders', {
+								params: {
+									'id': theId,
+								}
+							}, )
+							.then(res => {
+								if(res.data.length == '0') {
+									this.show = true;
+								} else {
+									this.show = false;
+									this.orderData = res.data;
+								}
+							})
+							.catch(err => {})
 					})
 					.catch(err => {})
-					})
-				.catch(err => {})
-				
+
 			} else {
 				this.show = true;
+			}
+		},
+		directives:{
+			delStar:{
+				bind:(ele,binding)=>{
+					ele.addEventListener('click',e=>{
+						ele.parentElement.parentElement.parentElement.parentElement.removeChild(ele.parentElement.parentElement.parentElement);
+					})
+				}
 			}
 		}
 	}
 </script>
 
 <style scoped>
-	#ordertitle{
+	#thebody{
+		background-color: #fff;
+	}
+	#ordertitle {
 		width: 50%;
 	}
+	
 	.list_wrap {
 		overflow: auto;
 		margin-bottom: 20%;

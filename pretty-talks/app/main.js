@@ -38,6 +38,7 @@ import order from "./router/porder.vue";
 import address from "./router/paddress.vue";
 import addaddr from "./router/paddaddr.vue";
 import Pmycenter from "./router/pmycenter.vue";
+import mycollect from "./router/pmycollect.vue";
 
 //路由
 var router = new VueRouter({
@@ -87,8 +88,11 @@ var router = new VueRouter({
             }]
         }, {
             path: "/mycenter",
-            component: Pmycenter
+            component: Pmycenter,
         }, {
+        	path:'/mycollect',
+            component:mycollect
+        },{
             path: '/listed/:pcid',
             component: Plist,
         }, {
