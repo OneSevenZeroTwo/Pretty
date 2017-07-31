@@ -12,7 +12,7 @@
 				<a href="#/mycollect"><span class="num" id="myLove">{{this.star}}</span>收藏的宝贝</a>
 				<a href=""><span class="num" id="myShop">0</span>收藏的店铺</a>
 				<a href=""><i class="material-icons">receipt</i></span>优惠券</a>
-				<a href=""><i class="material-icons">place</i></span>收货地址</a>
+				<a href="#/address"><i class="material-icons">place</i></span>收货地址</a>
 			</div>
 		</div>
 		<div id="contentbox">

@@ -38,19 +38,8 @@ app.use(bodyParser.urlencoded({
     extended: false
 }))
 
-
-var createConnection =function(){
-	connection = mysql.createConnection({
-		host: 'localhost',
-		user: 'root',
-		password: '',
-		database: 'prettytalks-user'
-	});
-	
-	return connection;
-}
-
 require('./loginreg.js').loginreg(app, createConnection);
+require('./car.js').car(app, createConnection);
 // 首页商品详情
 
 app.get('/home', function(request, response) {
@@ -214,6 +203,24 @@ app.get('/seek', function(request, response) {
             list: results
         };
         response.send(JSON.stringify(obj));
+    });
+
+    connection.end();
+});
+// 搜索得到的列表
+app.get('/liseek', function(request, response) {
+    response.append("Access-Control-Allow-Origin", "*");
+    createConnection();
+    connection.connect();
+    var tatol = request.query;
+    var page = 10 * (tatol.page - 1);
+    connection.query(`SELECT * FROM goodlist WHERE title LIKE "%${tatol.title}%" and sort="${tatol.sort}" limit ${page},10 `, function(error, results, fields) {
+        if (error) throw error;
+        var obj = {
+            list: results
+        };
+        response.send(JSON.stringify(obj));
+        console.log('执行')
     });
 
     connection.end();

@@ -8,10 +8,10 @@
                 <ul class="bomove clearfix" v-shift="">
                     <li v-for="a1 in aswell1">
                         <a href="javascript:;">
-                        <img :src="a1.image">
-                        <p class="astitle">{{a1.title}}</p>
-                        <p class="mo_price">{{a1.price}}</p>
-                    </a>
+                            <img :src="a1.image">
+                            <p class="astitle">{{a1.title}}</p>
+                            <p class="mo_price">{{a1.price}}</p>
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -22,10 +22,10 @@
                 <ul class="bomove clearfix" v-shift="">
                     <li v-for="a2 in aswell2">
                         <a href="javascript:;">
-                        <img :src="a2.image">
-                         <p class="astitle">{{a2.title}}</p>
-                        <p class="mo_price">{{a2.price}}</p>
-                    </a>
+                            <img :src="a2.image">
+                            <p class="astitle">{{a2.title}}</p>
+                            <p class="mo_price">{{a2.price}}</p>
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -36,10 +36,10 @@
                 <ul class="bomove clearfix" v-shift="">
                     <li v-for="a3 in aswell3">
                         <a href="javascript:;">
-                        <img :src="a3.image">
-                        <p class="astitle">{{a3.title}}</p>
-                        <p class="mo_price">{{a3.price}}</p>
-                    </a>
+                            <img :src="a3.image">
+                            <p class="astitle">{{a3.title}}</p>
+                            <p class="mo_price">{{a3.price}}</p>
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -68,9 +68,10 @@ export default {
                 this.well1Img = data.data.data['0'].image;
                 this.well2Img = data.data.data['1'].image;
                 this.well3Img = data.data.data['2'].image;
-                this.aswell1 = data.data.data['0'].goodsList;
-                this.aswell2 = data.data.data['1'].goodsList;
-                this.aswell3 = data.data.data['2'].goodsList;
+                this.aswell1 = data.data.data['0'].goodsList.slice(0,12);
+                this.aswell2 = data.data.data['1'].goodsList.slice(0,12);
+                this.aswell3 = data.data.data['2'].goodsList.slice(0,12);
+                console.log(this.aswell3.length)
             }).catch((err) => {
 
             })
@@ -83,28 +84,30 @@ export default {
         // shift有点蠢，反应迟钝！！！
         shift: {
             bind(el, binding) {
-                var ways = null;
-                var timer;
-                var width = 100 * 18;
-                el.style.width = width + 'px';
-                el.addEventListener("touchstart", function(data1, eve) {
-                    var start = data1.changedTouches['0'].pageX;
-                    var left = this.offsetLeft
-                    this.addEventListener("touchmove", function(data2) {
 
-                        // 移动的位置
-                        var end = data2.changedTouches['0'].pageX;
-                        // 需要移动的距离
-                        var way = left + (end - start)
-                        if (way <= document.body.offsetWidth - width) {
-                            way = document.body.offsetWidth - width
-                        }
-                        if (way >= 0) {
-                            way = 0
-                        }
-                        this.style.left = way + 'px'
-                    })
-                });
+                    var ways = null;
+                    var timer;
+                    var width = 100 * 14;
+                    el.style.width = width + 'px';
+                    el.addEventListener("touchstart", function(data1, eve) {
+                        var start = data1.changedTouches['0'].pageX;
+                        var left = this.offsetLeft
+                        this.addEventListener("touchmove", function(data2) {
+
+                            // 移动的位置
+                            var end = data2.changedTouches['0'].pageX;
+                            // 需要移动的距离
+                            var way = left + (end - start)
+                            if (way <= document.body.offsetWidth - width+50) {
+                                way = document.body.offsetWidth - width+50
+                            }
+                            if (way >= 0) {
+                                way = 0
+                            }
+                            this.style.left = way + 'px'
+                        })
+                    });
+
             }
         },
     }

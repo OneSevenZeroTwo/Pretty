@@ -49,14 +49,25 @@
 		data() {
 			return {
 				isMaskShow: false,
+				isDate:new Date(),
+				orderLists:[],
 			}
 		},
 		mounted() {
-			//console.log(this.$store.state.orderList)
+			this.$store.state.carList = [];
+			this.$store.dispatch("getCarList");
 		},
 		computed: {
 			orderList() {
-				return this.$store.state.orderList;
+				this.orderLists = [];
+				this.$store.state.carList.forEach((goods, index) => {
+ 					if(goods.orders == 1){
+ 						this.orderLists.push(goods);
+						console.log("订单页商品0",this.orderLists);
+ 					}
+				})
+				console.log("订单页商品return",this.orderLists);
+				return this.orderLists;
 			},
 			//计算总价
 			totalPrice() {
@@ -71,7 +82,13 @@
 		},
 		methods: {
 			tj() {
-				this.isMaskShow = !this.isMaskShow;
+				let s = Date.parse(new Date()) - Date.parse(this.isDate);
+				if(s >= 5000){
+					this.isMaskShow = !this.isMaskShow;
+					console.log("已超时,页面已停留5秒钟");
+				}else{
+					console.log("可以付款,跳转支付页面")
+				}
 			},
 			toCar() {
 				this.$store.state.orderList = [];

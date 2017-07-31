@@ -23,7 +23,6 @@
 			}
 		},
 	 	mounted(){
-	 		// this.$store.state.addrList = null;
 	 		this.$store.dispatch("getOrderAddr");
 	 	},
 	 	computed:{
@@ -32,6 +31,7 @@
 				if(this.$store.state.addrList != null){
 					this.hasAddresss = true;
 					this.noAddress = "";
+					console.log("订单页-收货地址",this.$store.state.addrList);
 					return this.$store.state.addrList;
 				}else{
 					this.hasAddresss = false;
@@ -39,8 +39,6 @@
 				}
 	 		}
 	 	},
-	
-	 	
 	}
 </script>
 
