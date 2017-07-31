@@ -345,7 +345,7 @@
 			},
 			changeDeg(event) {
 				var timer
-				
+				clearInterval(timer);
 				var ele = event.currentTarget;
 				console.log(ele.timer)
 				// clearInterval(timer);

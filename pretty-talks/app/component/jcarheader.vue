@@ -18,7 +18,7 @@
 			isDelList() {
 				alert("确定要删除选定项？")
 				this.$store.state.carList.forEach((goods,idx) => {
-						console.log(this.$store.state.isChecked,goods,idx);
+						console.log("选中项->"+this.$store.state.isChecked,"car列表->"+goods,"car列表index->"+idx);
 					if(this.$store.state.isChecked.join("").indexOf(goods.id) != -1) {
 						//this.$store.state.carList.splice(idx,1);
 					}

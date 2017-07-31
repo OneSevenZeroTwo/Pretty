@@ -37,17 +37,16 @@ export default {
  	computed:{
  		addrList(){
  			//获取所有地址
+            //console.log(this.$store.state.addrList);
  			return this.$store.state.addrList;
  		}
  	},
  	methods:{
  		// 点击成为默认地址
  		useIt(useId){
- 			//console.log(this.addrList[0]);
+            this.$store.dispatch("isnomodifyAddr");
  			this.$store.state.useAddrId = useId;
- 			this.$store.dispatch("isnomodifyAddr");
  			this.$store.dispatch("ismodifyAddr");
- 			//this.$store.dispatch("modifyAddrList");
  			window.location.href = "#/order";
  		},
  		modthis(modthisId){
