@@ -207,6 +207,24 @@ app.get('/discuss', function(req, res) {
     connection.end();
 });
 
+//收藏
+//app.get('/collect', function(req, res) {
+//  res.append('Access-Control-Allow-Origin', '*');
+//  createConnection();
+//  connection.connect();
+//  var collId = req.query;
+//  console.log(collId)
+//  connection.query(`INSERT INTO users(id) VALUES("'+collId+'")`, function(error, results, fields) {
+//      if (error) { 
+//      	throw error
+//      }else{
+//      	res.send('添加成功');
+//      };
+//      
+//  });
+//  connection.end();
+//});
+
 app.listen(999, function() {
     console.log('打开999端口')
 })

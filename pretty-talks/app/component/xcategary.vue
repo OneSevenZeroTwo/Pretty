@@ -59,6 +59,9 @@
 </script>
 
 <style>
+	html,body{
+		background: #fff;
+	}
 	.box-wrap{
 		width:100%;
 	     height: 100%;

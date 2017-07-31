@@ -276,6 +276,7 @@ var store = new Vuex.Store({
                     console.log(state.addressPid);
                 }).catch((err) => {})
         },
+        //分类
 		setNews(state) {
 			axios.get('http://localhost:999/fsort', {
 					params: {
@@ -283,7 +284,9 @@ var store = new Vuex.Store({
 					},
 				})
 				.then((response) => {
-					//state.news = state.news.concat(response.data.data)
+					console.log(response)
+					state.news = response.data.value
+					console.log(state.news)
 				})
 				.catch((error) => {
 					console.log(error);
@@ -303,21 +306,6 @@ var store = new Vuex.Store({
 
 			})
 		},
-		getActive(state) {
-
-			axios.get("http://localhost:999/tsort", {
-					params: {
-						pid: state.pid
-					}
-				}).then((response) => {
-					console.log(response)
-					//state.res = response.data.data
-					console.log(state.res)
-				})
-				.catch((error) => {
-					console.log(error)
-				})
-		},
 		getList(state, data) {
 			axios.get('http://localhost:999/home', {
 				params: {
@@ -330,22 +318,6 @@ var store = new Vuex.Store({
 			}).catch((err) => {
 
 			})
-		},
-		setChar(state) {
-
-			axios.get("http://localhost:999/tsort", {
-					params: {
-						pid: state.pid
-					}
-				}).then((response) => {
-					console.log(response)
-					//state.res = response.data.data
-					console.log(state.res)
-				})
-				.catch((error) => {
-					console.log(error)
-				})
-
 		},
         //详情页
         setDetail(state) {
@@ -377,6 +349,18 @@ var store = new Vuex.Store({
                     console.log(state.cuss)
                 })
         },      
+        //收藏
+        setColl(state) {
+            axios.get("http://localhost:999/collect", {
+                    params: {
+                        iid: state.iid
+                    }
+                }).then((response) => {
+                    console.log(response)
+//                  state.cuss = response.data
+//                  console.log(state.cuss)
+                })
+        },      
         // 分类2
         setChar(state) {
 
@@ -404,7 +388,7 @@ var store = new Vuex.Store({
                 }).then((response) => {
 //                  console.log(response)
                     state.choose = response.data.data.list
-                    console.log(state.choose)
+//                  console.log(state.choose)
                 })
                 .catch((error) => {
                     console.log(error)
@@ -478,11 +462,12 @@ var store = new Vuex.Store({
         setChing(context, data) {
             context.commit('setChing')
         },
-
         setCuss(context, data) {
             context.commit('setCuss')
         },
-
+        setColl(context, data) {
+            context.commit('setColl')
+        },
     }
 
 

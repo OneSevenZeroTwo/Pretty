@@ -290,12 +290,16 @@
 					</li>
 					<li>
 						<i class="icon">
-							<img src="../img/zan1.png" alt="" />
+							<img :src="src" @click="Img()" alt="" />
 						</i>
 						<span class="text">收藏</span>
 					</li>
 				</ul>
 			</div>
+			<div class="weui-toast" style="display: none;">
+                <i class="weui-icon-success-no-circle weui-icon_toast"></i>
+                <p class="weui-toast__content">已收藏</p>
+            </div>
 			<div class="footer_b">
 				<span class="buy-cart">加入购物车</span>
 				<span class="buy-now">购买</span>
@@ -317,6 +321,7 @@
 				ccc: null,
 				bottomSheet: false,
 				noon: true,
+				src:require("../img/zan1.png"),
 			}
 		},
 		computed: {
@@ -334,7 +339,12 @@
 				console.log(this.$store.state.rus)
 				this.bbb = this.$store.state.rus;
 				return this.bbb;
-			}
+			},
+			coll() {
+//				console.log(this.$store.state.rus)
+//				this.bbb = this.$store.state.rus;
+//				return this.bbb;
+			},
 		},
 		methods: {
 			mores() {
@@ -342,6 +352,9 @@
 			},
 			discuss() {
 				this.$store.dispatch("setCuss")
+			},
+			collect() {
+				this.$store.dispatch("setColl")
 			},
 			closeBottomSheet() {
 				this.bottomSheet = false
@@ -369,12 +382,23 @@
                     break;
 			   }
 			},
+			Img(){
+				if(this.src=require("../img/zan1.png")){
+					this.src=require("../img/zan2.png")
+				    document.querySelector('.weui-toast').style.display = 'block'
+					console.log(222)
+				}else if(this.src=require("../img/zan2.png")){
+					this.src=require("../img/zan1.png")
+					console.log(333)
+				}	
+			}
 		},
 		mounted() {
 			this.$store.state.iid = this.$route.params.iid;
 			//			console.log(this.$store.state.iid)
 			this.mores();
 			this.discuss();
+			this.collect();
 		},
 		directives: {
 			does: {
@@ -782,7 +806,7 @@
 	.buy-now {
 		display: block;
 		margin-left: 47%;
-		margin-top: -30%;
+		margin-top: -29%;
 		text-align: center;
 		color: #fff;
 		background: #f69;
