@@ -295,7 +295,7 @@ var store = new Vuex.Store({
                 // 轮播图
                 state.carousel = data.data.data['43542'].list;
                 // 9.9包邮活动
-                state.special = data.data.data['13730'].list.slice(0, -1);;
+                state.special = data.data.data['13730'].list.slice(0, -1);
                 // 限时活动
                 state.liactive = data.data.data['42287'].list;
                 // 实现时间
@@ -303,22 +303,6 @@ var store = new Vuex.Store({
             }).catch((err) => {
 
             })
-        }
-
-        getActive(state) {
-
-            axios.get("http://localhost:999/tsort", {
-                    params: {
-                        pid: state.pid
-                    }
-                }).then((response) => {
-                    console.log(response)
-                    //state.res = response.data.data
-                    console.log(state.res)
-                })
-                .catch((error) => {
-                    console.log(error)
-                })
         },
         getList(state, data) {
             axios.get('http://localhost:999/home', {
