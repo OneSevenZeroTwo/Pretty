@@ -3,13 +3,13 @@
     <div :class="{list:!isontop,listTop:isontop}">
         <ul class="lnav clearfix">
             <li @click="shownav(0)">
-                <a href="#/index/home/list/pop/0"><span :class="{active:isshownav==0}" >流行</span></a>
+                <a href="#/index/home/list/pop/1"><span :class="{active:isshownav==0}" >流行</span></a>
             </li>
             <li @click="shownav(1)">
-                <a href="#/index/home/list/sell/0"><span :class="{active:isshownav==1}">新款</span></a>
+                <a href="#/index/home/list/sell/1"><span :class="{active:isshownav==1}">新款</span></a>
             </li>
             <li @click="shownav(2)">
-                <a href="#/index/home/list/new/0"><span :class="{active:isshownav==2}">精选</span></a>
+                <a href="#/index/home/list/new/1"><span :class="{active:isshownav==2}">精选</span></a>
             </li>
         </ul>
     </div>
@@ -41,11 +41,11 @@ export default {
     },
     mounted() {
         this.onTop();
-        if (this.$route.path == '/index/home/list/pop/0') {
+        if (this.$route.path == '/index/home/list/pop/1') {
             this.isshownav = 0;
-        } else if (this.$route.path == '/index/home/list/sell/0') {
+        } else if (this.$route.path == '/index/home/list/sell/1') {
             this.isshownav = 1;
-        } else if (this.$route.path == '/index/home/list/new/0') {
+        } else if (this.$route.path == '/index/home/list/new/1') {
             this.isshownav = 2;
         }
     }

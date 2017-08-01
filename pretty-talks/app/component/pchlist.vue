@@ -2,8 +2,8 @@
     <div class="hlist">
         <ul class="list_ch clearfix">
             <li v-for="(lis,index) in list" :key="index">
-                <a href="#">
-                    <img :src="lis.show.img">
+                <a :href="'#/detail/'+lis.iid">
+                    <img :src="lis.image">
                     <p class="li_title">{{lis.title}}</p>
                     <p class="mo_price">{{lis.price}}<span class=" collect"></span><span class="count">{{lis.cfav}}</span></p>
                 </a>
@@ -54,9 +54,10 @@ export default {
                             sort: this.sort
                         }
                     }).then((data) => {
-                        this.$store.state.list = this.$store.state.list.concat(data.data.data.list);
+                        this.$store.state.list = this.$store.state.list.concat(data.data.list);
                         this.wasmore = false
-                        // console.log(data.data.data.list)
+                        
+                        console.log(data)
                     }).catch((err) => {
 
                     });

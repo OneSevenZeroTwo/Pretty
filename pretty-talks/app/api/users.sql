@@ -10,13 +10,13 @@ Target Server Type    : MYSQL
 Target Server Version : 50714
 File Encoding         : 65001
 
-Date: 2017-07-29 10:14:49
+Date: 2017-07-31 19:35:11
 */
 
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for users
+-- Table structure for `users`
 -- ----------------------------
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
@@ -27,10 +27,13 @@ CREATE TABLE `users` (
   `email` varchar(255) DEFAULT NULL,
   `add_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `headerImgUrl` varchar(255) DEFAULT NULL,
+  `iid` varchar(223) DEFAULT NULL,
   PRIMARY KEY (`id`,`add_time`)
-) ENGINE=MyISAM AUTO_INCREMENT=119 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=124 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES ('118', null, '123344', '13810293847', null, '2017-07-28 14:08:47', null);
+INSERT INTO `users` VALUES ('1', '123', '123', '123', '123', '2017-07-30 14:45:23', null, null);
+INSERT INTO `users` VALUES ('122', '铁皮青衣', '12345678', '13811111111', null, '2017-07-30 15:54:19', './headImg/head-1501401566253.jpg', null);
+INSERT INTO `users` VALUES ('123', '123', 'qwerty', '13722222222', null, '2017-07-31 11:42:20', '', '1kgghcw');

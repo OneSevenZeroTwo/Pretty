@@ -87,13 +87,13 @@
 		margin-bottom: 0;		
 	}
 	.list_a{
-		width: 56px;
+		width: 70%;
 		height: 80px;
 	}
 	.list_a img{
 		width: 100%;
 		display: block;
-		margin-left: 5px;
+		margin-left:17%;
 	}
 	.list_b{
 		position: absolute;

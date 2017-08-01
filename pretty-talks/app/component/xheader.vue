@@ -35,9 +35,11 @@
 				if(this.text.length>0){
 					this.$store.state.isshowtsea = false;
 					this.title = '搜索';
+					this.seekmsg()
 				}else{
 					this.$store.state.isshowtsea = true;
 					this.title = '取消';
+					
 				}
 			},
 			hidetsea(){
@@ -47,7 +49,25 @@
 			act(){
 				if(this.title == '取消'){
 					this.$store.state.isshowsearch = false;
+				}else if(this.title == '搜索'){
+					
 				}
+			},
+			seekmsg(){
+				this.$ajax.get('http://localhost:999/seek', {
+                        params: {
+                        	title:this.text
+                        }
+                    }).then((data) => {
+                        if(data.data.list.length <=10){
+                        	this.$store.state.searchlist = data.data.list;
+                        	console.log(this.$store.state.searchlist)
+                        }else{
+                        	this.$store.state.searchlist = data.data.list.slice(0,10);
+                        }
+                    }).catch((err) => {
+
+                    });
 			}
 		},
 		directives:{
@@ -55,6 +75,9 @@
 				bind(el,binding){
 					el.onclick = function(){
 						document.querySelector('.js_input').focus();
+					};
+					if(binding.value == '搜索'){
+
 					}
 				}
 			}
