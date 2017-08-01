@@ -397,9 +397,9 @@ var store = new Vuex.Store({
                         pid: state.pid
                     }
                 }).then((response) => {
-                    console.log(response)
+//                  console.log(response)
                     //state.res = response.data.data
-                    console.log(state.res)
+//                  console.log(state.res)
                 })
                 .catch((error) => {
                     console.log(error)
@@ -407,22 +407,22 @@ var store = new Vuex.Store({
 
         },
         //详情页
-        setDetail(state) {
-            axios.get("http://localhost:999/main", {
-                    params: {
-                        iid: state.iid
-                    }
-                }).then((response) => {
-                    console.log(response)
-                    state.gooding = response.data.result
-                    state.rus = response.data.result.detailInfo.detailImage
-                    console.log(state.gooding)
-                    console.log(state.rus)
-                })
-                .catch((error) => {
-                    console.log(error)
-                })
-        },
+//      setDetail(state) {
+//          axios.get("http://localhost:999/main", {
+//                  params: {
+//                      iid: state.iid
+//                  }
+//              }).then((response) => {
+////                  console.log(response)
+//                  state.gooding = response.data.result
+//                  state.rus = response.data.result.detailInfo.detailImage
+////                  console.log(state.gooding)
+////                  console.log(state.rus)
+//              })
+//              .catch((error) => {
+////                  console.log(error)
+//              })
+//      },
 
         //评论
         setCuss(state) {

@@ -2,11 +2,11 @@
 	<div class="screen">
 		<!--轮播图-->
 		<swiper :options="swiperOption" ref="mySwiper">
-			<swiper-slide><img :src="gooding.itemInfo.topImages[0]" alt="" /></swiper-slide>
-			<swiper-slide><img :src="gooding.itemInfo.topImages[1]" alt="" /></swiper-slide>
-			<swiper-slide><img :src="gooding.itemInfo.topImages[2]" alt="" /></swiper-slide>
-			<swiper-slide><img :src="gooding.itemInfo.topImages[3]" alt="" /></swiper-slide>
-			<swiper-slide><img :src="gooding.itemInfo.topImages[4]" alt="" /></swiper-slide>
+			<swiper-slide><img :src="this.gooding.itemInfo.topImages[0]" alt="" /></swiper-slide>
+			<swiper-slide><img :src="this.gooding.itemInfo.topImages[1]" alt="" /></swiper-slide>
+			<swiper-slide><img :src="this.gooding.itemInfo.topImages[2]" alt="" /></swiper-slide>
+			<swiper-slide><img :src="this.gooding.itemInfo.topImages[3]" alt="" /></swiper-slide>
+			<swiper-slide><img :src="this.gooding.itemInfo.topImages[4]" alt="" /></swiper-slide>
 
 			<div class="swiper-pagination choose" slot="pagination">
 
@@ -15,16 +15,16 @@
 		<!--商品详情-->
 		<div class="info">
 			<div class="info_a">
-				{{gooding.itemInfo.title}}
+				{{this.gooding.itemInfo.title}}
 			</div>
 			<div class="info_b">
-				<span class="now">{{gooding.itemInfo.price}}</span>
+				<span class="now">{{this.gooding.itemInfo.price}}</span>
 			</div>
 			<div class="info_c">
-				<span class="item">{{gooding.columns[0]}}</span>
-				<span class="item">{{gooding.columns[1]}}</span>
-				<span class="item">{{gooding.itemInfo.extra.deliveryTime}}小时发货</span>
-				<span class="item">{{gooding.itemInfo.extra.sendAddress}}</span>
+				<span class="item">{{this.gooding.columns[0]}}</span>
+				<span class="item">{{this.gooding.columns[1]}}</span>
+				<span class="item">{{this.gooding.itemInfo.extra.deliveryTime}}小时发货</span>
+				<span class="item">{{this.gooding.itemInfo.extra.sendAddress}}</span>
 			</div>
 			<div class="info_d">
 				<ul class="ing">
@@ -253,19 +253,12 @@
 					<span>热卖推荐</span>
 				</div>
 				<div class="list">
-					<ul class="list_ch clearfix">
-						<li>
+					<ul class="list_ch clearfix" >
+						<li v-for="item in this.men">
 							<a href="#/detail">
-								<img src="http://s3.mogucdn.com/p2/170719/upload_6ag65c1lh04beda6b4kc706925cb5_640x900.jpg_320x999.webp">
-								<p class="li_title">2017夏季新款韩版宽松中长款拼接竖条纹a字裙荷叶边连衣裙女</p>
-								<p class="mo_price">￥68.75 <span class=" collect"></span></p>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<img src="http://s3.mogucdn.com/p2/170719/upload_6ag65c1lh04beda6b4kc706925cb5_640x900.jpg_320x999.webp">
-								<p class="li_title">2017夏季新款韩版宽松中长款拼接竖条纹a字裙荷叶边连衣裙女</p>
-								<p class="mo_price">￥68.75 <span class=" collect"></span><span class="count">456</span></p>
+								<img :src="item.image ">
+								<p class="li_title">{{item.title}}</p>
+								<p class="mo_price">{{item.price}} <span class=" collect"></span></p>
 							</a>
 						</li>
 					</ul>
@@ -376,29 +369,21 @@
 				src: require("../img/zan1.png"),
 				id: null,
 				watch: true,
+				men:[],
+				gooding:[],
 			}
 		},
 		computed: {
-			gooding() {
-				//				console.log(this.$store.state.gooding)
-				this.aaa = this.$store.state.gooding;
-				return this.aaa;
-			},
 			cuss() {
-				console.log(this.$store.state.cuss)
-				//				this.ccc = this.$store.state.cuss;
+			
 				return this.$store.state.cuss;
 			},
 			rus() {
-				console.log(this.$store.state.rus)
 				this.bbb = this.$store.state.rus;
 				return this.bbb;
 			},
 		},
 		methods: {
-			mores() {
-				this.$store.dispatch("setDetail")
-			},
 			discuss() {
 				this.$store.dispatch("setCuss")
 			},
@@ -417,40 +402,7 @@
 			openSheet() {
 				this.Sheet = true
 			},
-//			dating(data) {
-//				switch(data) {
-//					case 1:
-//						this.$(window).scrollTop(this.$('.panel_a').offset().top);
-//						console.log(this.$('.panel_a').offset().top)
-//						break;
-//					case 2:
-//						document.body.addEventListener('scroll',()=>{
-//							document.body.scrollTo(this.$('.panel_b').offset().top)
-//						})
-//						
-//						console.log(this.$('.panel_b').offset().top)
-//						console.log(document.body)
-//						break;
-//					case 3:
-//						window.scrollTop = this.$('.panel_c').offset().top + 'px';
-//						console.log(this.$('.panel_c').offset().top)
-//						break;
-//					case 4:
-//						document.body.scrollTo = this.$('.panel_d').offset().top + 'px';
-//						console.log(this.$('.panel_d').offset().top)
-//						break;
-//				}
-//			},
-//			Img() {
-//				this.watch = !this.watch
-//				if(this.src == require("../img/zan1.png")) {
-//					this.src = require("../img/zan2.png")
-//                  document.querySelector('.weui-toast').style.display = 'block'
-//				} else if(this.src == require("../img/zan2.png")) {
-//					this.src = require("../img/zan1.png")
-//					document.querySelector('.weui-toast').style.display = 'none'
-//				}
-//			},
+
 			Cool() {
 				this.watch = !this.watch
 				if(this.src == require("../img/zan1.png")) {
@@ -469,34 +421,56 @@
 							id: this.id,
 							iid: res,
 						}
-					}).then((response) => {
-//						console.log(response)
-//						if(res == null) {
-//							res = this.$store.state.iid
-//						} else {
-//							res += ',' + this.$store.state.iid
-//						}
-//						this.$ajax.get("http://localhost:999/case", {
-//							params: {
-//								iid: res,
-//								id: this.id
-//							}
-//						}).then((response) => {
-//							console.log(response)
-//
-//						})
+				}).then((response) => {
+					
 			 })
 					.catch((error) => {
 						console.log(error)
 					})
 			},
+		remen(){
+				this.$ajax.get("http://localhost:999/man", {
+						params: {
+					
+						}
+				}).then((response) => {
+//					console.log(response)
+					response.data.forEach((item,idx)=>{
+						if(item.hot >= 1){
+						 this.men.push(item)
+					  }
+						
+					})
+//					console.log(this.men)
+			 }).catch((error) => {
+						console.log(error)
+					})
 		},
+		setDetail(){
+			 this.$ajax.get("http://localhost:999/main", {
+                    params: {
+                        iid: this.$store.state.iid
+                    }
+                }).then((response) => {
+                    console.log(response)
+                     this.gooding = response.data.result
+                     this.rus = response.data.result.detailInfo.detailImage
+                    console.log(this.gooding)
+                    console.log(this.rus)
+                })
+                .catch((error) => {
+//                  console.log(error)
+                })
+		}
+	 },
 
 		mounted() {
 			this.$store.state.iid = this.$route.params.iid; //			console.log(this.$store.state.iid)
-			this.mores();
+//			this.mores();
 			this.discuss();
 			this.collect();
+			this.remen();
+			this.setDetail();
 			this.id = document.cookie.split('=')[1];
 		},
 		directives: {
