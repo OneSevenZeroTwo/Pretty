@@ -296,9 +296,13 @@
 					</li>
 				</ul>
 			</div>
-			<div class="footer_b">
-				<span class="buy-cart">加入购物车</span>
+			<div class="footer_b" >
+				<span class="buy-cart"  @click="buycar()">加入购物车</span>
 				<span class="buy-now">购买</span>
+
+			</div>
+			<div class="login" v-show="isshowload">
+				请登录
 			</div>
 		</div>
 	</div>
@@ -317,6 +321,7 @@
 				ccc: null,
 				bottomSheet: false,
 				noon: true,
+				isshowload:false
 			}
 		},
 		computed: {
@@ -326,12 +331,12 @@
 				return this.aaa;
 			},
 			cuss() {
-				console.log(this.$store.state.cuss)
+				// console.log(this.$store.state.cuss)
 				//				this.ccc = this.$store.state.cuss;
 				return this.$store.state.cuss;
 			},
 			rus() {
-				console.log(this.$store.state.rus)
+				// console.log(this.$store.state.rus)
 				this.bbb = this.$store.state.rus;
 				return this.bbb;
 			}
@@ -352,29 +357,43 @@
 			dating(data) {
 				switch (data){
 				    case 1:
-					window.scorllTop = this.$('.panel_a').offset().top + 'px';
-					console.log(this.$('.panel_a').offset().top)
+					document.body.scrollTop = this.$('.panel_a').offset().top;
+					// console.log(this.$('.panel_a').offset().top)
 					break;
 				    case 2:
-				    window.scorllTop = this.$('.panel_b').offset().top + 'px';
-				    console.log(this.$('.panel_b').offset().top)
+				    document.body.scrollTop = this.$('.panel_b').offset().top;
+				    // console.log(this.$('.panel_b').offset().top)
 				    break;
                     case 3:
-                    window.scorllTop = this.$('.panel_c').offset().top + 'px';
-                    console.log(this.$('.panel_c').offset().top)
+                    document.body.scrollTop = this.$('.panel_c').offset().top;
+                    // console.log(this.$('.panel_c').offset().top)
                     break;
                     case 4:
-                    window.scorllTop = this.$('.panel_d').offset().top + 'px';
-                    console.log(this.$('.panel_d').offset().top)
+                    document.body.scrollTop = this.$('.panel_d').offset().top;
+                    // console.log(this.$('.panel_d').offset().top)
                     break;
 			   }
 			},
+			buycar(){
+				var cookies = document.cookie;
+				var id;
+				if(cookies == ''){
+					this.isshowload = true;
+				}else{
+					this.isshowload = false;
+					id = cookies.split('=')[1];
+					// console.log(id)
+					// 发送ajax请求
+					
+				}
+			}
 		},
 		mounted() {
 			this.$store.state.iid = this.$route.params.iid;
 			//			console.log(this.$store.state.iid)
 			this.mores();
 			this.discuss();
+			this.buycar();
 		},
 		directives: {
 			does: {
@@ -398,7 +417,7 @@
 <style>
 	html,
 	body {
-		height: 100%;
+		/*height: 100%;*/
 		background: #fff;
 	}
 	
@@ -771,8 +790,8 @@
 	.buy-cart {
 		display: block;
 		width: 47%;
-		height: 50px;
-		line-height: 50px;
+		height: 60px;
+		line-height: 60px;
 		font-size: 12px;
 		color: #333;
 		background: #ffe817;
@@ -786,9 +805,9 @@
 		text-align: center;
 		color: #fff;
 		background: #f69;
-		width: 47%;
-		height: 50px;
-		line-height: 50px;
+		width: 53%;
+		height: 60px;
+		line-height: 60px;
 		font-size: 12px;
 	}
 	
@@ -1121,5 +1140,18 @@
 	}
 	.rate-root{
 		padding:5% 5%;
+	}
+	.login{
+		background: rgba(0,0,0,.5);
+		width: 100px;
+		height: 30px;
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		margin-left: -15px;
+		margin-top: -45px;
+		line-height: 30px;
+		text-align:center;
+		color:#fff;
 	}
 </style>

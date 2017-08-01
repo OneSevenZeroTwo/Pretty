@@ -360,7 +360,7 @@
 					if(fkAngle >= angle*1) {
 						clearInterval(ele.timer);
 						fkAngle = angle*1;
-						clearInterval(ele.timer);
+						clearInterval(timer);
 						console.log(timer)
 					}
 					ele.style.transform = "rotate(" + (fkAngle + 90) + "deg)";

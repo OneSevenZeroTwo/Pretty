@@ -5,7 +5,7 @@
 			<p></p>
 		</div>
 		<div class="list">
-			<ul class="list_log">
+			<ul class="list_log clearfix">
 				<li v-for="n in news">
 					<!--<p class="getId">{{n.link|time}}</p>-->
 					<a v-vid="n.link">
@@ -58,13 +58,15 @@
 	}
 </script>
 
-<style>
+<style >
 	.box-wrap{
+		background: #fff;
 		width:100%;
 	     height: 100%;
+	     /*padding-top: 20px;*/
 	}
 	.list{
-		margin-top: -10px;
+		/*margin-top: -10px;*/
 	}
 	.list_log{
 		border-top:1px solid #eee;
@@ -72,25 +74,29 @@
 	}
 	.list_log li{
 		width:25%;
-		height: 0;
-		list-style: none;
 		float: left;
-		overflow: hidden;
 		position: relative;
 		border-right: 1px solid #eee;
 		border-bottom: 1px solid #eee;
-		box-sizing:border-box;
-		padding-bottom: 32%;
+		/*box-sizing:border-box;*/
+		padding-bottom: 6%;
 		margin-bottom: 0;		
 	}
+	.list_log li a{
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
 	.list_a{
-		width: 56px;
-		height: 80px;
+		width: 76%;
+		height: 70%;
+		/*height: 80px;*/
+		margin-left: 12%;
 	}
 	.list_a img{
 		width: 100%;
 		display: block;
-		margin-left: 5px;
+		/*margin-left: 5px;*/
 	}
 	.list_b{
 		position: absolute;
@@ -108,17 +114,16 @@
 		background: rgba(255,255,255,0.8);
 	}
 	.wrap_a{
+		text-indent: 0.6em;
 		width:100%;
-		height: 31px;
-		overflow: hidden;
-		margin: 4% 2%;
+		/*height: 32px;*/
 	}
 	.wrap_a h3{
+		height: 64px;
+		line-height: 64px;
 		color: #333;
-		font-size: 0.64rem;
+		font-size: 16px;
 		font-weight: normal;
-		float: left;
-		/*margin-bottom:20px;*/
 	}
 	.wrap_a p{
 		color: #666;

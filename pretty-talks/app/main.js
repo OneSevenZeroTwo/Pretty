@@ -368,11 +368,11 @@ var store = new Vuex.Store({
                         iid: state.iid
                     }
                 }).then((response) => {
-                    console.log(response)
+                    // console.log(response)
                     state.gooding = response.data.result
                     state.rus = response.data.result.detailInfo.detailImage
-                    console.log(state.gooding)
-                    console.log(state.rus)
+                    // console.log(state.gooding)
+                    // console.log(state.rus)
                 })
                 .catch((error) => {
                     console.log(error)
@@ -386,7 +386,7 @@ var store = new Vuex.Store({
                     iid: state.iid
                 }
             }).then((response) => {
-                console.log(response)
+                // console.log(response)
                 state.cuss = response.data
                 console.log(state.cuss)
             })
