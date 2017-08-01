@@ -1,12 +1,12 @@
 <template>
-	<div class="box">
+	<div class="box clearfix ">
 	<div class="box-wrap">
 		<div class="wrap_a">
 			<h3>正在流行</h3>
 			<p></p>
 		</div>
 		<div class="list">
-			<ul class="list_log">
+			<ul class="list_log clearfix">
 				<li v-for="n in res">
 <!--					<p class="aaa">{{n.link|timer}}</p>-->
 					<a v-sore="n.link">
@@ -93,15 +93,25 @@
 </script>
 
 <style>
+	html,body{
+		background: #fff;
+	}
 	.box{
-		overflow: hidden;
+		background: #fff;
+		/*overflow: hidden;*/
 	}
 	.box-wrap{
 		width:100%;
 	     height: 100%;
 	}
+		.box-wrap{
+		background: #fff;
+		width:100%;
+	     height: 100%;
+	     /*padding-top: 20px;*/
+	}
 	.list{
-		margin-top: -10px;
+		/*margin-top: -10px;*/
 	}
 	.list_log{
 		border-top:1px solid #eee;
@@ -109,25 +119,27 @@
 	}
 	.list_log li{
 		width:25%;
-		height: 0;
-		list-style: none;
 		float: left;
-		overflow: hidden;
 		position: relative;
 		border-right: 1px solid #eee;
 		border-bottom: 1px solid #eee;
-		box-sizing:border-box;
-		padding-bottom: 32%;
+		/*box-sizing:border-box;*/
+		padding-bottom: 6%;
 		margin-bottom: 0;		
 	}
+	.list_log li a{
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
 	.list_a{
-		width: 56px;
-		height: 80px;
+		width: 76%;
+		height: 70%;
+		margin-left: 12%;
 	}
 	.list_a img{
 		width: 100%;
 		display: block;
-		margin-left: 5px;
 	}
 	.list_b{
 		position: absolute;
@@ -145,16 +157,16 @@
 		background: rgba(255,255,255,0.8);
 	}
 	.wrap_a{
+		text-indent: 0.6em;
 		width:100%;
-		overflow: hidden;
-		margin: 4% 2%;
+		/*height: 32px;*/
 	}
 	.wrap_a h3{
+		height: 36px;
+		line-height: 36px;
 		color: #333;
-		font-size: 0.64rem;
+		font-size: 16px;
 		font-weight: normal;
-		float: left;
-		/*margin:20px 0;*/
 	}
 	.wrap_a p{
 		color: #666;
@@ -166,6 +178,9 @@
 		width:100%;
 		height: 10px;
 		background: #eee;
-		margin-top: 413px;
+		/*margin-top: 413px;*/
+	}
+	.box-wrap{
+		margin-top: 10px;
 	}
 </style>

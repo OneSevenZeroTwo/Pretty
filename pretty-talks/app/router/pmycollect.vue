@@ -4,12 +4,12 @@
 		<div class="goods_wall">
 			<div class="theleft" v-for="n in list">
 				<a href="">
-					<img src="../../images/login&reg&mine/test.jpg" alt="" />
-					<p class="clothesTitle">套装 夏</p>
+					<img :src="n.image" alt="" />
+					<p class="clothesTitle">{{n.title}}</p>
 					<div class="figcaption">
-						<span class="price">￥35.00</span>
+						<span class="price">{{n.price}}</span>
 						<i class="material-icons">star_border</i>
-						<span>1640</span>
+						<span>{{n.cfav|cut}}</span>
 					</div>
 				</a>
 			</div>
@@ -49,18 +49,26 @@
 							'iid': goods[i],
 						}
 					}, ).then(res => {
-						this.list.push(res.data);
-						console.log(res)
+						this.list = this.list.concat(res.data);
 					}).catch(err => {})
 				}
 			})
 			.catch(err => {})
-			console.log(this.list)
+		},
+		filters:{
+			cut(value){
+				return value.slice(2,-1);
+			}
 		}
 	}
 </script>
 
 <style scoped>
+	.clothesTitle{
+		overflow: hidden;
+	    text-overflow: ellipsis;
+	    white-space: nowrap;
+	}
 	#thebody {
 		background-color: #fff;
 	}

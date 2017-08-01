@@ -68,11 +68,14 @@
 		-webkit-transform: rotate(270deg);
 		-o-transform: rotate(270deg);
 	}
+<<<<<<< HEAD
 
 	.animateDeg{
 		transition: all 0.5s;
 	}
 	
+=======
+>>>>>>> dbd7bc51bc0dce2eb002933f6a8c841debe2f51a
 	#captcha {
 		margin: 0 15px 0 15px;
 	}
@@ -306,6 +309,7 @@
 						    now.setDate(now.getDate() + 7);
 		                    document.cookie = 'id='+ res.data[0].id +';expires='+ now;
 		                    window.location.href = 'http://localhost:4399';
+//							console.log(res.data[0].id)
 						}
 					})
 					.catch(err => {
@@ -350,16 +354,14 @@
 				var ele = event.currentTarget;
 				ele.classList.remove('fail');
 				var arr = window.getComputedStyle(ele).transform.slice(7, -1).split(',');
-				var angle = getmatrix(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5]);
-				var fkAngle = (Number(angle) - 90);
+				var angle = Number(getmatrix(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5]));
+				var fkAngle = (angle - 90);
 
 				timer = setInterval(function() {
 					fkAngle++;
-					if(fkAngle >= angle*1) {
-						clearInterval(ele.timer);
-						fkAngle = angle*1;
-						clearInterval(ele.timer);
-						console.log(timer)
+					if(fkAngle >= angle) {
+						fkAngle = angle;
+						clearInterval(timer);
 					}
 					ele.style.transform = "rotate(" + (fkAngle + 90) + "deg)";
 				});

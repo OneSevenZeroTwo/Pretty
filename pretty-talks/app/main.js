@@ -107,10 +107,10 @@ var router = new VueRouter({
         }, {
             path: '/detail/:iid',
             component: Plong
-        }, {
-            path: '/listing/:pcid',
-            component: Plisting,
-        }, {
+       }, {
+          path: '/listing/:pcid',
+          component: Plisting,
+      }, {
             path: '/',
             redirect: 'index/home/list/pop/1'
         }
@@ -318,6 +318,49 @@ var store = new Vuex.Store({
                     //console.log("删除收货地址");
                 }).catch((err) => {})
         },
+        //分类
+		setNews(state) {
+			axios.get('http://localhost:999/fsort', {
+					params: {
+
+					},
+				})
+				.then((response) => {
+					console.log(response)
+					state.news = response.data.value
+					console.log(state.news)
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+		},
+		getActive(state, data) {
+			axios.get('http://localhost:999/active').then((data) => {
+				// 轮播图
+				state.carousel = data.data.data['43542'].list;
+				// 9.9包邮活动
+				state.special = data.data.data['13730'].list;
+				// 限时活动
+				state.liactive = data.data.data['42287'].list;
+				// 实现时间
+				state.litime = data.data.data['42287'].context.currentTime;
+			}).catch((err) => {
+
+			})
+		},
+		getList(state, data) {
+			axios.get('http://localhost:999/home', {
+				params: {
+					page: state.page,
+					sort: state.sort
+				}
+			}).then((data) => {
+				state.list = state.list.concat(data.data.data.list);
+				// console.log(data.data.data.list)
+			}).catch((err) => {
+
+			})
+		},
         setNews(state) {
             axios.get('http://localhost:999/fsort', {
                     params: {
@@ -325,6 +368,8 @@ var store = new Vuex.Store({
                     },
                 })
                 .then((response) => {
+                    state.news = response.data.value
+
                     state.news =response.data.value
                 })
                 .catch((error) => {
@@ -365,45 +410,64 @@ var store = new Vuex.Store({
                         pid: state.pid
                     }
                 }).then((response) => {
-                    console.log(response)
+//                  console.log(response)
                     //state.res = response.data.data
-                    console.log(state.res)
+//                  console.log(state.res)
                 })
                 .catch((error) => {
                     console.log(error)
                 })
 
         },
-        //详情页
         setDetail(state) {
             axios.get("http://localhost:999/main", {
                     params: {
                         iid: state.iid
                     }
                 }).then((response) => {
-                    console.log(response)
+                    // console.log(response)
                     state.gooding = response.data.result
                     state.rus = response.data.result.detailInfo.detailImage
-                    console.log(state.gooding)
-                    console.log(state.rus)
+                    // console.log(state.gooding)
+                    // console.log(state.rus)
                 })
                 .catch((error) => {
                     console.log(error)
                 })
         },
 
+
         //评论
         setCuss(state) {
             axios.get("http://localhost:999/discuss", {
+                    params: {
+                        iid: state.iid
+                    }
+                }).then((response) => {
+                    console.log(response)
+                    state.cuss = response.data
+                    console.log(state.cuss)
+                })
+        },      
+        //收藏
+        setColl(state) {
+            axios.get("http://localhost:999/collect", {
                 params: {
                     iid: state.iid
                 }
             }).then((response) => {
-                console.log(response)
+
+                // console.log(response)
                 state.cuss = response.data
                 console.log(state.cuss)
+
+                console.log(response)
+//              state.cuss = response.data
+//              console.log(state.cuss)
+
             })
         },
+
         // 分类2
         setChar(state) {
 
@@ -429,9 +493,9 @@ var store = new Vuex.Store({
                         pcid: state.pcid
                     }
                 }).then((response) => {
-                    //                  console.log(response)
-                    state.choose = response.data.data.list
-                    console.log(state.choose)
+                    console.log(response)
+                    state.choose = response.data
+//                  console.log(state.choose)
                 })
                 .catch((error) => {
                     console.log(error)
@@ -509,11 +573,12 @@ var store = new Vuex.Store({
         setChing(context, data) {
             context.commit('setChing')
         },
-
         setCuss(context, data) {
             context.commit('setCuss')
         },
-
+        setColl(context, data) {
+            context.commit('setColl')
+        },
     }
 
 

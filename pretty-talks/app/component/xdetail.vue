@@ -2,11 +2,11 @@
 	<div class="screen">
 		<!--轮播图-->
 		<swiper :options="swiperOption" ref="mySwiper">
-			<swiper-slide><img :src="gooding.itemInfo.topImages[0]" alt="" /></swiper-slide>
-			<swiper-slide><img :src="gooding.itemInfo.topImages[1]" alt="" /></swiper-slide>
-			<swiper-slide><img :src="gooding.itemInfo.topImages[2]" alt="" /></swiper-slide>
-			<swiper-slide><img :src="gooding.itemInfo.topImages[3]" alt="" /></swiper-slide>
-			<swiper-slide><img :src="gooding.itemInfo.topImages[4]" alt="" /></swiper-slide>
+			<swiper-slide><img :src="this.gooding.itemInfo.topImages[0]" alt="" /></swiper-slide>
+			<swiper-slide><img :src="this.gooding.itemInfo.topImages[1]" alt="" /></swiper-slide>
+			<swiper-slide><img :src="this.gooding.itemInfo.topImages[2]" alt="" /></swiper-slide>
+			<swiper-slide><img :src="this.gooding.itemInfo.topImages[3]" alt="" /></swiper-slide>
+			<swiper-slide><img :src="this.gooding.itemInfo.topImages[4]" alt="" /></swiper-slide>
 
 			<div class="swiper-pagination choose" slot="pagination">
 
@@ -15,16 +15,16 @@
 		<!--商品详情-->
 		<div class="info">
 			<div class="info_a">
-				{{gooding.itemInfo.title}}
+				{{this.gooding.itemInfo.title}}
 			</div>
 			<div class="info_b">
-				<span class="now">{{gooding.itemInfo.price}}</span>
+				<span class="now">{{this.gooding.itemInfo.price}}</span>
 			</div>
 			<div class="info_c">
-				<span class="item">{{gooding.columns[0]}}</span>
-				<span class="item">{{gooding.columns[1]}}</span>
-				<span class="item">{{gooding.itemInfo.extra.deliveryTime}}小时发货</span>
-				<span class="item">{{gooding.itemInfo.extra.sendAddress}}</span>
+				<span class="item">{{this.gooding.columns[0]}}</span>
+				<span class="item">{{this.gooding.columns[1]}}</span>
+				<span class="item">{{this.gooding.itemInfo.extra.deliveryTime}}小时发货</span>
+				<span class="item">{{this.gooding.itemInfo.extra.sendAddress}}</span>
 			</div>
 			<div class="info_d">
 				<ul class="ing">
@@ -112,19 +112,19 @@
 			<div class="tab_a">
 				<ul class="tab clearfix">
 					<li class="tab-item">
-						<span @click="dating(1)">图文详情</span>
+						<span v-settop="'panel_a'">图文详情</span>
 						<i></i>
 					</li>
 					<li class="tab-item">
-						<span @click="dating(2)">商品参数</span>
+						<span v-settop="'panel_b'">商品参数</span>
 						<i></i>
 					</li>
 					<li class="tab-item">
-						<span @click="dating(3)">评价()</span>
+						<span v-settop="'panel_c'">评价()</span>
 						<i></i>
 					</li>
 					<li class="tab-item">
-						<span @click="dating(4)">热卖推荐</span>
+						<span v-settop="'panel_d'">热卖推荐</span>
 						<i></i>
 					</li>
 				</ul>
@@ -225,8 +225,8 @@
 				</div>
 				<div class="rate-root" v-does="cuss">暂无评价</div>
 				<div class="rate-list">
-					
-					<div class="rate-user" >
+
+					<div class="rate-user">
 						<!--<span class="user-info">-->
 						<img :src="cuss[0].image==null?'':cuss[0].image" alt="" />
 						<span class="name">{{cuss[0].name=='null'?'':cuss[0].name}}</span>
@@ -253,19 +253,12 @@
 					<span>热卖推荐</span>
 				</div>
 				<div class="list">
-					<ul class="list_ch clearfix">
-						<li>
+					<ul class="list_ch clearfix" >
+						<li v-for="item in this.men">
 							<a href="#/detail">
-								<img src="http://s3.mogucdn.com/p2/170719/upload_6ag65c1lh04beda6b4kc706925cb5_640x900.jpg_320x999.webp">
-								<p class="li_title">2017夏季新款韩版宽松中长款拼接竖条纹a字裙荷叶边连衣裙女</p>
-								<p class="mo_price">￥68.75 <span class=" collect"></span></p>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<img src="http://s3.mogucdn.com/p2/170719/upload_6ag65c1lh04beda6b4kc706925cb5_640x900.jpg_320x999.webp">
-								<p class="li_title">2017夏季新款韩版宽松中长款拼接竖条纹a字裙荷叶边连衣裙女</p>
-								<p class="mo_price">￥68.75 <span class=" collect"></span><span class="count">456</span></p>
+								<img :src="item.image ">
+								<p class="li_title">{{item.title}}</p>
+								<p class="mo_price">{{item.price}} <span class=" collect"></span></p>
 							</a>
 						</li>
 					</ul>
@@ -288,19 +281,83 @@
 						</i>
 						<span class="text">店铺</span>
 					</li>
-					<li>
+					<li @click="Cool()">
 						<i class="icon">
-							<img src="../img/zan1.png" alt="" />
+							<img :src="src"  alt="" />
 						</i>
-						<span class="text">收藏</span>
+						<span class="text" >收藏</span>
 					</li>
 				</ul>
 			</div>
+<<<<<<< HEAD
+			<div class="footer_b" >
+				<span class="buy-cart"  @click="buycar()">加入购物车</span>
+=======
+			<div class="weui-toast" style="display: none;">
+				<i class="weui-icon-success-no-circle weui-icon_toast"></i>
+				<p class="weui-toast__content">已收藏</p>
+			</div>
 			<div class="footer_b">
-				<span class="buy-cart">加入购物车</span>
+				<span class="buy-cart" @click="openSheet">加入购物车</span>
+>>>>>>> 97e0faeb382b8a046ffa8cb3c6abaa5dc8db6753
 				<span class="buy-now">购买</span>
+
+			</div>
+			<div class="login" v-show="isshowload">
+				请登录
 			</div>
 		</div>
+		
+		<!--<div class="car">-->
+	<mu-bottom-sheet :open="Sheet" @close="closeSheet">
+	    <mu-list @itemClick="Sheet">
+			<div class="car_a">
+				<div class="cart">
+					<img src="http://s3.mogucdn.com/mlcdn/55cf19/170713_2dl5654kl9j4225687k055db7kg8k_640x960.jpg_160x240.v1cAC.jpg" alt="" />
+				</div>
+				<div class="show">
+					<span class="show_a">小翻领花边线排扣九分袖雪纺衫上衣</span>
+					<div class="show_b">
+					 <span class="price_a">¥60.00</span>
+					 <span class="price_b">库存
+					 	<span class="qty">99</span>
+					 	件
+					 </span>
+					</div>
+				</div>
+				<span class="close">╳</span>
+			</div>
+			<div class="scoll">
+				<div class="sku-list">
+				  <div class="list_a">
+				  	   <p>颜色：</p>
+				    <span class="yanse">白色</span>
+				  </div>
+				  <div class="list_b">
+				  	  <p>尺码：</p>
+				    <span class="yanse">均码</span>
+				  </div> 
+				</div>
+				<div class="sku-num">
+					<p class="title">数量：</p>
+					<div class="counter">
+						<span class="counter_a">
+							<b class="counter_a_a">－</b>
+						</span>
+						<em class="counter_a_b">1</em>
+						<span class="counter_a">
+							<b class="counter_a_c">＋</b>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="action" :open="Sheet" @click="closeSheet">
+				<span class="confirm">确定</span>
+			</div>
+		</mu-list>
+	</mu-bottom-sheet>
+		<!--</div>-->
+		
 	</div>
 </template>
 
@@ -316,32 +373,41 @@
 				bbb: null,
 				ccc: null,
 				bottomSheet: false,
+				Sheet: false,
 				noon: true,
+				isshowload:false
+				src: require("../img/zan1.png"),
+				id: null,
+				watch: true,
+				men:[],
+				gooding:[],
 			}
 		},
 		computed: {
-			gooding() {
-				//				console.log(this.$store.state.gooding)
-				this.aaa = this.$store.state.gooding;
-				return this.aaa;
-			},
 			cuss() {
-				console.log(this.$store.state.cuss)
+<<<<<<< HEAD
+			
+				return this.$store.state.cuss;
+			},
+			rus() {
+=======
+				// console.log(this.$store.state.cuss)
 				//				this.ccc = this.$store.state.cuss;
 				return this.$store.state.cuss;
 			},
 			rus() {
-				console.log(this.$store.state.rus)
+				// console.log(this.$store.state.rus)
+>>>>>>> 6a93078e6482af9c778966cd31267e69c2768d62
 				this.bbb = this.$store.state.rus;
 				return this.bbb;
-			}
+			},
 		},
 		methods: {
-			mores() {
-				this.$store.dispatch("setDetail")
-			},
 			discuss() {
 				this.$store.dispatch("setCuss")
+			},
+			collect() {
+				this.$store.dispatch("setColl")
 			},
 			closeBottomSheet() {
 				this.bottomSheet = false
@@ -352,53 +418,154 @@
 			dating(data) {
 				switch (data){
 				    case 1:
-					window.scorllTop = this.$('.panel_a').offset().top + 'px';
-					console.log(this.$('.panel_a').offset().top)
+					document.body.scrollTop = this.$('.panel_a').offset().top;
+					// console.log(this.$('.panel_a').offset().top)
 					break;
 				    case 2:
-				    window.scorllTop = this.$('.panel_b').offset().top + 'px';
-				    console.log(this.$('.panel_b').offset().top)
+				    document.body.scrollTop = this.$('.panel_b').offset().top;
+				    // console.log(this.$('.panel_b').offset().top)
 				    break;
                     case 3:
-                    window.scorllTop = this.$('.panel_c').offset().top + 'px';
-                    console.log(this.$('.panel_c').offset().top)
+                    document.body.scrollTop = this.$('.panel_c').offset().top;
+                    // console.log(this.$('.panel_c').offset().top)
                     break;
                     case 4:
-                    window.scorllTop = this.$('.panel_d').offset().top + 'px';
-                    console.log(this.$('.panel_d').offset().top)
+                    document.body.scrollTop = this.$('.panel_d').offset().top;
+                    // console.log(this.$('.panel_d').offset().top)
                     break;
 			   }
 			},
+			closeSheet() {
+				this.Sheet = false
+			},
+			openSheet() {
+				this.Sheet = true
+			},
+<<<<<<< HEAD
+
+=======
+>>>>>>> 6a93078e6482af9c778966cd31267e69c2768d62
+			Cool() {
+				this.watch = !this.watch
+				if(this.src == require("../img/zan1.png")) {
+					this.src = require("../img/zan2.png")
+                    document.querySelector('.weui-toast').style.display = 'block'
+				} else if(this.src == require("../img/zan2.png")) {
+					this.src = require("../img/zan1.png")
+					document.querySelector('.weui-toast').style.display = 'none'
+				}
+				
+				var res;
+				res = this.$store.state.iid
+				console.log(res)
+				this.$ajax.get("http://localhost:999/collect", {
+						params: {
+							id: this.id,
+							iid: res,
+						}
+				}).then((response) => {
+					
+			 })
+					.catch((error) => {
+						console.log(error)
+					})
+			},
+<<<<<<< HEAD
+		remen(){
+				this.$ajax.get("http://localhost:999/man", {
+						params: {
+					
+						}
+				}).then((response) => {
+//					console.log(response)
+					response.data.forEach((item,idx)=>{
+						if(item.hot >= 1){
+						 this.men.push(item)
+					  }
+						
+					})
+//					console.log(this.men)
+			 }).catch((error) => {
+						console.log(error)
+					})
+=======
+			buycar(){
+				var cookies = document.cookie;
+				var id;
+				if(cookies == ''){
+					this.isshowload = true;
+				}else{
+					this.isshowload = false;
+					id = cookies.split('=')[1];
+					// console.log(id)
+					// 发送ajax请求
+					
+				}
+			}
+>>>>>>> 6a93078e6482af9c778966cd31267e69c2768d62
 		},
+		setDetail(){
+			 this.$ajax.get("http://localhost:999/main", {
+                    params: {
+                        iid: this.$store.state.iid
+                    }
+                }).then((response) => {
+                    console.log(response)
+                     this.gooding = response.data.result
+                     this.rus = response.data.result.detailInfo.detailImage
+                    console.log(this.gooding)
+                    console.log(this.rus)
+                })
+                .catch((error) => {
+//                  console.log(error)
+                })
+		}
+	 },
+
 		mounted() {
-			this.$store.state.iid = this.$route.params.iid;
-			//			console.log(this.$store.state.iid)
-			this.mores();
+			this.$store.state.iid = this.$route.params.iid; //			console.log(this.$store.state.iid)
+//			this.mores();
 			this.discuss();
+			this.buycar();
+			this.collect();
+			this.remen();
+			this.setDetail();
+			this.id = document.cookie.split('=')[1];
 		},
 		directives: {
 			does: {
 				bind: function(el, binding, vnode) {
-					setTimeout(function(){
-						if(binding.value== 'id为空') {
+					setTimeout(function() {
+						if(binding.value == 'id为空') {
 							el.style.display = 'block';
 							document.querySelector('.rate-list').style.display = 'none';
 						} else {
 							el.style.display = 'none';
 							document.querySelector('.rate-list').style.display = 'block';
 						}
-					},20)
-						
+					}, 20)
+
 				}
-			}
+			},
+			settop: {
+                bind:function(el, binding) {
+                  el.onclick = function() {
+                   setTimeout(function(){
+                   	     document.body.scrollTop = document.querySelector(`.${binding.value}`).offsetTop;
+                        console.log(document.querySelector(`.${binding.value}`).offsetTop)
+                   },30)
+                       
+                  
+                }
+            }
+        }
 		}
 	}
 </script>
 
-<style>
+<style scoped>
 	html,
 	body {
-		height: 100%;
 		background: #fff;
 	}
 	
@@ -771,8 +938,8 @@
 	.buy-cart {
 		display: block;
 		width: 47%;
-		height: 50px;
-		line-height: 50px;
+		height: 60px;
+		line-height: 60px;
 		font-size: 12px;
 		color: #333;
 		background: #ffe817;
@@ -782,13 +949,13 @@
 	.buy-now {
 		display: block;
 		margin-left: 47%;
-		margin-top: -30%;
+		margin-top: -29%;
 		text-align: center;
 		color: #fff;
 		background: #f69;
-		width: 47%;
-		height: 50px;
-		line-height: 50px;
+		width: 53%;
+		height: 60px;
+		line-height: 60px;
 		font-size: 12px;
 	}
 	
@@ -1119,7 +1286,126 @@
 		color: #fff;
 		margin-top: 4%;
 	}
-	.rate-root{
-		padding:5% 5%;
+	
+	.rate-root {
+		padding: 5% 5%;
 	}
+	.car_a{
+		margin:0 2%;
+		display: -webkit-box;
+	    background: #fff;
+	    padding: 2% 0;
+	    border-bottom:1px solid #f2f5f8;
+	    overflow: auto;
+	}
+	.cart{
+		display: block;
+		width: 22%;
+		height:6%;
+		position: relative;
+	}
+	.cart img{
+		width: 100%;
+		height: 100%;
+	}
+	.show{
+		margin-left: 3%;
+		width: 57%;
+		height: 20%;
+		display: block;
+	}
+	.price_a{
+	    color:#f69;
+	    font-size: 14px;
+	}
+	.price_b{
+		font-size: 14px;
+	}
+	.list_a{
+		margin-top: 4%;
+		border-bottom: 1px solid #f2f5f8;
+	}
+	.yanse{
+		color: #fff;
+		background-color: #f69;
+		display: inline-block;
+		height: 5%;
+		padding: 0 15px;
+		margin-right: 3%;
+		margin-bottom: 3%;
+		font-size: 14px;
+	}
+	.login{
+		background: rgba(0,0,0,.5);
+		width: 100px;
+		height: 30px;
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		margin-left: -15px;
+		margin-top: -45px;
+		line-height: 30px;
+		text-align:center;
+		color:#fff;
+	}
+	.list_b{
+		margin-top:4%;
+		border-bottom: 1px solid #f2f5f8;
+	}
+    .sku-num{
+    	margin-bottom: 15px;
+    }
+    .title{
+    	line-height: 16px;
+    	margin-bottom: 7px;
+    }
+    .counter{
+    	height: 6%;
+    }
+    .counter_a{
+    	width: 4%;
+	    height: 27px;
+	    background-color: #f8f8f8;
+	    display: inline-block;
+	    text-align: center;
+	    line-height: 27px;
+    }
+   .counter_a_b{
+    	color: #333;
+	    width: 4%;
+	    height: 27px;
+	    background-color: #f8f8f8;
+	    display: inline-block;
+	    text-align: center;
+	    line-height: 27px;
+    }
+    .counter_a_c{
+    	width: 4%;
+	    height: 27PX;
+	    background-color: #f8f8f8;
+	    display: inline-block;
+	    text-align: center;
+	    line-height: 27px;
+    }
+    .confirm{
+    	font-size: 14px;
+	    text-align: center;
+	    color: #fff;
+	    background-color: #f69;
+	    display: block;
+	    height: 39px;
+	    line-height: 39px
+    }
+    .close{
+    	color: #bbb;
+	    font-size: 14px;
+	    font-family: serif;
+	    position: absolute;
+	    right: 2%;
+	    top: 2%;
+	    text-align: right;
+	    cursor: pointer;
+	    width: 3%;
+	    height: 30px;
+    }
 </style>

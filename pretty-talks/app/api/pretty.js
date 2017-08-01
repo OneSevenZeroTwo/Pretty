@@ -135,22 +135,36 @@ app.get('/main', function(request, response) {
 });
 
 //列表页1
-app.get('/choose', function(request, response) {
-    response.append("Access-Control-Allow-Origin", "*");
-    var Id = request.query
-    https.get(`https://list.meilishuo.com/search?frame=1&page=2&sort=pop&cKey=wap-cate&tag=&maxPrice=&minPrice=&wxPrice=&uq=&_mgjuuid=0c4bc0f3-120f-4ac1-9cc7-1baef82f0505&fcid=${Id.fcid}&trace=0&cpc_offset=0&_=1501228522843`, function(res) {
-        var data = '';
-        res.on('data', function(chunk) {
-            data += chunk;
-        })
-        res.on('end', function() {
-            response.end(data)
-        })
+app.get('/choose', function(req, res) {
+    res.append("Access-Control-Allow-Origin", "*");
+    createConnection();
+    connection.connect();
+    var fcid = req.query.pcid;
+    console.log(req.query)
+    connection.query(`SELECT * FROM goodlist where fcid="${fcid}"`, function(error, results, fields) {
+       if (error) { throw error };
+
+        res.send(results);
     })
-
+    connection.end();
 })
-// 下载头像到本地
 
+//热门
+app.get('/man', function(req, res) {
+    res.append("Access-Control-Allow-Origin", "*");
+    createConnection();
+    connection.connect();
+//  var fc = req.query.iid;
+//  console.log(req.query)
+    connection.query(`SELECT * FROM goodlist`, function(error, results, fields) {
+       if (error) { throw error };
+       
+        res.send(results);
+    })
+    connection.end();
+})
+
+// 下载头像到本地
 app.post('/sethead', upload.any(), function(req, res, next) {	
 	res.append('Access-Control-Allow-Origin','*');
 	res.send({
@@ -179,7 +193,7 @@ app.get('/discuss', function(req, res) {
     createConnection();
     connection.connect();
     var IId = req.query;
-    console.log(IId)
+//  console.log(IId)
     connection.query(`SELECT * FROM discuss where iid="${IId.iid}"`, function(error, results, fields) {
         if (error) { throw error };
         
@@ -191,6 +205,53 @@ app.get('/discuss', function(req, res) {
     });
     connection.end();
 });
+
+//收藏
+app.get('/collect', function(req, res) {
+    res.append('Access-Control-Allow-Origin', '*');
+    
+    var goId = req.query;
+   createConnection();
+connection.connect();
+    console.log(goId)
+//  connection.query(`SELECT * FROM users where id="${goId.id}"`, function(error, results, fields) {
+//      var obj = {
+//          list: results
+//      };
+//      var res = null;
+//      var chang = JSON.parse(JSON.stringify(obj)).list[0].iid
+//      if(chang == null){
+//      	chang = goId.iid
+//      }else{
+//      	chang += ',' + goId.iid
+//      }
+//      if(results.length == 1){
+//      	connection.query(`UPDATE users SET iid="${chang}" WHERE id=${goId.id}`, function(error, results, fields) {
+//      		if (error) { throw error };
+//      		
+//  });
+//      }
+//      
+//      console.log(JSON.parse(JSON.stringify(obj)).list[0].iid)
+////      res.send(results) 
+//  });
+//  connection.end();
+});
+
+//app.get('/case', function(req, res) {
+//  res.append('Access-Control-Allow-Origin', '*');
+//  createConnection();
+//  connection.connect();
+//  var collId = req.query;
+//  console.log(collId)
+//  connection.query(`UPDATE users SET iid="${collId.iid}" where id=${collId.id}`, function(error, results, fields) {
+//      if (error) { 
+//      	throw error
+//      }
+//      res.send('ok') 
+//  });
+//  connection.end();
+//});
 
 app.get('/seek', function(request, response) {
     response.append("Access-Control-Allow-Origin", "*");
@@ -237,6 +298,7 @@ app.get('/getstar', function(request, response) {
 
     connection.end();
 });
+
 
 app.listen(999, function() {
     console.log('打开999端口')
