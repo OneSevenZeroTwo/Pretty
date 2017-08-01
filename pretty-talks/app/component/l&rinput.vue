@@ -14,7 +14,7 @@
 				</p>
 				<ul>
 					<ul>
-						<li class="theLi" @click="changeDeg($event)" v-for="n in theArr" :class="n.class">
+						<li class="theLi" v-for="n in theArr" :class="n.class" @click="changeDeg($event)">
 							<img :src="n.url" />
 						</li>
 					</ul>
@@ -68,7 +68,13 @@
 		-webkit-transform: rotate(270deg);
 		-o-transform: rotate(270deg);
 	}
+<<<<<<< HEAD
+=======
+	.animateDeg{
+		transition: all 0.5s;
+	}
 	
+>>>>>>> ffdd55afb2e53391a58e5f381cb48b90dd0a1185
 	#captcha {
 		margin: 0 15px 0 15px;
 	}
@@ -342,18 +348,21 @@
 				this.dialog = false
 			},
 			changeDeg(event) {
-				clearInterval(this.timer);
+				var timer;
+				clearInterval(timer);
 				var ele = event.currentTarget;
 				ele.classList.remove('fail');
 				var arr = window.getComputedStyle(ele).transform.slice(7, -1).split(',');
 				var angle = getmatrix(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5]);
 				var fkAngle = (Number(angle) - 90);
 
-				var timer = setInterval(function() {
+				timer = setInterval(function() {
 					fkAngle++;
-					if(fkAngle >= angle) {
-						fkAngle = angle;
-						clearInterval(timer);
+					if(fkAngle >= angle*1) {
+						clearInterval(ele.timer);
+						fkAngle = angle*1;
+						clearInterval(ele.timer);
+						console.log(timer)
 					}
 					ele.style.transform = "rotate(" + (fkAngle + 90) + "deg)";
 				});
@@ -433,6 +442,5 @@
 					break;
 			}
 		},
-
 	}
 </script>

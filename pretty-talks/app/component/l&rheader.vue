@@ -1,17 +1,22 @@
 <template>
 	<header>
 		<div>
-			<img src="../../images/login&reg&mine/back.png" />
+			<a href="javascript:history.go(-1)">
+				<img src="../../images/login&reg&mine/back.png" />
+			</a>
 		</div>
 		<div class="mid">
 			<a href="">{{theHeader.title}}</a>
 		</div>
 		<div>
-			<a :href='theHeader.theHref' @click="quit">{{theHeader.rightBtn}}</a>
+			<a :href='theHeader.theHref' @click="quit">
+				{{theHeader.rightBtn}}
+				<i class="material-icons" v-show="theHeader.car">local_grocery_store</i>
+			</a>
 		</div>
 	</header>
 </template>
-<style>
+<style scoped>
 	header {
 		height: 45px;
 		width: 100%;

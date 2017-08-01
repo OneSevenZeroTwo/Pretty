@@ -41,4 +41,13 @@ var Rconnection;
 		Rconnection.end();
 		});
 	});
+	
+	app.get('/delorders', function(req,res){
+		res.append("Access-Control-Allow-Origin", "*");
+		Rconnection = createConnection();
+		Rconnection.query(`UPDATE carlist SET orders='0' WHERE id="${req.query.id}"`,function(error,results,fields) {	
+		res.send(results);
+		Rconnection.end();
+		});
+	});
 }

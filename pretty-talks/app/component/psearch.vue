@@ -51,9 +51,14 @@
                 return this.$store.state.searchlist
             }
 		},
+        methods:{
+            showfind(){
+                
+            }
+        },
         filters:{
             ten(input){
-                console.log(input.slice(0,10))
+                // console.log(input.slice(0,10))
                 return input.slice(0,10)
             }
         }

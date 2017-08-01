@@ -1,11 +1,14 @@
 <template>
-	<div>
+	<div  id="thebody">
 		<lrHeader :theHeader='headerMsg'></lrHeader>
 		<router-view></router-view>
 	</div>
 </template>
 
 <style>
+	#thebody{
+		background-color: #fff;
+	}
 </style>
 
 <script>
@@ -16,7 +19,9 @@
 			return {
 				headerMsg:{
 					title:'注册',
-					rightBtn:'首页'
+					rightBtn:'首页',
+					car:'false',
+					theHref:'#/'
 				}
 			}
 		},
