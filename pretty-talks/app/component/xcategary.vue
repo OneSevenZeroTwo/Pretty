@@ -59,6 +59,10 @@
 </script>
 
 <style >
+<style>
+	html,body{
+		background: #fff;
+	}
 	.box-wrap{
 		background: #fff;
 		width:100%;
@@ -92,11 +96,14 @@
 		height: 70%;
 		/*height: 80px;*/
 		margin-left: 12%;
+		width: 70%;
+		/*height: 80px;*/
 	}
 	.list_a img{
 		width: 100%;
 		display: block;
 		/*margin-left: 5px;*/
+		/*margin-left:17%;*/
 	}
 	.list_b{
 		position: absolute;

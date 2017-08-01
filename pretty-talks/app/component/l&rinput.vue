@@ -308,6 +308,7 @@
 						    now.setDate(now.getDate() + 7);
 		                    document.cookie = 'id='+ res.data[0].id +';expires='+ now;
 		                    window.location.href = 'http://localhost:4399';
+//							console.log(res.data[0].id)
 						}
 					})
 					.catch(err => {

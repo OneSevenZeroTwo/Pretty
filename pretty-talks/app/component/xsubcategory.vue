@@ -93,6 +93,9 @@
 </script>
 
 <style>
+	html,body{
+		background: #fff;
+	}
 	.box{
 		background: #fff;
 		/*overflow: hidden;*/
@@ -132,13 +135,11 @@
 	.list_a{
 		width: 76%;
 		height: 70%;
-		/*height: 80px;*/
 		margin-left: 12%;
 	}
 	.list_a img{
 		width: 100%;
 		display: block;
-		/*margin-left: 5px;*/
 	}
 	.list_b{
 		position: absolute;
