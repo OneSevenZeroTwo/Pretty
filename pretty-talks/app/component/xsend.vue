@@ -36,10 +36,10 @@
 		<div class="list">
 			<ul class="list_ch clearfix">
 				<li v-for="good in choose">
-					<a href="#/detail/">
-						<img :src="good.show.img">
+                         <a :href="'#/detail/'+good.iid">
+						<img :src="good.image">
 						<div class="youhui">
-						<img :src="good.leftbottom_taglist" alt=""  />
+						<!--<img :src="good.leftbottom_taglist" alt=""  />-->
 						</div>
 						<p class="li_title">{{good.title}}</p>
 						<p class="mo_price">{{good.price}}</p>
@@ -59,26 +59,15 @@
 		},
 		computed: {
 			choose() {
-//				console.log(this)
+				console.log(this.$store.state.choose)
 			    return this.$store.state.choose;
 			}
 		},
 		methods: {
-			moring() {
-				this.$store.dispatch("setChoose")
-			},
-			loading(){
-//				if(this.$store.state.sented==true){
-//					this.$store.state.sented=false;
-//				}else{
-//					this.$store.state.sented=true
-//				}
-//				console.log(this.$store.state.sented)
-               
-			}
 		},
 		mounted() {
-			this.moring();
+			this.$store.state.pcid = this.$route.params.pcid;
+			this.$store.dispatch("setChoose")
 		},
 	}
 </script>
@@ -128,6 +117,7 @@
 		visibility: visible;
 		opacity: 1;
 		overflow: hidden;
+		display: none;
 	}
 	
 	.price {

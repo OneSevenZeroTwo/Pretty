@@ -18,7 +18,7 @@
 				</a>
 				</div>
 			</div>
-			<div class="hide-tab">
+			<div class="hide-tab" v-show="sented">
 				<div class="price">
 					<p class="price-b">0-30</p>
 					<p class="price-b">30-60</p>
@@ -37,9 +37,9 @@
 			<ul class="list_ch clearfix">
 				<li v-for="good in choose">
                          <a :href="'#/detail/'+good.iid">
-						<img :src="good.show.img">
+						<img :src="good.image">
 						<div class="youhui">
-						<img :src="good.leftbottom_taglist" alt=""  />
+						<!--<img :src="good.leftbottom_taglist" alt=""  />-->
 						</div>
 						<p class="li_title">{{good.title}}</p>
 						<p class="mo_price">{{good.price}}</p>
@@ -52,19 +52,22 @@
 </template>
 <script>
 	export default {
+		data(){
+			return{
+				sented:true,
+			}
+		},
 		computed: {
 			choose() {
-//				console.log(this)
+				console.log(this.$store.state.choose)
 			    return this.$store.state.choose;
 			}
 		},
 		methods: {
-			moring() {
-				this.$store.dispatch("setChoose")
-			},
 		},
 		mounted() {
-			this.moring();
+			this.$store.state.pcid = this.$route.params.pcid;
+			this.$store.dispatch("setChoose")
 		},
 	}
 </script>
@@ -77,9 +80,10 @@
 	.tags {
 		width: 100%;
 		height: 5%;
+		line-height: 5%;
 		position: fixed;
 		left: 1%;
-		margin-top: 2%;
+		top:0;
 		overflow: hidden;
 	}
 	
@@ -106,6 +110,7 @@
 		visibility: visible;
 		opacity: 1;
 		overflow: hidden;
+		display: none;
 	}
 	
 	.price {

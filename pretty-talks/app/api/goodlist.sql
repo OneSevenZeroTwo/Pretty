@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50714
 File Encoding         : 65001
 
-Date: 2017-07-30 20:48:07
+Date: 2017-08-01 11:02:48
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -41,7 +41,7 @@ CREATE TABLE `goodlist` (
 -- Records of goodlist
 -- ----------------------------
 INSERT INTO `goodlist` VALUES ('14', '收藏228人', 'http://s3.mogucdn.com/p2/170721/upload_8e3c1g732606b57ieahk9f0k35i9i_640x900.jpg_320x999.jpg', '￥66.25', '条纹连衣裙 收腰 拼接 开叉 新款', 'pop', '销量 18', '广东 广州', '1', '10058482', '23020', '1kgb21q', null, '2017-07-28 20:54:34');
-INSERT INTO `goodlist` VALUES ('16', '收藏129人', 'http://s3.mogucdn.com/p2/170117/upload_5jebi0af8537id564g95ehj0g781k_1125x647.jpg', '￥62.50', '夏季新款韩版赫本风纯色一字领收腰连衣裙', 'pop', '销量 36', '广东 广州', '1', '10058482', '23020', '1kg8mtw', null, '2017-07-28 21:05:46');
+INSERT INTO `goodlist` VALUES ('16', '收藏129人', 'http://s3.mogucdn.com/p2/170726/upload_7e25hc9g5ddf1l8hd659khgdhcl7j_640x900.jpg_640x960.v1cOK.81.jpg', '￥62.50', '夏季新款韩版赫本风纯色一字领收腰连衣裙', 'pop', '销量 36', '广东 广州', '1', '10058482', '23020', '1kg8mtw', null, '2017-07-28 21:05:46');
 INSERT INTO `goodlist` VALUES ('18', '收藏369人', 'http://s17.mogucdn.com/p2/170718/upload_76812521ge2e3l7k6aegh24kdf3c8_640x900.jpg_640x960.v1cOK.81.jpg', '￥76.8', '2017夏新款女装韩版时尚气质休闲露肩宽松A字连衣裙', 'pop', '销量 20', '广东 广州', '0', '10058482', '23020', '1kgabxy', null, '2017-07-29 09:11:41');
 INSERT INTO `goodlist` VALUES ('19', '收藏166人', 'http://s3.mogucdn.com/p2/170718/upload_50k5kkk46l5c7cl80a9j8lglia24f_640x900.jpg_640x960.v1cOK.81.jpg', '￥54.8', '复古一字肩交叉绑带棉麻连衣裙', 'pop', '销量 37', '江苏 南京', '0', '10058482', '23020', '1kg80rg', null, '2017-07-29 09:11:59');
 INSERT INTO `goodlist` VALUES ('20', '收藏234人', 'http://s3.mogucdn.com/p2/170725/upload_6kkchfbf3chl32e35hd1d92e91609_640x900.jpg_640x960.v1cOK.81.jpg', '￥65.88', '女装夏季2017新款一字肩裙子个性露肩连衣裙女夏', 'pop', '销量 23', '广东 广州', '1', '10058482', '23020', '1kg7oxq', null, '2017-07-29 09:12:11');
@@ -128,7 +128,6 @@ INSERT INTO `goodlist` VALUES ('100', '收藏333人', 'http://s3.mogucdn.com/mlc
 INSERT INTO `goodlist` VALUES ('101', '收藏94人', 'http://s11.mogucdn.com/mlcdn/c45406/170607_8919e7a1h8la1j5a4i682e464553l_640x640.jpg', '¥28.00', '情侣装短袖t恤女宽松夏新款韩版学生班服大码女体恤网红同款上衣', 'pop', '销量 651', '广东省揭阳市', '0', '10057096', '23023', '1kd57o2', null, '2017-07-30 14:31:07');
 INSERT INTO `goodlist` VALUES ('102', '收藏237人', 'http://s3.mogucdn.com/p2/170728/upload_701akk08je236kj7jb5i0g6732g69_640x900.jpg', '¥48.75', '露肩上衣女夏2017新款性感心机针织衫设计感宽松T恤学生', 'pop', '销量 1', '广东 广州', '1', '10057096', '23023', '1kggvo8', null, '2017-07-30 14:31:17');
 INSERT INTO `goodlist` VALUES ('103', '收藏186人', 'http://s3.mogucdn.com/p2/170727/upload_183365a025ebf2id7ji97d883k959_640x900.jpg', '¥21.25', '字母印花宽松学院风学生软萌百搭圆领纯色打底衫', 'pop', '销量 27', '广东 广州', '0', '10057096', '23023', '1kggil2', null, '2017-07-30 14:31:26');
-INSERT INTO `goodlist` VALUES ('104', '收藏406人', 'http://s3.mogucdn.com/p2/170310/upload_2ih829edj3c2chfik941dga767hcl_800x1200.jpg', '¥47.50', 'baby同款明星2017夏季学生宽松上衣亮片字母半截袖T恤女', 'pop', '销量 25', '广东 广州', '0', '10057096', '23023', '1kge8f6', null, '2017-07-30 14:31:37');
 INSERT INTO `goodlist` VALUES ('105', '收藏470人', 'http://s3.mogucdn.com/p2/170718/upload_86bi3c1jac179lci898bc7l087313_640x900.jpg', '¥20.00', 't恤女2017夏季韩版印花宽松学生装半袖体恤上衣服百搭打底衫', 'pop', '销量 42', '广东 广州', '0', '10057096', '23023', '1kg7u12', null, '2017-07-30 14:31:49');
 INSERT INTO `goodlist` VALUES ('106', '收藏871人', 'http://s3.mogucdn.com/p2/170706/upload_54b35hf285412d47a84kckiaeb6dd_1575x2216.jpg', '¥61.25', '【买手款】菠萝拼接不规则宽松下摆喇叭袖袖宽松娃娃衫t恤', 'pop', '销量 66', '广东 广州', '0', '10057096', '23023', '1kf0v2a', null, '2017-07-30 14:31:58');
 INSERT INTO `goodlist` VALUES ('107', '收藏2909人', 'http://s3.mogucdn.com/p2/170218/868843636_8fdiai2l3c771b025hb17e707d82e_640x960.jpg', '¥29.88', '夏日必备新款宽松简约短袖圆领打底衫女纯白色常规基本款纯棉T恤', 'pop', '销量 1917', '浙江 杭州', '1', '10057096', '23023', '1kb0md2', null, '2017-07-30 14:32:12');
