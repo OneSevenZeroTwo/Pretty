@@ -69,12 +69,13 @@
 		-o-transform: rotate(270deg);
 	}
 <<<<<<< HEAD
-=======
+
 	.animateDeg{
 		transition: all 0.5s;
 	}
 	
->>>>>>> ffdd55afb2e53391a58e5f381cb48b90dd0a1185
+=======
+>>>>>>> dbd7bc51bc0dce2eb002933f6a8c841debe2f51a
 	#captcha {
 		margin: 0 15px 0 15px;
 	}
@@ -353,16 +354,14 @@
 				var ele = event.currentTarget;
 				ele.classList.remove('fail');
 				var arr = window.getComputedStyle(ele).transform.slice(7, -1).split(',');
-				var angle = getmatrix(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5]);
-				var fkAngle = (Number(angle) - 90);
+				var angle = Number(getmatrix(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5]));
+				var fkAngle = (angle - 90);
 
 				timer = setInterval(function() {
 					fkAngle++;
-					if(fkAngle >= angle*1) {
-						clearInterval(ele.timer);
-						fkAngle = angle*1;
+					if(fkAngle >= angle) {
+						fkAngle = angle;
 						clearInterval(timer);
-						console.log(timer)
 					}
 					ele.style.transform = "rotate(" + (fkAngle + 90) + "deg)";
 				});

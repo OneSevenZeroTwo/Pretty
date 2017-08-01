@@ -118,6 +118,7 @@
 		padding: 0;
 	}
 	.list_log li{
+		height: 106px;
 		width:25%;
 		float: left;
 		position: relative;

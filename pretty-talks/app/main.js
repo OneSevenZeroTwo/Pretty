@@ -153,6 +153,7 @@ var store = new Vuex.Store({
         isshowsearch: false,
         isshowtsea: true,
         searchlist: [],
+        user_id:null,
     },
 
     getters: {
@@ -163,13 +164,17 @@ var store = new Vuex.Store({
     mutations: {
         //获取购物车列表数据
         getCarList(state) {
-            axios.get("http://localhost:999/read")
+            axios.get("http://localhost:999/read",{
+                params:{
+                    user_id:state.user_id,
+                }
+            })
                 .then((res) => {
                     state.carList = res.data;
                     state.isChecked = state.carList.map(function(item) {
                         return item.id;
                     });
-                    console.log("默认选中项",state.isChecked);
+                    //console.log("默认选中项",state.isChecked);
                 }).catch((err) => {})
         },
         //修改购物车列表选中项数据
@@ -181,14 +186,14 @@ var store = new Vuex.Store({
                     }
                 })
                 .then((res) => {
-                    console.log("数量写入成功");
+                    //console.log("数量写入成功");
                 }).catch((err) => {})
         },
         //修改购物车列表选中项数据
         setCarListOrder0(state) {
             axios.get("http://localhost:999/writeOrder0")
                 .then((res) => {
-                    console.log("不加入订单");
+                    //console.log("不加入订单");
                 }).catch((err) => {})
         },
         //修改购物车列表选中项数据
@@ -199,7 +204,7 @@ var store = new Vuex.Store({
             	}
             })
                 .then((res) => {
-                    console.log("加入订单");
+                    //console.log("加入订单");
                 }).catch((err) => {})
         },
         //删除购物车列表选中项数据
@@ -210,7 +215,7 @@ var store = new Vuex.Store({
                     }
                 })
                 .then((res) => {
-                    console.log("数据删除成功");
+                    //console.log("数据删除成功");
                 }).catch((err) => {})
         },
         //设置收货地址
@@ -221,16 +226,20 @@ var store = new Vuex.Store({
                     }
                 })
                 .then((res) => {
-                    console.log("设置收货地址成功");
+                    //console.log("设置收货地址成功");
                 }).catch((err) => {})
         },
         //获取收货地址列表
         getAddrList(state) {
-            axios.get("http://localhost:999/getAddr")
+            axios.get("http://localhost:999/getAddr",{
+                params:{
+                    user_id:state.user_id,
+                }
+            })
                 .then((res) => {
-                    //console.log(state.useAddrId);
+                    ////console.log(state.useAddrId);
                     if (state.useAddrId == null) {
-                        //console.log("res.data", res.data);
+                        ////console.log("res.data", res.data);
                         let isDefaults = null;
                         res.data.forEach((item,idx) => {
                         	if(item.isDefault == 1){
@@ -239,13 +248,13 @@ var store = new Vuex.Store({
                         });
                         res.data.splice(0,0,isDefaults[0]);
                         state.addrList = res.data;
-						console.log("全部地址",state.addrList);
+						//console.log("全部地址",state.addrList);
 
                     } else {
                         res.data.forEach((item) => {
                             if (item.id == state.useAddrId) {
                                 state.addrList = item;
-                                console.log("默认地址",state.addrList);
+                                //console.log("默认地址",state.addrList);
                             }
                         })
                     }
@@ -253,12 +262,16 @@ var store = new Vuex.Store({
         },
         //获取订单页收货地址
         getOrderAddr(state) {
-            axios.get("http://localhost:999/getOrderAddr")
+            axios.get("http://localhost:999/getOrderAddr",{
+                params:{
+                    user_id:state.user_id,
+                }
+            })
                 .then((res) => {
                     res.data.forEach((item) => {
                         if (item.isDefault == 1) {
                             state.addrList = item;
-                            console.log("订单页-收货地址",state.addrList);
+                            //console.log("订单页-收货地址",state.addrList);
                         }
                     })
 
@@ -273,14 +286,14 @@ var store = new Vuex.Store({
                     }
                 })
                 .then((res) => {
-                    console.log("修改收货地址成功");
+                    //console.log("修改收货地址成功");
                 }).catch((err) => {})
         },
         //修改收货地址默认值0
         isnomodifyAddr(state) {
             axios.get("http://localhost:999/isnomodifyAddr")
                 .then((res) => {
-                    console.log("默认值全部为0");
+                    //console.log("默认值全部为0");
                 }).catch((err) => {})
         },
         //修改收货地址默认值1
@@ -291,7 +304,7 @@ var store = new Vuex.Store({
                     }
                 })
                 .then((res) => {
-                    console.log("选中项默认值为1");
+                    //console.log("选中项默认值为1");
                 }).catch((err) => {})
         },
         //删除收货地址
@@ -302,7 +315,7 @@ var store = new Vuex.Store({
                     }
                 })
                 .then((res) => {
-                    console.log("删除收货地址");
+                    //console.log("删除收货地址");
                 }).catch((err) => {})
         },
         //分类
@@ -360,7 +373,7 @@ var store = new Vuex.Store({
                     state.news =response.data.value
                 })
                 .catch((error) => {
-                    console.log(error);
+                    //console.log(error);
                 });
         },
         getActive(state, data) {
@@ -397,16 +410,15 @@ var store = new Vuex.Store({
                         pid: state.pid
                     }
                 }).then((response) => {
-                    console.log(response)
+//                  console.log(response)
                     //state.res = response.data.data
-                    console.log(state.res)
+//                  console.log(state.res)
                 })
                 .catch((error) => {
                     console.log(error)
                 })
 
         },
-        //详情页
         setDetail(state) {
             axios.get("http://localhost:999/main", {
                     params: {
@@ -423,6 +435,7 @@ var store = new Vuex.Store({
                     console.log(error)
                 })
         },
+
 
         //评论
         setCuss(state) {

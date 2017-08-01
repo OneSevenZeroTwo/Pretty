@@ -57,7 +57,7 @@ export default {
         },
         onTop() {
             window.addEventListener('scroll', () => {
-                if (window.scrollY >= 2567) {
+                if (window.scrollY >= 2490) {
                     this.isontop = true;
                 } else {
                     this.isontop = false;
@@ -94,7 +94,6 @@ export default {
 </script>
 <style>
 .list {
-
     background: #fff;
     margin-top: 10px;
 }
@@ -105,6 +104,7 @@ export default {
     position: fixed;
     top: 0;
     margin-top: 0;
+    z-index: 1000;
 }
 
 .lnav li {

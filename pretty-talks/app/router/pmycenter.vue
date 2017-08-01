@@ -6,7 +6,7 @@
 				<div class="img_innner">
 					<img :src="userimg">
 				</div>
-				<p>{{username}}</p>
+				<p @click="login">{{username}}</p>
 			</div>
 			<div class="list">
 				<a href="#/mycollect"><span class="num" id="myLove">{{this.star}}</span>收藏的宝贝</a>
@@ -80,8 +80,9 @@
 			return {
 				orderData: null,
 				show: true,
-				username: '未登录',
+				username: '点击登录',
 				star:'0',
+				login:'',
 				userimg: require('../../images/login&reg&mine/step2.png'),
 				activeTab: 'tab1',
 				headerMsg: {
@@ -112,6 +113,7 @@
 		mounted() {
 			var theId = document.cookie.split('=')[1];
 			if(theId) {
+				this.login = function(){}
 				this.show = false;
 				this.$ajax.get('http://localhost:999/search', {
 						params: {
@@ -122,7 +124,6 @@
 						this.username = res.data[0].username;
 						this.userimg = res.data[0].headerImgUrl;
 						this.star = res.data[0].iid.split(',').length;
-						console.log(res.data[0])
 						this.$ajax.get('http://localhost:999/orders', {
 								params: {
 									'id': theId,
@@ -142,6 +143,9 @@
 
 			} else {
 				this.show = true;
+				this.login = function(){
+					return window.location.href = '#/login';
+				}
 			}
 		},
 		directives:{

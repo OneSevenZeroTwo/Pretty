@@ -148,13 +148,29 @@ app.get('/choose', function(req, res) {
     })
     connection.end();
 })
-// 下载头像到本地
 
-app.post('/sethead', upload.any(), function(req, res, next) {
-    res.append('Access-Control-Allow-Origin', '*');
-    res.send({
-        fileFormat
+
+//热门
+app.get('/man', function(req, res) {
+    res.append("Access-Control-Allow-Origin", "*");
+    createConnection();
+    connection.connect();
+//  var fc = req.query.iid;
+//  console.log(req.query)
+    connection.query(`SELECT * FROM goodlist`, function(error, results, fields) {
+       if (error) { throw error };
+       
+        res.send(results);
     })
+    connection.end();
+})
+
+// 下载头像到本地
+app.post('/sethead', upload.any(), function(req, res, next) {	
+	res.append('Access-Control-Allow-Origin','*');
+	res.send({
+		imgurl
+	})
 });
 
 
@@ -199,28 +215,28 @@ app.get('/collect', function(req, res) {
     createConnection();
     connection.connect();
     console.log(goId)
-    // connection.query(`SELECT * FROM users where id="${goId.id}"`, function(error, results, fields) {
-    //     var obj = {
-    //         list: results
-    //     };
-    //     var res = null;
-    //     var chang = JSON.parse(JSON.stringify(obj)).list[0].iid
-    //     if (chang == null) {
-    //         chang = goId.iid
-    //     } else {
-    //         chang += ',' + goId.iid
-    //     }
-    //     if (results.length == 1) {
-    //         connection.query(`UPDATE users SET iid="${chang}" WHERE id=${goId.id}`, function(error, results, fields) {
-    //             if (error) { throw error };
-
-    //         });
-    //     }
-
-    //     console.log(JSON.parse(JSON.stringify(obj)).list[0].iid)
-    //     //      res.send(results) 
-    // });
-    //  connection.end();
+//  connection.query(`SELECT * FROM users where id="${goId.id}"`, function(error, results, fields) {
+//      var obj = {
+//          list: results
+//      };
+//      var res = null;
+//      var chang = JSON.parse(JSON.stringify(obj)).list[0].iid
+//      if(chang == null){
+//      	chang = goId.iid
+//      }else{
+//      	chang += ',' + goId.iid
+//      }
+//      if(results.length == 1){
+//      	connection.query(`UPDATE users SET iid="${chang}" WHERE id=${goId.id}`, function(error, results, fields) {
+//      		if (error) { throw error };
+//      		
+//  });
+//      }
+//      
+//      console.log(JSON.parse(JSON.stringify(obj)).list[0].iid)
+////      res.send(results) 
+//  });
+//  connection.end();
 });
 
 //app.get('/case', function(req, res) {

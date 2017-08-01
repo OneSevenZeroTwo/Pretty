@@ -1,16 +1,16 @@
 <template>
 	<div class="mode">
 		<div class="wallTop">
-			<div class="tags">
-				<a href="" class="tags-a">
-					<span class="tags-b">流行</span>
+			<div class="tags clearfix">
+				<a href="javascript:;" class="tags-a">
+					流行
 				</a>
-				<a href="" class="tags-a">
-					<span class="tags-b">热销</span>
+				<a href="javascript:;" class="tags-a">
+					热销
 				</a>
-				<a href="" class="tags-a">
-					<span class="tags-b">价格
-					</span>
+				<a href="javascript:;" class="tags-a">
+					价格
+					
 				</a>
 				<div class="arrow">
 				<a src="#" @click="sented=!sented">
@@ -59,7 +59,7 @@
 		},
 		computed: {
 			choose() {
-				console.log(this.$store.state.choose)
+				// console.log(this.$store.state.choose)
 			    return this.$store.state.choose;
 			}
 		},
@@ -71,31 +71,32 @@
 		},
 	}
 </script>
-<style>
+<style scoped>
 	.wallTop {
+		background: #fff;
 		width: 100%;
 		height: 10%;
 	}
 	
 	.tags {
 		width: 100%;
-		height: 5%;
-		line-height: 5%;
 		position: fixed;
-		left: 1%;
 		top:0;
-		overflow: hidden;
 	}
 	
 	.tags-a {
 		float: left;
+		height: 40px;
+		line-height: 40px;
 		width: 33%;
-		height: 100%;
 		font-size: 12px;
 		text-align: center;
 		background: white;
 		z-index: 200;
 		overflow: hidden;
+	}
+	.tags-b {
+		display: inline-block;
 	}
 	
 	.arrow {
@@ -190,7 +191,7 @@
 	
 	.list {
 		background: #fff;
-		margin-top: 10px;
+		margin-top: 42px;
 	}
 	
 	.list_ch li {
@@ -201,6 +202,7 @@
 	
 	.list_ch li img {
 		width: 100%;
+		height: 230px; 
 	}
 	
 	.list_ch li .li_title {

@@ -144,7 +144,7 @@
                         <dt class="pic-title">{{gooding.detailInfo.detailImage[0].key}}</dt>
                         <dt class="pic-desc">{{gooding.detailInfo.detailImage[0].desc}} </dt>
                         <dd class="pic-list">
-                            <img class="fadeIn" v-for="rute in rus" :src="rute.list[1]">
+                            <img class="fadeIn" v-for="(rute,index) in rus" :src="rute" :key="index">
                             <!--<img class="fadeIn" :src="{{gooding.detailInfo.detailImage[1].list}}">  
 							<img class="fadeIn" :src="{{gooding.detailInfo.detailImage[2].list}}">  
 							<img class="fadeIn" :src="{{gooding.detailInfo.detailImage[3].list}}">  
@@ -250,18 +250,11 @@
                 </div>
                 <div class="list">
                     <ul class="list_ch clearfix">
-                        <li>
+                        <li v-for="item in this.men">
                             <a href="#/detail">
-								<img src="http://s3.mogucdn.com/p2/170719/upload_6ag65c1lh04beda6b4kc706925cb5_640x900.jpg_320x999.webp">
-								<p class="li_title">2017夏季新款韩版宽松中长款拼接竖条纹a字裙荷叶边连衣裙女</p>
-								<p class="mo_price">￥68.75 <span class=" collect"></span></p>
-							</a>
-                        </li>
-                        <li>
-                            <a href="#">
-								<img src="http://s3.mogucdn.com/p2/170719/upload_6ag65c1lh04beda6b4kc706925cb5_640x900.jpg_320x999.webp">
-								<p class="li_title">2017夏季新款韩版宽松中长款拼接竖条纹a字裙荷叶边连衣裙女</p>
-								<p class="mo_price">￥68.75 <span class=" collect"></span><span class="count">456</span></p>
+								<img :src="item.image ">
+								<p class="li_title">{{item.title}}</p>
+								<p class="mo_price">{{item.price}} <span class=" collect"></span></p>
 							</a>
                         </li>
                     </ul>
@@ -362,9 +355,6 @@ export default {
             swiperOption: {
 
             },
-            aaa: null,
-            bbb: null,
-            ccc: null,
             bottomSheet: false,
             Sheet: false,
             noon: true,
@@ -375,7 +365,8 @@ export default {
             num: 1,
             gooding: [],
             // cuss:[],
-            rus: []
+            rus: [],
+            men: []
         }
     },
     computed: {
@@ -394,9 +385,9 @@ export default {
                 }).then((response) => {
                     // console.log(response)
                     this.gooding = response.data.result
-                    this.rus = response.data.result.detailInfo.detailImage
+                    this.rus = response.data.result.detailInfo.detailImage['0'].list
                     // console.log(state.gooding)
-                    // console.log(state.rus)
+                    // console.log(this.rus,response.data.result.detailInfo.detailImage['0'])
                 })
                 .catch((error) => {
                     console.log(error)
@@ -418,15 +409,15 @@ export default {
             this.Sheet = false;
             //点击加入购物车
             var all = this.gooding;
-            console.log(this.gooding) 
+            console.log(this.gooding)
             this.$ajax.get("http://localhost:999/addcar", {
                     params: {
-                        imgUrl:all['itemInfo'].topImages[0],
+                        imgUrl: all['itemInfo'].topImages[0],
                         title: all['itemInfo'].title,
                         color: '白色',
                         size: '均码',
                         num: this.num,
-                        price: all['itemInfo'].price.slice(1)*1,
+                        price: all['itemInfo'].price.slice(1) * 1,
                         origin_price: all['itemInfo'].lowPrice,
                         user_id: this.id,
                     }
@@ -478,20 +469,25 @@ export default {
             //     })
         },
         remen() {
-            var arr;
-            arr = this.$store.state.iid
-            // console.log(arr)
             this.$ajax.get("http://localhost:999/man", {
-                    params: {
-                        iid: arr,
+                params: {
+
+                }
+            }).then((response) => {
+                //					console.log(response)
+                response.data.forEach((item, idx) => {
+                    if (item.hot >= 1) {
+                        this.men.push(item)
                     }
-                }).then((response) => {
-                    console.log(response)
+
                 })
-                .catch((error) => {
-                    console.log(error)
-                })
+                this.men = this.men.slice(0,20)
+                //					console.log(this.men)
+            }).catch((error) => {
+                console.log(error)
+            })
         },
+
         add() {
             this.num++;
         },
@@ -504,8 +500,7 @@ export default {
             this.num--;
 
         },
-        addcarss() {
-        }
+        addcarss() {}
     },
 
 
@@ -537,7 +532,8 @@ export default {
                 el.onclick = function() {
                     setTimeout(function() {
                         document.body.scrollTop = document.querySelector(`.${binding.value}`).offsetTop;
-                        console.log(document.querySelector(`.${binding.value}`).offsetTop)
+
+                        // document.querySelector(`.${binding.value}`).offsetTop
                     }, 30)
 
 
@@ -547,13 +543,14 @@ export default {
     }
 }
 </script>
-<style>
+<style scoped>
 html,
 body {
-    background: #fff;
+    
 }
 
 .screen {
+	background: #fff;
     width: 100%;
     height: 100%;
 }
@@ -653,12 +650,12 @@ body {
 }
 
 .swiper-container {
-    width: 100%;
+    width: 80%;
     height: 371px;
 }
 
 .swiper-container img {
-    width: 100%;
+    /*width: 80%;*/
     height: 100%;
 }
 
@@ -853,6 +850,11 @@ body {
     border-right: 1px solid #e5e5e5;
     font-family: "微软雅黑";
 }
+
+
+
+
+
 
 
 
@@ -1141,6 +1143,11 @@ body {
     padding-left: 3%;
     padding-right: 3%;
 }
+
+
+
+
+
 
 
 
