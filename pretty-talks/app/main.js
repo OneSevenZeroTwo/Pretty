@@ -443,15 +443,7 @@ var store = new Vuex.Store({
                     iid: state.iid
                 }
             }).then((response) => {
-<<<<<<< HEAD
-                // console.log(response)
                 state.cuss = response.data
-                console.log(state.cuss)
-=======
-                console.log(response)
-//              state.cuss = response.data
-//              console.log(state.cuss)
->>>>>>> 97e0faeb382b8a046ffa8cb3c6abaa5dc8db6753
             })
         },
 

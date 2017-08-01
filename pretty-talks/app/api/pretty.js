@@ -122,7 +122,7 @@ app.get('/tsort', function(request, response) {
 app.get('/main', function(request, response) {
     response.append("Access-Control-Allow-Origin", "*");
     var getId = request.query
-//  console.log(getId)
+    //  console.log(getId)
     https.get(`https://m.meilishuo.com/detail/mls/v1/h5?iid=${getId.iid}`, function(res) {
         var data = '';
         res.on('data', function(chunk) {
@@ -142,7 +142,7 @@ app.get('/choose', function(req, res) {
     var fcid = req.query.pcid;
     console.log(req.query)
     connection.query(`SELECT * FROM goodlist where fcid="${fcid}"`, function(error, results, fields) {
-       if (error) { throw error };
+        if (error) { throw error };
 
         res.send(results);
     })
@@ -150,13 +150,13 @@ app.get('/choose', function(req, res) {
 })
 // 下载头像到本地
 
-app.post('/sethead', upload.any(), function(req, res, next) {	
-	res.append('Access-Control-Allow-Origin','*');
-	res.send({
-		fileFormat
-	})
+app.post('/sethead', upload.any(), function(req, res, next) {
+    res.append('Access-Control-Allow-Origin', '*');
+    res.send({
+        fileFormat
+    })
 });
-  
+
 
 app.get('/newsimg', function(req, res) {
     res.append('Access-Control-Allow-Origin', '*');
@@ -178,14 +178,14 @@ app.get('/discuss', function(req, res) {
     createConnection();
     connection.connect();
     var IId = req.query;
-//  console.log(IId)
+    //  console.log(IId)
     connection.query(`SELECT * FROM discuss where iid="${IId.iid}"`, function(error, results, fields) {
         if (error) { throw error };
-        
-        if(results == ''){
-        	res.send('id为空')
-        }else{
-        	res.send(results);
+
+        if (results == '') {
+            res.send('id为空')
+        } else {
+            res.send(results);
         }
     });
     connection.end();
@@ -194,33 +194,33 @@ app.get('/discuss', function(req, res) {
 //收藏
 app.get('/collect', function(req, res) {
     res.append('Access-Control-Allow-Origin', '*');
-    
+
     var goId = req.query;
-   createConnection();
-connection.connect();
+    createConnection();
+    connection.connect();
     console.log(goId)
-    connection.query(`SELECT * FROM users where id="${goId.id}"`, function(error, results, fields) {
-        var obj = {
-            list: results
-        };
-        var res = null;
-        var chang = JSON.parse(JSON.stringify(obj)).list[0].iid
-        if(chang == null){
-        	chang = goId.iid
-        }else{
-        	chang += ',' + goId.iid
-        }
-        if(results.length == 1){
-        	connection.query(`UPDATE users SET iid="${chang}" WHERE id=${goId.id}`, function(error, results, fields) {
-        		if (error) { throw error };
-        		
-    });
-        }
-        
-        console.log(JSON.parse(JSON.stringify(obj)).list[0].iid)
-//      res.send(results) 
-    });
-//  connection.end();
+    // connection.query(`SELECT * FROM users where id="${goId.id}"`, function(error, results, fields) {
+    //     var obj = {
+    //         list: results
+    //     };
+    //     var res = null;
+    //     var chang = JSON.parse(JSON.stringify(obj)).list[0].iid
+    //     if (chang == null) {
+    //         chang = goId.iid
+    //     } else {
+    //         chang += ',' + goId.iid
+    //     }
+    //     if (results.length == 1) {
+    //         connection.query(`UPDATE users SET iid="${chang}" WHERE id=${goId.id}`, function(error, results, fields) {
+    //             if (error) { throw error };
+
+    //         });
+    //     }
+
+    //     console.log(JSON.parse(JSON.stringify(obj)).list[0].iid)
+    //     //      res.send(results) 
+    // });
+    //  connection.end();
 });
 
 //app.get('/case', function(req, res) {
@@ -231,7 +231,7 @@ connection.connect();
 //  console.log(collId)
 //  connection.query(`UPDATE users SET iid="${collId.iid}" where id=${collId.id}`, function(error, results, fields) {
 //      if (error) { 
-//      	throw error
+//          throw error
 //      }
 //      res.send('ok') 
 //  });
@@ -284,7 +284,22 @@ app.get('/getstar', function(request, response) {
     connection.end();
 });
 
+// 点击加入购物车
+app.get('/addcar', function(request, response) {
+    response.append("Access-Control-Allow-Origin", "*");
+    createConnection();
+    connection.connect();
+    var tatol = request.query;
+    connection.query(`INSERT INTO carlist (imgUrl, title, color, size, num, price, origin_price,user_id,orders) VALUES ( "${tatol.imgUrl}", "${tatol.title}", "${tatol.color}", "${tatol.size}", "${tatol.num}", ${tatol.price},${tatol.origin_price}, "${tatol.user_id}",0)`, function(error, results, fields) {
+        if (error) { throw error };
+        response.send('ok');
+
+    });
+
+    connection.end();
+});
 
 app.listen(999, function() {
     console.log('打开999端口')
 })
+
