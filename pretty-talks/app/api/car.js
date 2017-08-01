@@ -5,7 +5,8 @@ exports.car = function(app, createConnection) {
     app.get("/read", function(req, res) {
         res.append("Access-Control-Allow-Origin", "*");
         // connection.connect();
-        connection.query("SELECT * FROM carlist", function(error, results, fields) {
+        var user_id = req.query.user_id;
+        connection.query(`SELECT * FROM carlist where user_id="${user_id}"`, function(error, results, fields) {
             if (error) throw error;
             res.send(results);
             // connection.end();
@@ -102,7 +103,8 @@ exports.car = function(app, createConnection) {
     app.get("/getAddr", function(req, res) {
         res.append("Access-Control-Allow-Origin", "*");
         // connection.connect();
-        connection.query("SELECT * FROM addresslist", function(error, results, fields) {
+        var user_id = req.query.user_id;
+        connection.query(`SELECT * FROM addresslist where user_id="${user_id}"`, function(error, results, fields) {
             if (error) throw error;
             res.send(results);
             // connection.end();
@@ -113,7 +115,8 @@ exports.car = function(app, createConnection) {
     app.get("/getOrderAddr", function(req, res) {
         res.append("Access-Control-Allow-Origin", "*");
         // connection.connect();
-        connection.query("SELECT * FROM addresslist", function(error, results, fields) {
+        var user_id = req.query.user_id;
+        connection.query(`SELECT * FROM addresslist where user_id="${user_id}"`, function(error, results, fields) {
             if (error) throw error;
             res.send(results);
             // connection.end();

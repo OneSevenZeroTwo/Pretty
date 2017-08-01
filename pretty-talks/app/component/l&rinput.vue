@@ -68,13 +68,11 @@
 		-webkit-transform: rotate(270deg);
 		-o-transform: rotate(270deg);
 	}
-<<<<<<< HEAD
-=======
+
 	.animateDeg{
 		transition: all 0.5s;
 	}
 	
->>>>>>> ffdd55afb2e53391a58e5f381cb48b90dd0a1185
 	#captcha {
 		margin: 0 15px 0 15px;
 	}

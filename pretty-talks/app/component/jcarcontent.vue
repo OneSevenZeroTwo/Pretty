@@ -66,6 +66,26 @@
                     <a href="/index" class="btn">去逛逛</a>
                 </div>
             </div>
+            <div class="windowDrive" v-show="isDeleteOneShow">
+                <div class="mask"></div>
+                <div class="dialog" id="alert" style="top: 22.0009%;">
+                    <div class="dialog-con">确定要删除该商品吗</div>
+                    <div class="dialog-btn">
+                        <span class="sureBtn" @click="delOneY">确认</span>
+                        <span class="sureBtn" @click="delOneN">取消</span>
+                    </div>
+                </div>
+            </div>
+            <div class="windowDrive" v-show="isDeleteAllShow">
+                <div class="mask"></div>
+                <div class="dialog" id="alert" style="top: 22.0009%;">
+                    <div class="dialog-con">确定要删除这些商品吗</div>
+                    <div class="dialog-btn">
+                        <span class="sureBtn" @click="delAllY">确认</span>
+                        <span class="sureBtn" @click="delAllN">取消</span>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="float_ctrl_wrap" v-show="carListNone">
             <div id="float_ctrl" class="float_ctrl">
@@ -92,7 +112,7 @@
             <div class="mask"></div>
             <div class="dialog" id="alert" style="top: 22.0009%;">
                 <div class="dialog-con">非常抱歉，您还未登陆，请先登录后查看</div>
-                <div class="dialog-btn" @click="toMycenter">
+                <div class="dialog-btn" @click="goBack">
                     <span class="sureBtn">确认</span>
                 </div>
             </div>
@@ -110,29 +130,28 @@ export default {
                 isNoPrompt: false,
                 promptCont: "",
                 isChecked: [],
-				isMaskShow: false,
+                isMaskShow: false,
+                isDeleteOneShow: false,
+                isDeleteAllShow: false,
+                isDelIndex:null,
                 href: "javascript:;",
 
             }
         },
         methods: {
-            //购物车是否为空
-            isCarListNone() {
-            },
             //显示/隐藏 列表
             isCarListShow() {
                 this.carListShow = !this.carListShow
             },
-            //删除单个物品
-            isDelList(index) {
-                alert("确定要删除该物品？");
+            delOneY() {
+                var index = this.isDelIndex;
+                this.isDeleteOneShow = false;
                 this.$store.state.carProId = this.$store.state.carList[index].id;
                 this.$store.state.carList.splice(index, 1);
                 this.$store.dispatch("delCarList");
             },
-            // 删除选中项
-            isDelListAll() {
-                alert("确定要删除选中物品？");
+            delAllY() {
+                this.isDeleteAllShow = false;
                 this.isChecked.forEach((item, idx) => {
                     this.$store.state.carList.forEach((goods, index) => {
                         if (item == goods.id) {
@@ -143,6 +162,28 @@ export default {
                     })
                 })
                 this.isChecked = [];
+            },
+            delOneN() {
+                this.isDeleteOneShow = false;
+                return false
+            },
+            delAllN() {
+                this.isDeleteAllShow = false;
+                return false
+            },
+            //删除单个物品
+            isDelList(index) {
+                this.isDeleteOneShow = true;
+                this.isDelIndex = index;
+            },
+            // 删除选中项
+            isDelListAll() {
+                if (this.isChecked.length == 0) {
+                    this.promptShow();
+                    this.promptCont = "你没有选中任何商品";
+                }else{
+                    this.isDeleteAllShow = true;                    
+                }
             },
             //商品数量减
             changeNum(index, numChange) {
@@ -204,32 +245,33 @@ export default {
 
                 }
             },
-            toMycenter(){
+            goBack() {
                 window.location.href = "#/mycenter";
-                this.isMaskShow = false;          	
-            	this.carListNone = true;
+                this.isMaskShow = false;
+                this.carListNone = true;
             }
         },
         mounted() {
             if (document.cookie.split("=")[1]) {
+                this.$store.state.user_id = document.cookie.split("=")[1];
                 //发送给actions，调用mutations里的getCarList函数通过axios.get获取数据
                 this.$store.dispatch("getCarList");
                 // 如果不清空，返回该页面后列表会累加
                 this.$store.state.isChecked = [];
                 this.$store.state.carList = [];
             } else {
-            	this.carListNone = false;
-            	this.isMaskShow = true;
+                this.carListNone = false;
+                this.isMaskShow = true;
             }
         },
         computed: {
             //获取数据列表
             carList() {
-	            if (this.$store.state.carList.length == 0) {
-	                this.carListNone = false;
-	            } else {
-	                this.carListNone = true;
-	            }
+                if (this.$store.state.carList.length == 0) {
+                    this.carListNone = false;
+                } else {
+                    this.carListNone = true;
+                }
                 this.isChecked = this.$store.state.carList.map(function(item) {
                     return item.id;
                 });
@@ -740,7 +782,7 @@ select {
     width: 100%;
     height: 100%;
     background: #000;
-    opacity: .1;
+    opacity: .2;
 }
 
 .windowDrive .dialog {
@@ -769,5 +811,10 @@ select {
     color: #f36;
     box-sizing: border-box;
     display: inline-block;
+}
+
+.windowDrive .sureBtn {
+    text-align: center;
+    width: 40%;
 }
 </style>
