@@ -424,6 +424,24 @@ var store = new Vuex.Store({
 //              })
 //      },
 
+        setDetail(state) {
+            axios.get("http://localhost:999/main", {
+                    params: {
+                        iid: state.iid
+                    }
+                }).then((response) => {
+                    // console.log(response)
+                    state.gooding = response.data.result
+                    state.rus = response.data.result.detailInfo.detailImage
+                    // console.log(state.gooding)
+                    // console.log(state.rus)
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+        },
+
+
         //评论
         setCuss(state) {
             axios.get("http://localhost:999/discuss", {
@@ -443,9 +461,15 @@ var store = new Vuex.Store({
                     iid: state.iid
                 }
             }).then((response) => {
+
+                // console.log(response)
+                state.cuss = response.data
+                console.log(state.cuss)
+
                 console.log(response)
 //              state.cuss = response.data
 //              console.log(state.cuss)
+
             })
         },
 

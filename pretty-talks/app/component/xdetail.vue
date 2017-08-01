@@ -289,13 +289,22 @@
 					</li>
 				</ul>
 			</div>
+<<<<<<< HEAD
+			<div class="footer_b" >
+				<span class="buy-cart"  @click="buycar()">加入购物车</span>
+=======
 			<div class="weui-toast" style="display: none;">
 				<i class="weui-icon-success-no-circle weui-icon_toast"></i>
 				<p class="weui-toast__content">已收藏</p>
 			</div>
 			<div class="footer_b">
 				<span class="buy-cart" @click="openSheet">加入购物车</span>
+>>>>>>> 97e0faeb382b8a046ffa8cb3c6abaa5dc8db6753
 				<span class="buy-now">购买</span>
+
+			</div>
+			<div class="login" v-show="isshowload">
+				请登录
 			</div>
 		</div>
 		
@@ -366,6 +375,7 @@
 				bottomSheet: false,
 				Sheet: false,
 				noon: true,
+				isshowload:false
 				src: require("../img/zan1.png"),
 				id: null,
 				watch: true,
@@ -375,10 +385,19 @@
 		},
 		computed: {
 			cuss() {
+<<<<<<< HEAD
 			
 				return this.$store.state.cuss;
 			},
 			rus() {
+=======
+				// console.log(this.$store.state.cuss)
+				//				this.ccc = this.$store.state.cuss;
+				return this.$store.state.cuss;
+			},
+			rus() {
+				// console.log(this.$store.state.rus)
+>>>>>>> 6a93078e6482af9c778966cd31267e69c2768d62
 				this.bbb = this.$store.state.rus;
 				return this.bbb;
 			},
@@ -396,13 +415,36 @@
 			openBottomSheet() {
 				this.bottomSheet = true
 			},
+			dating(data) {
+				switch (data){
+				    case 1:
+					document.body.scrollTop = this.$('.panel_a').offset().top;
+					// console.log(this.$('.panel_a').offset().top)
+					break;
+				    case 2:
+				    document.body.scrollTop = this.$('.panel_b').offset().top;
+				    // console.log(this.$('.panel_b').offset().top)
+				    break;
+                    case 3:
+                    document.body.scrollTop = this.$('.panel_c').offset().top;
+                    // console.log(this.$('.panel_c').offset().top)
+                    break;
+                    case 4:
+                    document.body.scrollTop = this.$('.panel_d').offset().top;
+                    // console.log(this.$('.panel_d').offset().top)
+                    break;
+			   }
+			},
 			closeSheet() {
 				this.Sheet = false
 			},
 			openSheet() {
 				this.Sheet = true
 			},
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6a93078e6482af9c778966cd31267e69c2768d62
 			Cool() {
 				this.watch = !this.watch
 				if(this.src == require("../img/zan1.png")) {
@@ -428,6 +470,7 @@
 						console.log(error)
 					})
 			},
+<<<<<<< HEAD
 		remen(){
 				this.$ajax.get("http://localhost:999/man", {
 						params: {
@@ -445,6 +488,21 @@
 			 }).catch((error) => {
 						console.log(error)
 					})
+=======
+			buycar(){
+				var cookies = document.cookie;
+				var id;
+				if(cookies == ''){
+					this.isshowload = true;
+				}else{
+					this.isshowload = false;
+					id = cookies.split('=')[1];
+					// console.log(id)
+					// 发送ajax请求
+					
+				}
+			}
+>>>>>>> 6a93078e6482af9c778966cd31267e69c2768d62
 		},
 		setDetail(){
 			 this.$ajax.get("http://localhost:999/main", {
@@ -468,6 +526,7 @@
 			this.$store.state.iid = this.$route.params.iid; //			console.log(this.$store.state.iid)
 //			this.mores();
 			this.discuss();
+			this.buycar();
 			this.collect();
 			this.remen();
 			this.setDetail();
@@ -504,7 +563,7 @@
 	}
 </script>
 
-<style>
+<style scoped>
 	html,
 	body {
 		background: #fff;
@@ -879,8 +938,8 @@
 	.buy-cart {
 		display: block;
 		width: 47%;
-		height: 50px;
-		line-height: 50px;
+		height: 60px;
+		line-height: 60px;
 		font-size: 12px;
 		color: #333;
 		background: #ffe817;
@@ -894,9 +953,9 @@
 		text-align: center;
 		color: #fff;
 		background: #f69;
-		width: 47%;
-		height: 50px;
-		line-height: 50px;
+		width: 53%;
+		height: 60px;
+		line-height: 60px;
 		font-size: 12px;
 	}
 	
@@ -1275,6 +1334,19 @@
 		margin-right: 3%;
 		margin-bottom: 3%;
 		font-size: 14px;
+	}
+	.login{
+		background: rgba(0,0,0,.5);
+		width: 100px;
+		height: 30px;
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		margin-left: -15px;
+		margin-top: -45px;
+		line-height: 30px;
+		text-align:center;
+		color:#fff;
 	}
 	.list_b{
 		margin-top:4%;
