@@ -1,11 +1,11 @@
 http请求地址（测试使用） http://localhost:999
 
-### 首页首页接口
+### 首页接口
 
 |路由|使用位置|参数|类型|支持格式|请求方式|数据分析| 
 |-|-|-|-|-|-|-| 
 |/home|首页的商品列表|page,sort|number,string|json|get|| 
-|/active|首页活动|无|无|json|get|obj['43542']:轮播图数据,obj['13730']:9.9包邮活动,obj['42287']:限时秒杀活动| 
+|/active|首页活动|无|无|json|get|obj['43542']:轮播图数据 obj['13730']:9.9包邮活动 obj['42287']:限时秒杀活动| 
 |/well|好物组货|无|无|json|get|| 
 |/seek|搜索功能|title|string|json|get|| 
 |/liseek|返回模糊搜索的列表|title,sort,page|string,string,number|json|get||
