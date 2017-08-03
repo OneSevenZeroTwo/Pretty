@@ -262,6 +262,7 @@
             </div>
         </div>
         <!--底部-->
+        <!-- <tohead></tohead> -->
         <div class="footer">
             <div class="footer_a">
                 <ul>
@@ -297,6 +298,7 @@
                 请登录
             </div>
         </div>
+
         <!--<div class="car">-->
         <mu-bottom-sheet :open="Sheet" @close="closeSheet">
             <mu-list @itemClick="Sheet">
@@ -348,8 +350,11 @@
     </div>
 </template>
 <script>
+import tohead from './tohead.vue'
 export default {
-    name: 'carrousel',
+    // components:{
+    // 	tohead,
+    // },
     data() {
         return {
             swiperOption: {
@@ -366,7 +371,8 @@ export default {
             gooding: [],
             // cuss:[],
             rus: [],
-            men: []
+            men: [],
+            name: 'carrousel',
         }
     },
     computed: {
