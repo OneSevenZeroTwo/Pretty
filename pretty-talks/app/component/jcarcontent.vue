@@ -19,7 +19,7 @@
                         <label for="select_1172jnw8"></label>
                     </div>
                     <div class="shop_name">
-                        <a href="/shop/index/1172jnw8">店铺：美丽优选</a>
+                        <a href="#/index">店铺：美丽优选</a>
                     </div>
                     <div class="fold_btn js-action" @click="isCarListShow" data-action="fold">展开</div>
                     <div class="shop_tatol_price">合计：
@@ -33,10 +33,10 @@
                             <label :for="list.id"></label>
                         </div>
                         <div class="main">
-                            <a class="pic_wrap lazyload-img-end" href="/wap/detail/1kfp88y" :style="'background-image: url('+list.imgUrl+'); background-size: cover;'">
+                            <a class="pic_wrap lazyload-img-end" href="javascript:;" :style="'background-image: url('+list.imgUrl+'); background-size: cover;'">
                             </a>
                             <div class="middle">
-                                <a href="/wap/detail/1kfp88y">
+                                <a href="javascript:;">
                                     <p class="title">{{list.title}}</p>
                                 </a>
                                 <p class="prop">
@@ -227,21 +227,15 @@ export default {
                     this.href = "javascript:;";
                     return;
                 } else {
-                    var promise = new Promise((resolve, reject) => {
-                        this.$store.dispatch("setCarListOrder0");
-                        resolve("setCarListOrder0")
-                    })
-                    promise.then((resolve, reject) => {
-                        this.isChecked.forEach((item, idx) => {
-                            this.$store.state.carList.forEach((goods, index) => {
-                                if (item == goods.id) {
-                                    this.$store.state.carProId = goods.id;
-                                    this.$store.dispatch("setCarListOrder1");
-                                }
-                            })
+                    this.isChecked.forEach((item, idx) => {
+                        this.$store.state.carList.forEach((goods, index) => {
+                            if (item == goods.id) {
+                                this.$store.state.carProId = goods.id;
+                                this.$store.dispatch("setCarListOrder");
+                            }
                         })
-                        this.href = "#/order";
                     })
+                    this.href = "#/order";
 
                 }
             },

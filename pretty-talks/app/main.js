@@ -5,16 +5,13 @@ import VueAwesomeSwiper from 'vue-awesome-swiper'
 import axios from "axios";
 import MuseUI from 'muse-ui';
 import 'muse-ui/dist/muse-ui.css';
-import lodash from 'lodash';
-import $ from "jquery";
 
 Vue.use(MuseUI);
 Vue.use(Vuex);
 Vue.use(VueRouter);
 Vue.use(VueAwesomeSwiper);
 Vue.prototype.$ajax = axios;
-Vue.prototype._ = lodash;
-Vue.prototype.$ = $;
+
 
 // 样式
 import "./css/base.css";
@@ -42,84 +39,84 @@ import mycollect from "./router/pmycollect.vue";
 import Pfilist from './router/router/pfilist.vue'
 // import Pseek from './component/pseek.vue'
 
+
 //路由
 var router = new VueRouter({
     routes: [{
-            path: '/index',
-            component: Pindex,
+        path: '/index',
+        component: Pindex,
+        children: [{
+            path: 'home',
+            component: Phome,
             children: [{
-                path: 'home',
-                component: Phome,
-                children: [{
-                    path: 'list/:sort/:page',
-                    component: Pchlist,
-                }]
-            }, {
-                path: 'category',
-                component: Psort
+                path: 'list/:sort/:page',
+                component: Pchlist,
+            }]
+        }, {
+            path: 'category',
+            component: Psort
 
-            },{
-                path:'filist',
-                component:Pfilist,
-                children:[{
-                    path:'pseek/:sort/:page/:title',
-                    component:Pchlist
-                }]
-            }]
-        },
-        {
-            path: '/subCategory/:pid',
-            component: sub,
         }, {
-            path: '/login',
-            component: Plogin
-        }, {
-            path: "/car",
-            component: car
-        }, {
-            path: "/order",
-            component: order
-        }, {
-            path: "/address",
-            component: address
-        }, {
-            path: "/addaddr",
-            component: addaddr
-        }, {
-            path: '/reg',
-            component: Preg,
+            path: 'filist',
+            component: Pfilist,
             children: [{
-                path: 'step1',
-                component: Regstep1,
-            }, {
-                path: 'step2/:phone',
-                component: Regstep2,
+                path: 'pseek/:sort/:page/:title',
+                component: Pchlist
             }]
+        }]
+    }, {
+        path: '/subCategory/:pid',
+        component: sub,
+    }, {
+        path: '/login',
+        component: Plogin
+    }, {
+        path: "/car",
+        component: car
+    }, {
+        path: "/order",
+        component: order
+    }, {
+        path: "/address",
+        component: address
+    }, {
+        path: "/addaddr",
+        component: addaddr
+    }, {
+        path: '/reg',
+        component: Preg,
+        children: [{
+            path: 'step1',
+            component: Regstep1,
         }, {
-            path: "/mycenter",
-            component: Pmycenter,
-        }, {
-        	path:'/mycollect',
-            component:mycollect
-        },{
-            path: '/listed/:pcid',
-            component: Plist,
-        }, {
-            path: '/detail/:iid',
-            component: Plong
-       }, {
-          path: '/listing/:pcid',
-          component: Plisting,
-      }, {
-            path: '/',
-            redirect: 'index/home/list/pop/1'
-        }
-    ]
+            path: 'step2/:phone',
+            component: Regstep2,
+        }]
+    }, {
+        path: "/mycenter",
+        component: Pmycenter,
+    }, {
+        path: '/mycollect',
+        component: mycollect
+    }, {
+        path: '/listed/:pcid',
+        component: Plist,
+    }, {
+        path: '/detail/:iid',
+        component: Plong
+    }, {
+        path: '/listing/:pcid',
+        component: Plisting,
+    }, {
+        path: '/',
+        redirect: 'index/home/list/pop/1'
+    }]
 })
 
 //vuex
 var store = new Vuex.Store({
     state: {
+        baseUrl: "http://localhost:999/",
         carList: [],
         pid: null,
         carProId: null,
@@ -153,7 +150,8 @@ var store = new Vuex.Store({
         isshowsearch: false,
         isshowtsea: true,
         searchlist: [],
-        user_id:null,
+        user_id: null,
+
     },
 
     getters: {
@@ -164,13 +162,13 @@ var store = new Vuex.Store({
     mutations: {
         //获取购物车列表数据
         getCarList(state) {
-            axios.get("http://localhost:999/read",{
-                params:{
-                    user_id:state.user_id,
-                }
-            })
+            axios.get(state.baseUrl + "read", {
+                    params: {
+                        user_id: state.user_id,
+                    }
+                })
                 .then((res) => {
-                    state.carList = res.data;
+                    state.carList = res.data.data;
                     state.isChecked = state.carList.map(function(item) {
                         return item.id;
                     });
@@ -179,7 +177,7 @@ var store = new Vuex.Store({
         },
         //修改购物车列表选中项数据
         setCarListNum(state) {
-            axios.get("http://localhost:999/writeNum", {
+            axios.get(state.baseUrl + "writeNum", {
                     params: {
                         id: state.carProId,
                         num: state.carProNum,
@@ -189,27 +187,20 @@ var store = new Vuex.Store({
                     //console.log("数量写入成功");
                 }).catch((err) => {})
         },
-        //修改购物车列表选中项数据
-        setCarListOrder0(state) {
-            axios.get("http://localhost:999/writeOrder0")
-                .then((res) => {
-                    //console.log("不加入订单");
-                }).catch((err) => {})
-        },
-        //修改购物车列表选中项数据
-        setCarListOrder1(state) {
-            axios.get("http://localhost:999/writeOrder1",{
-            	params:{
-            		id:state.carProId,
-            	}
-            })
+        //修改购物车列表选中项加入订单
+        setCarListOrder(state) {
+            axios.get(state.baseUrl + "writeOrder", {
+                    params: {
+                        id: state.carProId,
+                    }
+                })
                 .then((res) => {
                     //console.log("加入订单");
                 }).catch((err) => {})
         },
         //删除购物车列表选中项数据
         delCarList(state) {
-            axios.get("http://localhost:999/delete", {
+            axios.get(state.baseUrl + "delete", {
                     params: {
                         id: state.carProId,
                     }
@@ -220,7 +211,7 @@ var store = new Vuex.Store({
         },
         //设置收货地址
         setAddrList(state) {
-            axios.get("http://localhost:999/setAddr", {
+            axios.get(state.baseUrl+"setAddr", {
                     params: {
                         address: state.userAddr,
                     }
@@ -231,55 +222,27 @@ var store = new Vuex.Store({
         },
         //获取收货地址列表
         getAddrList(state) {
-            axios.get("http://localhost:999/getAddr",{
-                params:{
-                    user_id:state.user_id,
-                }
-            })
-                .then((res) => {
-                    ////console.log(state.useAddrId);
-                    if (state.useAddrId == null) {
-                        ////console.log("res.data", res.data);
-                        let isDefaults = null;
-                        res.data.forEach((item,idx) => {
-                        	if(item.isDefault == 1){
- 								isDefaults = res.data.splice(idx,1);
-                        	}
-                        });
-                        res.data.splice(0,0,isDefaults[0]);
-                        state.addrList = res.data;
-						//console.log("全部地址",state.addrList);
-
-                    } else {
-                        res.data.forEach((item) => {
-                            if (item.id == state.useAddrId) {
-                                state.addrList = item;
-                                //console.log("默认地址",state.addrList);
-                            }
-                        })
+            axios.get(state.baseUrl + "getAddr", {
+                    params: {
+                        user_id: state.user_id,
                     }
-                }).catch((err) => {})
-        },
-        //获取订单页收货地址
-        getOrderAddr(state) {
-            axios.get("http://localhost:999/getOrderAddr",{
-                params:{
-                    user_id:state.user_id,
-                }
-            })
+                })
                 .then((res) => {
-                    res.data.forEach((item) => {
+                    let isDefaults = null;
+                    state.addrList = res.data.data;
+                    res.data.data.forEach((item, idx) => {
                         if (item.isDefault == 1) {
-                            state.addrList = item;
-                            //console.log("订单页-收货地址",state.addrList);
+                            state.isDefaultAddr = item;
+                            isDefaults = res.data.splice(idx, 1);
                         }
-                    })
-
+                    });
+                    res.data.data.splice(0, 0, isDefaults[0]);
+                    state.addrList = res.data.data;
                 }).catch((err) => {})
         },
         //修改收货地址
         modifyAddrList(state) {
-            axios.get("http://localhost:999/modifyAddr", {
+            axios.get(state.baseUrl + "modifyAddr", {
                     params: {
                         id: state.useAddrId,
                         address: state.userAddr,
@@ -289,16 +252,9 @@ var store = new Vuex.Store({
                     //console.log("修改收货地址成功");
                 }).catch((err) => {})
         },
-        //修改收货地址默认值0
-        isnomodifyAddr(state) {
-            axios.get("http://localhost:999/isnomodifyAddr")
-                .then((res) => {
-                    //console.log("默认值全部为0");
-                }).catch((err) => {})
-        },
         //修改收货地址默认值1
         ismodifyAddr(state) {
-            axios.get("http://localhost:999/ismodifyAddr", {
+            axios.get(state.baseUrl + "ismodifyAddr", {
                     params: {
                         id: state.useAddrId
                     }
@@ -309,7 +265,7 @@ var store = new Vuex.Store({
         },
         //删除收货地址
         delAddrList(state) {
-            axios.get("http://localhost:999/delAddr", {
+            axios.get(state.baseUrl + "delAddr", {
                     params: {
                         id: state.addrListId,
                     }
@@ -319,48 +275,48 @@ var store = new Vuex.Store({
                 }).catch((err) => {})
         },
         //分类
-		setNews(state) {
-			axios.get('http://localhost:999/fsort', {
-					params: {
+        //分类
+        setNews(state) {
+            axios.get('http://localhost:999/fsort', {
+                    params: {
 
-					},
-				})
-				.then((response) => {
-					console.log(response)
-					state.news = response.data.value
-					console.log(state.news)
-				})
-				.catch((error) => {
-					console.log(error);
-				});
-		},
-		getActive(state, data) {
-			axios.get('http://localhost:999/active').then((data) => {
-				// 轮播图
-				state.carousel = data.data.data['43542'].list;
-				// 9.9包邮活动
-				state.special = data.data.data['13730'].list;
-				// 限时活动
-				state.liactive = data.data.data['42287'].list;
-				// 实现时间
-				state.litime = data.data.data['42287'].context.currentTime;
-			}).catch((err) => {
+                    },
+                })
+                .then((response) => {
+                    console.log(response)
+                    state.news = response.data.value
+                    console.log(state.news)
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
+        getActive(state, data) {
+            axios.get(state.baseUrl + 'active.json').then((data) => {
+                // console.log(data.data)
+                // 9.9包邮活动
+                state.special = data.data.flist.slice(0, 4);
+                // 限时活动
+                state.liactive = data.data.olist;
+                // 实现时间
+                // state.litime = data.data.data['42287'].context.currentTime;
+            }).catch((err) => {
 
-			})
-		},
-		getList(state, data) {
-			axios.get('http://localhost:999/home', {
-				params: {
-					page: state.page,
-					sort: state.sort
-				}
-			}).then((data) => {
-				state.list = state.list.concat(data.data.data.list);
-				// console.log(data.data.data.list)
-			}).catch((err) => {
+            })
+        },
+        getList(state, data) {
+            axios.get('http://localhost:999/home', {
+                params: {
+                    page: state.page,
+                    sort: state.sort
+                }
+            }).then((data) => {
+                state.list = state.list.concat(data.data.data.list);
+                // console.log(data.data.data.list)
+            }).catch((err) => {
 
-			})
-		},
+            })
+        },
         setNews(state) {
             axios.get('http://localhost:999/fsort', {
                     params: {
@@ -370,25 +326,11 @@ var store = new Vuex.Store({
                 .then((response) => {
                     state.news = response.data.value
 
-                    state.news =response.data.value
+                    state.news = response.data.value
                 })
                 .catch((error) => {
                     //console.log(error);
                 });
-        },
-        getActive(state, data) {
-            axios.get('http://localhost:999/active').then((data) => {
-                // 轮播图
-                state.carousel = data.data.data['43542'].list;
-                // 9.9包邮活动
-                state.special = data.data.data['13730'].list.slice(0, -1);
-                // 限时活动
-                state.liactive = data.data.data['42287'].list;
-                // 实现时间
-                state.litime = data.data.data['42287'].context.currentTime;
-            }).catch((err) => {
-
-            })
         },
         getList(state, data) {
             axios.get('http://localhost:999/home', {
@@ -410,9 +352,9 @@ var store = new Vuex.Store({
                         pid: state.pid
                     }
                 }).then((response) => {
-//                  console.log(response)
+                    //                  console.log(response)
                     //state.res = response.data.data
-//                  console.log(state.res)
+                    //                  console.log(state.res)
                 })
                 .catch((error) => {
                     console.log(error)
@@ -428,27 +370,26 @@ var store = new Vuex.Store({
                     // console.log(response)
                     state.gooding = response.data.result
                     state.rus = response.data.result.detailInfo.detailImage
-                    // console.log(state.gooding)
-                    // console.log(state.rus)
+                        // console.log(state.gooding)
+                        // console.log(state.rus)
                 })
                 .catch((error) => {
                     console.log(error)
                 })
         },
 
-
         //评论
         setCuss(state) {
             axios.get("http://localhost:999/discuss", {
-                    params: {
-                        iid: state.iid
-                    }
-                }).then((response) => {
-                    console.log(response)
-                    state.cuss = response.data
-                    console.log(state.cuss)
-                })
-        },      
+                params: {
+                    iid: state.iid
+                }
+            }).then((response) => {
+                console.log(response)
+                state.cuss = response.data
+                console.log(state.cuss)
+            })
+        },
         //收藏
         setColl(state) {
             axios.get("http://localhost:999/collect", {
@@ -456,15 +397,7 @@ var store = new Vuex.Store({
                     iid: state.iid
                 }
             }).then((response) => {
-
-                // console.log(response)
                 state.cuss = response.data
-                console.log(state.cuss)
-
-                console.log(response)
-//              state.cuss = response.data
-//              console.log(state.cuss)
-
             })
         },
 
@@ -479,7 +412,7 @@ var store = new Vuex.Store({
                     //                  console.log(response)
                     state.res = response.data.value.category_1.list
                     state.now = response.data.value.category_2.list
-                    //                  console.log(state.res)
+                        //                  console.log(state.res)
 
                 })
                 .catch((error) => {
@@ -495,7 +428,7 @@ var store = new Vuex.Store({
                 }).then((response) => {
                     console.log(response)
                     state.choose = response.data
-//                  console.log(state.choose)
+                        //                  console.log(state.choose)
                 })
                 .catch((error) => {
                     console.log(error)
@@ -580,7 +513,6 @@ var store = new Vuex.Store({
             context.commit('setColl')
         },
     }
-
 
 })
 
