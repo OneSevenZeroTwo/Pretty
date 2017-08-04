@@ -128,11 +128,11 @@ export default {
 }
 
 .big_img {
-    height: 215px;
+    width: 100%;
 }
 
 .as_hea {
-    height: 65px;
+    width: 100%;
 }
 
 p {

@@ -11,7 +11,10 @@ Vue.use(Vuex);
 Vue.use(VueRouter);
 Vue.use(VueAwesomeSwiper);
 Vue.prototype.$ajax = axios;
+<<<<<<< HEAD
 
+=======
+>>>>>>> d16597c2a6b7824c57c7b49c6b5a86509a136048
 // 样式
 import "./css/base.css";
 import "./css/weui.css";
