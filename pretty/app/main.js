@@ -5,17 +5,12 @@ import VueAwesomeSwiper from 'vue-awesome-swiper'
 import axios from "axios";
 import MuseUI from 'muse-ui';
 import 'muse-ui/dist/muse-ui.css';
-import lodash from 'lodash';
-import $ from "jquery";
 
 Vue.use(MuseUI);
 Vue.use(Vuex);
 Vue.use(VueRouter);
 Vue.use(VueAwesomeSwiper);
 Vue.prototype.$ajax = axios;
-Vue.prototype._ = lodash;
-Vue.prototype.$ = $;
-
 // 样式
 import "./css/base.css";
 import "./css/weui.css";
