@@ -165,7 +165,6 @@ export default {
                     return;
                 }
                 if (onoff) {
-                    console.log(this.addressPid,this.addressCid,this.addressDid)
                     this.addressErrorMessage = "";
                     this.$store.state.userAddr = {
                         user_id: document.cookie.split("=")[1],
@@ -183,11 +182,9 @@ export default {
                         isDefault: this.isDefault,
                     }
                     if (this.isDefault == 1) {
-                        //this.$store.dispatch("isnomodifyAddr");
                         this.$store.dispatch("ismodifyAddr");
                     }
                     console.log(this.$store.state.useAddrId);
-
                     this.$store.dispatch("setAddrList");
                     window.location.href = "#/address";
                 }
@@ -222,9 +219,7 @@ export default {
             },
             delAddr() {
                 this.$store.state.addrListId = this.$store.state.useAddrId;
-                console.log(this.$store.state.addrListId , this.$store.state.useAddrId)
                 this.$store.dispatch("delAddrList");
-                //this.$store.state.addrListId = null;
                 window.location.href = "#/address";
             },
             goBack() {
@@ -249,9 +244,7 @@ export default {
         },
         mounted() {
             console.log("用户ID",document.cookie.split("=")[1])
-                //console.log(this.$route.params)
             // if (document.cookie.split("=")[1]) {
-
                 if (this.$store.state.useAddrId != null) {
                     this.isAddrBtnShow = true;
                     this.$store.dispatch("getAddrList");
@@ -270,14 +263,12 @@ export default {
                             this.addressPostcode = item.addressPostcode;
                             this.isDefault = item.isDefault;
                             this.isPidShow = false;
-
                         }
                     });
                 }
             // } else {
             //     this.isMaskShow = true;
             // }
-
         },
 
 }

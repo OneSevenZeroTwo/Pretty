@@ -12,7 +12,6 @@ Vue.use(VueRouter);
 Vue.use(VueAwesomeSwiper);
 Vue.prototype.$ajax = axios;
 
-
 // 样式
 import "./css/base.css";
 import "./css/weui.css";
@@ -38,7 +37,6 @@ import Pmycenter from "./router/pmycenter.vue";
 import mycollect from "./router/pmycollect.vue";
 import Pfilist from './router/router/pfilist.vue'
 // import Pseek from './component/pseek.vue'
-
 
 //路由
 var router = new VueRouter({

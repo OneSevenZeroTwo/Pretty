@@ -16577,7 +16577,6 @@ var store = new _vuex2.default.Store({
         isshowtsea: true,
         searchlist: [],
         user_id: null
-
     },
 
     getters: {},
@@ -16753,19 +16752,6 @@ var store = new _vuex2.default.Store({
             state.list = state.list.concat(data.data.data.list);
             // console.log(data.data.data.list)
         }).catch(function (err) {});
-    }), _defineProperty(_mutations, "setChar", function setChar(state) {
-
-        _axios2.default.get("http://localhost:999/tsort", {
-            params: {
-                pid: state.pid
-            }
-        }).then(function (response) {
-            //                  console.log(response)
-            //state.res = response.data.data
-            //                  console.log(state.res)
-        }).catch(function (error) {
-            console.log(error);
-        });
     }), _defineProperty(_mutations, "setDetail", function setDetail(state) {
         _axios2.default.get("http://localhost:999/main", {
             params: {
@@ -16824,97 +16810,7 @@ var store = new _vuex2.default.Store({
         }).catch(function (error) {
             console.log(error);
         });
-    }), _mutations),
-
-    actions: {
-        //提交触发 mutations 的 getCarList 获取 购物车 列表数据函数
-        getCarList: function getCarList(context) {
-            context.commit("getCarList");
-        },
-
-        //修改购物车数据函数
-        setCarListNum: function setCarListNum(context) {
-            context.commit("setCarListNum");
-        },
-
-        //修改购物车数据函数
-        setCarListOrder0: function setCarListOrder0(context) {
-            context.commit("setCarListOrder0");
-        },
-
-        //修改购物车数据函数
-        setCarListOrder1: function setCarListOrder1(context) {
-            context.commit("setCarListOrder1");
-        },
-
-        //修改购物车数据函数
-        delCarList: function delCarList(context) {
-            context.commit("delCarList");
-        },
-
-        //设置地址列表数据函数
-        setAddrList: function setAddrList(context) {
-            context.commit("setAddrList");
-        },
-
-        //获取 地址 列表数据函数
-        getAddrList: function getAddrList(context) {
-            context.commit("getAddrList");
-        },
-
-        //获取 地址 列表数据函数
-        getOrderAddr: function getOrderAddr(context) {
-            context.commit("getOrderAddr");
-        },
-
-        //修改地址列表数据函数
-        modifyAddrList: function modifyAddrList(context) {
-            context.commit("modifyAddrList");
-        },
-
-        //取消地址列为默认
-        isnomodifyAddr: function isnomodifyAddr(context) {
-            context.commit("isnomodifyAddr");
-        },
-
-        //设置地址列为默认
-        ismodifyAddr: function ismodifyAddr(context) {
-            context.commit("ismodifyAddr");
-        },
-
-        //删除地址列表数据函数
-        delAddrList: function delAddrList(context) {
-            context.commit("delAddrList");
-        },
-        setNews: function setNews(context, data) {
-            context.commit('setNews');
-        },
-        setChar: function setChar(context, data) {
-            context.commit('setChar');
-        },
-        getActive: function getActive(context, data) {
-            context.commit('getActive');
-        },
-        getList: function getList(context, data) {
-            context.commit('getList');
-        },
-        setDetail: function setDetail(context, data) {
-            context.commit('setDetail');
-        },
-        setChoose: function setChoose(context, data) {
-            context.commit('setChoose');
-        },
-        setChing: function setChing(context, data) {
-            context.commit('setChing');
-        },
-        setCuss: function setCuss(context, data) {
-            context.commit('setCuss');
-        },
-        setColl: function setColl(context, data) {
-            context.commit('setColl');
-        }
-    }
-
+    }), _mutations)
 });
 
 new _vue2.default({

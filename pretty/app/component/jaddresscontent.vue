@@ -65,7 +65,6 @@ export default {
                 window.location.href = "#/order";
                 
             },
-            // 点击修改地址
             modthis(modthisId) {
                 this.$store.state.useAddrId = null;
                 this.$store.state.useAddrId = modthisId;

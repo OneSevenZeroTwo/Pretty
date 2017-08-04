@@ -15,21 +15,21 @@ exports.car = function(app, createConnection) {
 
     //修改购物车列表数量
     app.get("/writeNum", function(req, res) {
-        res.append("Access-Control-Allow-Origin", "*");
+            res.append("Access-Control-Allow-Origin", "*");
 
-        console.log("/writeNum", req.query);
+            console.log("/writeNum", req.query);
 
-        var id = req.query.id;
-        var num = req.query.num;
+            var id = req.query.id;
+            var num = req.query.num;
 
-        // connection.connect();
-        connection.query(`update carlist set num="${num}" where id="${id}"`, function(error, results, fields) {
-            if (error) throw error;
-            res.send(results);
-            // connection.end();
+            // connection.connect();
+            connection.query(`update carlist set num="${num}" where id="${id}"`, function(error, results, fields) {
+                if (error) throw error;
+                res.send(results);
+                // connection.end();
+            })
         })
-    })
-    // 修改加入订单状态
+        // 修改加入订单状态
     app.get("/writeOrder", function(req, res) {
         res.append("Access-Control-Allow-Origin", "*");
 
@@ -40,7 +40,7 @@ exports.car = function(app, createConnection) {
         connection.query(`update carlist set orders=0`, function(error, results, fields) {
             if (error) {
                 throw error
-            }else{
+            } else {
                 connection.query(`update carlist set orders=1 where id="${id}"`, function(error, results, fields) {
                     if (error) throw error;
                     res.send(results);
@@ -147,9 +147,9 @@ exports.car = function(app, createConnection) {
         // connection.connect();
         var id = req.query.id;
         connection.query(`update addresslist set isDefault="0"`, function(error, results, fields) {
-            if (error){
+            if (error) {
                 throw error
-            }else{
+            } else {
                 connection.query(`update addresslist set isDefault="1" where id="${id}"`, function(error, results, fields) {
                     if (error) throw error;
                     res.send(results);

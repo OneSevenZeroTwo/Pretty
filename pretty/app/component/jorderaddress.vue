@@ -18,6 +18,8 @@
 		data(){
  			return{
  				hasAddresss:false,
+ 				noAddress:"",
+ 				addrLists:null,
  			}
 		},
 		methods: {

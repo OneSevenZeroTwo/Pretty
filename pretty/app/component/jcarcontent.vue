@@ -236,7 +236,6 @@ export default {
                         })
                     })
                     this.href = "#/order";
-
                 }
             },
             goBack() {
