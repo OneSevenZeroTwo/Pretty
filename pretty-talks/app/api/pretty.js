@@ -210,10 +210,10 @@ app.get('/discuss', function(req, res) {
 app.get('/collect', function(req, res) {
     res.append('Access-Control-Allow-Origin', '*');
     
-    var goId = req.query;
-   createConnection();
-connection.connect();
-    console.log(goId)
+//  var goId = req.query;
+// createConnection();
+//connection.connect();
+//  console.log(goId)
 //  connection.query(`SELECT * FROM users where id="${goId.id}"`, function(error, results, fields) {
 //      var obj = {
 //          list: results

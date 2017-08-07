@@ -31,7 +31,7 @@ import Regstep2 from "./router/router/regstep2.vue";
 import sub from "./router/pmine.vue";
 import Pchlist from "./component/pchlist.vue";
 import car from "./router/pcar.vue";
-import Plist from "./router/plist.vue";
+import Plist from "./router/plists.vue";
 import Plong from "./router/pdate.vue";
 import Plisting from "./router/plisting.vue";
 import order from "./router/porder.vue";
@@ -40,7 +40,8 @@ import addaddr from "./router/paddaddr.vue";
 import Pmycenter from "./router/pmycenter.vue";
 import mycollect from "./router/pmycollect.vue";
 import Pfilist from './router/router/pfilist.vue'
-// import Pseek from './component/pseek.vue'
+import Pseek from './component/pseek.vue'
+
 
 //路由
 var router = new VueRouter({
@@ -102,24 +103,30 @@ var router = new VueRouter({
         	path:'/mycollect',
             component:mycollect
         },{
-            path: '/listed/:pcid',
+            path: '/listed',
             component: Plist,
+            children:[{
+            	path:'doing/:sort/:page/:pcid',
+            	component:Pseek
+            }]
         }, {
             path: '/detail/:iid',
             component: Plong
        }, {
           path: '/listing/:pcid',
           component: Plisting,
-      }, {
-            path: '/',
-            redirect: 'index/home/list/pop/1'
-        }
+       }
+//     , {
+//          path: '/',
+//          redirect: 'index/home/list/pop/1'
+//      }
     ]
 })
 
 //vuex
 var store = new Vuex.Store({
     state: {
+    	baseUrl: "./data/",
         carList: [],
         pid: null,
         carProId: null,
@@ -307,15 +314,15 @@ var store = new Vuex.Store({
         },
         //分类
 		setNews(state) {
-			axios.get('http://localhost:999/fsort', {
+			axios.get('data/sort.json', {
 					params: {
 
 					},
 				})
 				.then((response) => {
-					console.log(response)
+//					console.log(response)
 					state.news = response.data.value
-					console.log(state.news)
+//					console.log(state.news)
 				})
 				.catch((error) => {
 					console.log(error);
@@ -348,21 +355,6 @@ var store = new Vuex.Store({
 
 			})
 		},
-        setNews(state) {
-            axios.get('http://localhost:999/fsort', {
-                    params: {
-
-                    },
-                })
-                .then((response) => {
-                    state.news = response.data.value
-
-                    state.news =response.data.value
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-        },
         getActive(state, data) {
             axios.get('http://localhost:999/active').then((data) => {
                 // 轮播图
@@ -390,68 +382,16 @@ var store = new Vuex.Store({
 
             })
         },
-        setChar(state) {
-
-            axios.get("http://localhost:999/tsort", {
+        //评论
+        setCuss(state) {
+            axios.get("data/discuss.json", {
                     params: {
-                        pid: state.pid
+                        iid: state.iid
                     }
                 }).then((response) => {
 //                  console.log(response)
-                    //state.res = response.data.data
-//                  console.log(state.res)
-                })
-                .catch((error) => {
-                    console.log(error)
-                })
-
-        },
-        //详情页
-//      setDetail(state) {
-//          axios.get("http://localhost:999/main", {
-//                  params: {
-//                      iid: state.iid
-//                  }
-//              }).then((response) => {
-////                  console.log(response)
-//                  state.gooding = response.data.result
-//                  state.rus = response.data.result.detailInfo.detailImage
-////                  console.log(state.gooding)
-////                  console.log(state.rus)
-//              })
-//              .catch((error) => {
-////                  console.log(error)
-//              })
-//      },
-
-        setDetail(state) {
-            axios.get("http://localhost:999/main", {
-                    params: {
-                        iid: state.iid
-                    }
-                }).then((response) => {
-                    // console.log(response)
-                    state.gooding = response.data.result
-                    state.rus = response.data.result.detailInfo.detailImage
-                    // console.log(state.gooding)
-                    // console.log(state.rus)
-                })
-                .catch((error) => {
-                    console.log(error)
-                })
-        },
-
-
-        //评论
-        setCuss(state) {
-            axios.get("http://localhost:999/discuss", {
-                    params: {
-                        iid: state.iid
-                    }
-                }).then((response) => {
-                    console.log(response)
-                    state.cuss = response.data
-                    console.log(state.cuss)
+                    state.cuss = response.data.RECORDS
+//                  console.log(state.cuss)
                 })
         },      
         //收藏
@@ -476,15 +416,16 @@ var store = new Vuex.Store({
         // 分类2
         setChar(state) {
 
-            axios.get("http://localhost:999/tsort", {
+            axios.get("data/sort.json", {
                     params: {
                         pid: state.pid
                     }
                 }).then((response) => {
-                    //                  console.log(response)
-                    state.res = response.data.value.category_1.list
-                    state.now = response.data.value.category_2.list
-                    //                  console.log(state.res)
+//                                      console.log(response)
+                    state.res = response.data.value[0].list
+                    state.now = response.data.value[0].flist
+//                                      console.log(state.res)
+//					console.log(state.now)
 
                 })
                 .catch((error) => {
@@ -493,13 +434,13 @@ var store = new Vuex.Store({
         },
         //列表页1
         setChoose(state) {
-            axios.get("http://localhost:999/choose", {
+            axios.get("data/goodlist.json", {
                     params: {
                         pcid: state.pcid
                     }
                 }).then((response) => {
-                    console.log(response)
-                    state.choose = response.data
+//                  console.log(response)
+                    state.choose = response.data.RECORDS
 //                  console.log(state.choose)
                 })
                 .catch((error) => {

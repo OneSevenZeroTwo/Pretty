@@ -1,15 +1,16 @@
 <template>
 	<div>
-		<xseek></xseek>
+		<plist></plist>
+		<router-view></router-view>
 	</div>
 </template>
 
 <script>
-	import xseek from '../component/xseek.vue';
+	import plist from '../component/plist.vue';
 	
 	export default{
 		components:{
-			xseek,
+			plist,
 		}
 	}
 </script>
