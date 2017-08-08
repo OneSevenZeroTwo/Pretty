@@ -1,16 +1,21 @@
 <template>
     <div class="screen">
         <!--轮播图-->
-        <swiper :options="swiperOption" ref="mySwiper">
+        <!--  <swiper :options="swiperOption" ref="mySwiper">
             <swiper-slide v-for="(g,index) of carousel " :key="index"><img :src="g" alt="" /></swiper-slide>
-            <!-- <swiper-slide><img :src="gooding.itemInfo.topImages[0]" alt="" /></swiper-slide>
+            <swiper-slide><img :src="gooding.itemInfo.topImages[0]" alt="" /></swiper-slide>
             <swiper-slide><img :src="gooding.itemInfo.topImages[1]" alt="" /></swiper-slide>
             <swiper-slide><img :src="gooding.itemInfo.topImages[2]" alt="" /></swiper-slide>
             <swiper-slide><img :src="gooding.itemInfo.topImages[3]" alt="" /></swiper-slide>
-            <swiper-slide><img :src="gooding.itemInfo.topImages[4]" alt="" /></swiper-slide> -->
+            <swiper-slide><img :src="gooding.itemInfo.topImages[4]" alt="" /></swiper-slide>
             <div class="swiper-pagination" slot="pagination">
             </div>
-        </swiper>
+        </swiper> -->
+        <div class="goods">
+            <ul class="clearfix" v-lun="">
+                <li v-for="(g,index) of carousel " :key="index"><img :src="g"></li>
+            </ul>
+        </div>
         <!--商品详情-->
         <div class="info">
             <div class="info_a">
@@ -63,8 +68,8 @@
         <div class="shop-info">
             <div class="fix">
                 <a href="" class="fix_a">
-					<img src="http://s3.mogucdn.com/p2/161111/hz75la_8f8kk1ff66365a77e520dckl0lb51_200x200.jpg_100x100.jpg" alt="" />
-				</a>
+                    <img src="http://s3.mogucdn.com/p2/161111/hz75la_8f8kk1ff66365a77e520dckl0lb51_200x200.jpg_100x100.jpg" alt="" />
+                </a>
                 <div class="fix_b">
                     <p class="title">美丽优选</p>
                     <span class="has" style="display: none;">已收藏</span>
@@ -146,157 +151,157 @@
                         <dd class="pic-list">
                             <img class="fadeIn" v-for="(rute,index) in detailImage" :src="rute" :key="index">
                             <!--<img class="fadeIn" :src="{{gooding.detailInfo.detailImage[1].list}}">  
-							<img class="fadeIn" :src="{{gooding.detailInfo.detailImage[2].list}}">  
-							<img class="fadeIn" :src="{{gooding.detailInfo.detailImage[3].list}}">  
-							<img class="fadeIn" :src="{{gooding.detailInfo.detailImage[4].list}}">  
-							<img class="fadeIn" :src="{{gooding.detailInfo.detailImage[5].list}}">  
-							<img class="fadeIn" :src="{{gooding.detailInfo.detailImage[6].list}}">  
-							<img class="fadeIn" :src="{{gooding.detailInfo.detailImage[7].list}}">  
-							<img class="fadeIn" :src="{{gooding.detailInfo.detailImage[8].list}}">  
-							<img class="fadeIn" :src="{{gooding.detailInfo.detailImage[9].list}}">  
-							<img class="fadeIn" :src="{{gooding.detailInfo.detailImage[10].list}}">  
-							<img class="fadeIn" :src="{{gooding.detailInfo.detailImage[11].list}}">  
-							<img class="fadeIn" :src="{{gooding.detailInfo.detailImage[12].list}}">  
-							<img class="fadeIn" :src="{{gooding.detailInfo.detailImage[13].list}}">  
-							<img class="fadeIn" :src="{{gooding.detailInfo.detailImage[14].list}}">  
-							<img class="fadeIn" :src="{{gooding.detailInfo.detailImage[15].list}}">  
-							<img class="fadeIn" :src="{{gooding.detailInfo.detailImage[16].list}}">  -->
+                            <img class="fadeIn" :src="{{gooding.detailInfo.detailImage[2].list}}">  
+                            <img class="fadeIn" :src="{{gooding.detailInfo.detailImage[3].list}}">  
+                            <img class="fadeIn" :src="{{gooding.detailInfo.detailImage[4].list}}">  
+                            <img class="fadeIn" :src="{{gooding.detailInfo.detailImage[5].list}}">  
+                            <img class="fadeIn" :src="{{gooding.detailInfo.detailImage[6].list}}">  
+                            <img class="fadeIn" :src="{{gooding.detailInfo.detailImage[7].list}}">  
+                            <img class="fadeIn" :src="{{gooding.detailInfo.detailImage[8].list}}">  
+                            <img class="fadeIn" :src="{{gooding.detailInfo.detailImage[9].list}}">  
+                            <img class="fadeIn" :src="{{gooding.detailInfo.detailImage[10].list}}">  
+                            <img class="fadeIn" :src="{{gooding.detailInfo.detailImage[11].list}}">  
+                            <img class="fadeIn" :src="{{gooding.detailInfo.detailImage[12].list}}">  
+                            <img class="fadeIn" :src="{{gooding.detailInfo.detailImage[13].list}}">  
+                            <img class="fadeIn" :src="{{gooding.detailInfo.detailImage[14].list}}">  
+                            <img class="fadeIn" :src="{{gooding.detailInfo.detailImage[15].list}}">  
+                            <img class="fadeIn" :src="{{gooding.detailInfo.detailImage[16].list}}">  -->
                         </dd>
                     </dl>
                 </div>
             </div>
-          </div>
-            <div class="shop"></div>
-            <!--商品参数-->
-            <div class="panel_b">
-                <div class="panel-head">
-                    <span>商品参数</span>
+        </div>
+        <div class="shop"></div>
+        <!--商品参数-->
+        <div class="panel_b">
+            <div class="panel-head">
+                <span>商品参数</span>
+            </div>
+            <div class="panel-list">
+                <div class="size">
+                    <table>
+                        <tr>
+                            <td>尺码</td>
+                            <td>【M】</td>
+                            <td>【S】</td>
+                            <td>【L】</td>
+                        </tr>
+                        <tr>
+                            <td>胸围</td>
+                            <td>87</td>
+                            <td>93</td>
+                            <td>91</td>
+                        </tr>
+                        <tr>
+                            <td>腰围</td>
+                            <td>72</td>
+                            <td>68</td>
+                            <td>76</td>
+                        </tr>
+                        <tr>
+                            <td>裙长</td>
+                            <td>89-95</td>
+                            <td>88-94</td>
+                            <td>90-96</td>
+                        </tr>
+                    </table>
                 </div>
-                <div class="panel-list">
-                    <div class="size">
-                        <table>
-                            <tr>
-                                <td>尺码</td>
-                                <td>【M】</td>
-                                <td>【S】</td>
-                                <td>【L】</td>
-                            </tr>
-                            <tr>
-                                <td>胸围</td>
-                                <td>87</td>
-                                <td>93</td>
-                                <td>91</td>
-                            </tr>
-                            <tr>
-                                <td>腰围</td>
-                                <td>72</td>
-                                <td>68</td>
-                                <td>76</td>
-                            </tr>
-                            <tr>
-                                <td>裙长</td>
-                                <td>89-95</td>
-                                <td>88-94</td>
-                                <td>90-96</td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="size-image">
-                        <img src="http://s3.mogucdn.com/p2/170117/upload_5jebi0af8537id564g95ehj0g781k_1125x647.jpg_468x468.jpg">
-                        <img src="http://s3.mogucdn.com/p2/170118/upload_00e2357hd57g860f9khakh3a6bbbi_1125x915.png_468x468.jpg">
-                        <img src="http://s17.mogucdn.com/p2/170727/10000000_6i23472bhk0llea4hgikfbhdc00ii_1500x3018.jpg_468x468.jpg">
-                        <img src="http://s3.mogucdn.com/p2/170118/upload_55c7c64956bfbd75c3ib3j4ik029b_1125x509.png_468x468.jpg">
-                    </div>
+                <div class="size-image">
+                    <img src="http://s3.mogucdn.com/p2/170117/upload_5jebi0af8537id564g95ehj0g781k_1125x647.jpg_468x468.jpg">
+                    <img src="http://s3.mogucdn.com/p2/170118/upload_00e2357hd57g860f9khakh3a6bbbi_1125x915.png_468x468.jpg">
+                    <img src="http://s17.mogucdn.com/p2/170727/10000000_6i23472bhk0llea4hgikfbhdc00ii_1500x3018.jpg_468x468.jpg">
+                    <img src="http://s3.mogucdn.com/p2/170118/upload_55c7c64956bfbd75c3ib3j4ik029b_1125x509.png_468x468.jpg">
                 </div>
             </div>
-            <div class="shop"></div>
-            <!--评价-->
-            <div class="panel_c">
-                <div class="rate-head">
-                    <a href="" class="tit">购买评价
-						<span class="more">更多
-						   <i class="arrow">
-						   	<img src="https://s10.mogucdn.com/mlcdn/c45406/170711_701e7hcfi1j9fe76hgd560bj28d87_14x22.png" alt="" />
-						   </i>
-						</span>
-					</a>
-                </div>
-                <div class="rate-root" v-does="cuss">暂无评价</div>
-                <div class="rate-list">
-                    <div class="rate-user">
-                        <!--<span class="user-info">-->
-                        <!--<img :src="cuss[0].image==null?'':cuss[0].image" alt="" />-->
-                        <!--<span class="name">{{cuss[0].name=='null'?'':cuss[0].name}}</span>-->
-                        <!--</span>-->
-                         <span class="user-info">
+        </div>
+        <div class="shop"></div>
+        <!--评价-->
+        <div class="panel_c">
+            <div class="rate-head">
+                <a href="" class="tit">购买评价
+                        <span class="more">更多
+                           <i class="arrow">
+                            <img src="https://s10.mogucdn.com/mlcdn/c45406/170711_701e7hcfi1j9fe76hgd560bj28d87_14x22.png" alt="" />
+                           </i>
+                        </span>
+                    </a>
+            </div>
+            <div class="rate-root" v-does="cuss">暂无评价</div>
+            <div class="rate-list">
+                <div class="rate-user">
+                    <!--<span class="user-info">-->
+                    <!--<img :src="cuss[0].image==null?'':cuss[0].image" alt="" />-->
+                    <!--<span class="name">{{cuss[0].name=='null'?'':cuss[0].name}}</span>-->
+                    <!--</span>-->
+                    <span class="user-info">
                         <img :src="men.img" alt="" />
                         <span class="name">{{men.name}}</span>
-                        </span>
-                    </div>
-                    <div class="rate-cont">
-                        <!--{{cuss[0].title==null?'':cuss[0].title}}-->
-                        {{men.title}}
-                    </div>
-                    <div class="rate-attr">
-                        <!--<span class="time">{{cuss[0].time==null?'':cuss[0].time}}</span>-->
-                        <!--<span class="sku">颜色:{{cuss[0].color}} 尺码:【{{cuss[0].size==null?'':cuss[0].size}}】 </span>-->
-                        <span class="time">{{men.time}}</span>
-                        <span class="sku">颜色:{{men.color}} 尺码:【{{men.size}}】 </span>
-                    </div>
-                    <div class="rate-imgs">
-                        <a href=""></a>
-							<!--<img :src="cuss[0].img==null?'':cuss[0].img" alt="" />-->
-							<img :src="men.img" alt="" />
-                        <!--<img :src="cuss[0].image==null?'':cuss[0].image" alt="" />-->
-                        <img :src="men.image" alt="" />
-                        <!--<span class="name">{{cuss[0].name=='null'?'':cuss[0].name}}</span>-->
-                         <span class="name">{{men.name}}</span>
-                        <!--</span>-->
-                    </div>
-                    <div class="rate-cont">
-                        <!--{{cuss[0].title==null?'':cuss[0].title}}-->
-                         {{men.title}}
-                    </div>
+                    </span>
+                </div>
+                <div class="rate-cont">
+                    <!--{{cuss[0].title==null?'':cuss[0].title}}-->
+                    {{men.title}}
+                </div>
+                <div class="rate-attr">
+                    <!--<span class="time">{{cuss[0].time==null?'':cuss[0].time}}</span>-->
+                    <!--<span class="sku">颜色:{{cuss[0].color}} 尺码:【{{cuss[0].size==null?'':cuss[0].size}}】 </span>-->
+                    <span class="time">{{men.time}}</span>
+                    <span class="sku">颜色:{{men.color}} 尺码:【{{men.size}}】 </span>
+                </div>
+                <div class="rate-imgs">
+                    <a href=""></a>
+                    <!--<img :src="cuss[0].img==null?'':cuss[0].img" alt="" />-->
+                    <img :src="men.img" alt="" />
+                    <!--<img :src="cuss[0].image==null?'':cuss[0].image" alt="" />-->
+                    <img :src="men.image" alt="" />
+                    <!--<span class="name">{{cuss[0].name=='null'?'':cuss[0].name}}</span>-->
+                    <span class="name">{{men.name}}</span>
+                    <!--</span>-->
+                </div>
+                <div class="rate-cont">
+                    <!--{{cuss[0].title==null?'':cuss[0].title}}-->
+                    {{men.title}}
                 </div>
             </div>
-            <div class="shop"></div>
-            <!--热卖推荐-->
-       <div class="panel_d">
-                <div class="mend">
-                    <span>热卖推荐</span>
-                </div>
-                <div class="list">
-                    <ul class="list_ch clearfix">
-                        <li v-for="item in this.men">
-                            <a href="#/detail">
-								<img :src="item.image ">
-								<p class="li_title">{{item.title}}</p>
-								<p class="mo_price">{{item.price}} <span class=" collect"></span></p>
-							</a>
-                        </li>
-                    </ul>
-                </div>
+        </div>
+        <div class="shop"></div>
+        <!--热卖推荐-->
+        <div class="panel_d">
+            <div class="mend">
+                <span>热卖推荐</span>
             </div>
+            <div class="list">
+                <ul class="list_ch clearfix">
+                    <li v-for="item in this.men">
+                        <a href="#/detail">
+                                <img :src="item.image ">
+                                <p class="li_title">{{item.title}}</p>
+                                <p class="mo_price">{{item.price}} <span class=" collect"></span></p>
+                            </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
         <!--底部-->
         <div class="footer">
             <div class="footer_a">
                 <ul>
                     <li>
                         <i class="icon">
-							<img src="../img/kefu.png" alt="" />
-						</i>
+                            <img src="../img/kefu.png" alt="" />
+                        </i>
                         <span class="text">客服</span>
                     </li>
                     <li>
                         <i class="icon">
-							<img src="../img/dianpu.png" alt="" />
-						</i>
+                            <img src="../img/dianpu.png" alt="" />
+                        </i>
                         <span class="text">店铺</span>
                     </li>
                     <li @click="Cool()">
                         <i class="icon">
-							<img :src="src"  alt="" />
-						</i>
+                            <img :src="src"  alt="" />
+                        </i>
                         <span class="text">收藏</span>
                     </li>
                 </ul>
@@ -313,7 +318,6 @@
                 请登录
             </div>
         </div>
-
         <!--<div class="car">-->
         <mu-bottom-sheet :open="Sheet" @close="closeSheet">
             <mu-list @itemClick="Sheet">
@@ -327,12 +331,12 @@
                         <div class="show_b">
                             <span class="price_a">{{gooding.price}}</span>
                             <span class="price_b">库存
-					 	<span class="qty">{{gooding.buyCount}}</span> 件</span>
-                        <!--<img :src="gooding['itemInfo']['topImages'][0]" alt="" />-->
+                        <span class="qty">{{gooding.buyCount}}</span> 件</span>
+                            <!--<img :src="gooding['itemInfo']['topImages'][0]" alt="" />-->
+                        </div>
+                        <span class="close">╳</span>
                     </div>
-                    <span class="close">╳</span>
                 </div>
-               </div>
                 <div class="scoll">
                     <div class="sku-list">
                         <div class="list_a">
@@ -348,12 +352,12 @@
                         <p class="title">数量：</p>
                         <div class="counter">
                             <span class="counter_a">
-							<b class="counter_a_a" @click="del()">－</b>
-						</span>
+                            <b class="counter_a_a" @click="del()">－</b>
+                        </span>
                             <em class="counter_a_b">{{num}}</em>
                             <span class="counter_a">
-							<b class="counter_a_c" @click="add()">＋</b>
-						</span>
+                            <b class="counter_a_c" @click="add()">＋</b>
+                        </span>
                         </div>
                     </div>
                 </div>
@@ -362,19 +366,17 @@
                 </div>
             </mu-list>
         </mu-bottom-sheet>
-        </div>
+    </div>
     </div>
 </template>
-
 <script>
 export default {
     // components:{
-    // 	tohead,
+    //  tohead,
     // },
     data() {
         return {
-            swiperOption: {
-            },
+            swiperOption: {},
             bottomSheet: false,
             Sheet: false,
             noon: true,
@@ -388,14 +390,14 @@ export default {
             rus: [],
             men: [],
             name: 'carrousel',
-            goodsImg:[],
-            carousel:null,
-            detailImage:null,
+            goodsImg: [],
+            carousel: null,
+            detailImage: null,
         }
     },
     computed: {
         cuss() {
-            //				console.log(this.$store.state.cuss)
+            //              console.log(this.$store.state.cuss)
             return this.$store.state.cuss;
         },
     },
@@ -405,35 +407,35 @@ export default {
                     params: {
                         iid: this.$route.params.iid
                     }
-               }).then((response) => {
-//                     console.log(response)
-//                     console.log(this.$route.params.iid)
-//                  this.gooding = response.data.result
-//                  this.goodsImg = this.goodsImg?this.gooding.itemInfo.topImages:1;
-//                  console.log(this.goodsImg)
-//                  this.rus = response.data.RECORDS
-//                     console.log(this.rus)
+                }).then((response) => {
+                    //                     console.log(response)
+                    //                     console.log(this.$route.params.iid)
+                    //                  this.gooding = response.data.result
+                    //                  this.goodsImg = this.goodsImg?this.gooding.itemInfo.topImages:1;
+                    //                  console.log(this.goodsImg)
+                    //                  this.rus = response.data.RECORDS
+                    //                     console.log(this.rus)
                     // console.log(this.rus,response.data.result.detailInfo.detailImage['0'])
-//                  this.chung = response.data.RECORDS.carousel
-//                  console.log(this.gooding)
-                    response.data.RECORDS.forEach((item)=>{
-                    	if(item.iid == this.$route.params.iid){
-		                    this.gooding = item;
-                    		this.carousel = item.carousel.split(",");
-                    		this.detailImage = item.imgAll.split(",");
-                    	}
-                    	console.log(this.carousel)
+                    //                  this.chung = response.data.RECORDS.carousel
+                    //                  console.log(this.gooding)
+                    response.data.RECORDS.forEach((item) => {
+                        if (item.iid == this.$route.params.iid) {
+                            this.gooding = item;
+                            this.carousel = item.carousel.split(",");
+                            this.detailImage = item.imgAll.split(",");
+                        }
+                        // console.log(this.carousel)
                     })
-//                  console.log(this.chung)
-                    
+                    //                  console.log(this.chung)
+
                     // console.log(response)
-//                  this.gooding = response.data.result
-//                  this.rus = response.data.result.detailInfo.detailImage['0'].list
+                    //                  this.gooding = response.data.result
+                    //                  this.rus = response.data.result.detailInfo.detailImage['0'].list
                     // console.log(state.gooding)
                     // console.log(this.rus,response.data.result.detailInfo.detailImage['0'])
                 })
                 .catch((error) => {
-                    console.log(error)
+                    // console.log(error)
                 })
         },
         discuss() {
@@ -452,7 +454,7 @@ export default {
             this.Sheet = false;
             //点击加入购物车
             var all = this.gooding;
-            console.log(this.gooding)
+            // console.log(this.gooding)
             this.$ajax.get("http://localhost:999/addcar", {
                     params: {
                         imgUrl: all['itemInfo'].topImages[0],
@@ -465,10 +467,10 @@ export default {
                         user_id: this.id,
                     }
                 }).then((response) => {
-                    console.log(response)
+                    // console.log(response)
                 })
                 .catch((error) => {
-                    console.log(error)
+                    // console.log(error)
                 })
         },
         openSheet() {
@@ -485,50 +487,48 @@ export default {
             }
         },
         Cool() {
-               this.watch = !this.watch
-               if (this.src == require("../img/zan1.png")) {
-                   this.src = require("../img/zan2.png")
-                   document.querySelector('.weui-toast').style.display = 'block'
-               } else if (this.src == require("../img/zan2.png")) {
-                   this.src = require("../img/zan1.png")
-                   document.querySelector('.weui-toast').style.display = 'none'
-               }
-               var res;
-               res = this.$route.params.iid
-               // console.log(res)
-               this.$ajax.get("http://localhost:999/collect", {
-                       params: {
-                           id: this.id,
-                           iid: res,
-                       }
-                   }).then((response) => {
-                   })
-                   .catch((error) => {
-                       // console.log(error)
-                   })
+            this.watch = !this.watch
+            if (this.src == require("../img/zan1.png")) {
+                this.src = require("../img/zan2.png")
+                document.querySelector('.weui-toast').style.display = 'block'
+            } else if (this.src == require("../img/zan2.png")) {
+                this.src = require("../img/zan1.png")
+                document.querySelector('.weui-toast').style.display = 'none'
+            }
+            var res;
+            res = this.$route.params.iid
+            // console.log(res)
+            this.$ajax.get("http://localhost:999/collect", {
+                    params: {
+                        id: this.id,
+                        iid: res,
+                    }
+                }).then((response) => {})
+                .catch((error) => {
+                    // console.log(error)
+                })
         },
         remen() {
             this.$ajax.get("data/goodlist.json", {
-                params: {
-                }
+                params: {}
             }).then((response) => {
-                  console.log(response)
-//                this.men = response.data.RECORDS  
-				 response.data.RECORDS.forEach((item)=>{
-				       this.men = response.data.RECORDS.slice(0,20)
-//                      console.log(this.men)           
-				}) 
-//              response.data.forEach((item, idx) => {
-//                  if (item.hot >= 1) {
-//                      this.men.push(item)
-//                  }
-//              })
-//              this.men = this.men.slice(0,20)
-//              //					console.log(this.men)
-            }) .catch((error) => {
-                       // console.log(error)
-                   })
-       },
+                console.log(response)
+                //                this.men = response.data.RECORDS  
+                response.data.RECORDS.forEach((item) => {
+                    this.men = response.data.RECORDS.slice(0, 20)
+                    //                      console.log(this.men)           
+                })
+                //              response.data.forEach((item, idx) => {
+                //                  if (item.hot >= 1) {
+                //                      this.men.push(item)
+                //                  }
+                //              })
+                //              this.men = this.men.slice(0,20)
+                //              //                  console.log(this.men)
+            }).catch((error) => {
+                // console.log(error)
+            })
+        },
         add() {
             this.num++;
         },
@@ -542,11 +542,11 @@ export default {
         addcarss() {}
     },
     mounted() {
-        this.$store.state.iid = this.$route.params.iid; //			console.log(this.$store.state.iid)
+        this.$store.state.iid = this.$route.params.iid; //          console.log(this.$store.state.iid)
         this.setDetail();
         this.discuss();
         this.collect();
-        this.remen();
+        // this.remen();
         this.id = document.cookie.split('=')[1];
     },
     directives: {
@@ -573,49 +573,107 @@ export default {
                 }
             }
         },
-        did:{
-				bind(el,binding){
-					console.log(el,binding,binding.value)
-					var input = binding.value;
-					var main = input.split(',')
-				}
-			}
+        did: {
+            bind: function(el, binding) {
+                console.log(el, binding, binding.value)
+                var input = binding.value;
+                var main = input.split(',')
+            }
+        },
+        lun: {
+            bind: function(el, binding) {
+                setTimeout(function() {
+                    var li = el.children;
+                    el.style.width = li.length * 330 + 'px';
+                    var width = li.length * 330;
+                    // console.log(li[0].offsetWidth)
+                    el.addEventListener("touchstart", function(data1, eve) {
+                    var start = data1.changedTouches['0'].pageX;
+                    var left = this.offsetLeft
+                    this.addEventListener("touchmove", function(data2) {
+
+                        // 移动的位置
+                        var end = data2.changedTouches['0'].pageX;
+                        // 需要移动的距离
+                        var way = left + (end - start)
+                        if (way <= document.body.offsetWidth - width) {
+                            way = document.body.offsetWidth - width
+                        }
+                        if (way >= 0) {
+                            way = 0
+                        }
+                        this.style.left = way + 'px'
+                    })
+                });
+            },
+            500)
     }
+}
+}
 }
 </script>
 <style scoped>
 html,
-body {
-    
+body {}
+
+
+
+/*轮播*/
+
+.goods {
+    position: relative;
+    height: 436px;
 }
+
+.goods ul {
+    position: absolute;
+    left: 0;
+}
+
+.goods li {
+    height: 436px;
+    float: left;
+    margin-left: 10px;
+}
+
+.goods li img {
+    height: 100%;
+}
+
 .screen {
-	background: #fff;
+    background: #fff;
     width: 100%;
     height: 100%;
 }
+
 .info {
     margin-top: 10px;
 }
+
 .info_a {
     line-height: 20px;
     margin-top: 2%;
     color: #424242;
     font-size: 14px;
 }
+
 .info_b {
     margin: 11px 6px 6px;
 }
+
 .now {
     font-size: 16px;
     color: #f69;
     line-height: 16px;
 }
+
 .info_c {
     width: 100%;
     height: 2%;
     margin: 11px 6px 6px;
     overflow: hidden;
 }
+
 .item {
     display: block;
     line-height: 12px;
@@ -624,12 +682,14 @@ body {
     float: left;
     margin-right: 8.1%;
 }
+
 .info_d {
     min-height: 53px;
     box-sizing: border-box;
     border-top: 1px solid #999;
     margin: 5% 2% 0 2%;
 }
+
 .ing {
     width: 90%;
     height: 3%;
@@ -637,6 +697,7 @@ body {
     font-size: 12px;
     flex-wrap: wrap;
 }
+
 .ing li {
     width: 26%;
     height: 4%;
@@ -646,6 +707,7 @@ body {
     box-sizing: border-box;
     margin-top: 6%;
 }
+
 .ing li img {
     float: left;
     width: 15%;
@@ -656,11 +718,13 @@ body {
     margin-right: 3%;
     margin-left: 3%;
 }
+
 .ing li span {
     color: #666;
     vertical-align: middle;
     font-size: 12px;
 }
+
 .good {
     display: block;
     width: 2.2%;
@@ -669,65 +733,46 @@ body {
     margin-top: -5%;
     margin-right: 2%;
 }
+
 .shop {
     height: 9px;
     border-top: 1px solid #f2f5f8;
     background: #f2f5f8;
 }
-.swiper-container {
-    width: 80%;
-    height: 371px;
-}
-.swiper-container img {
-    width: 80%;
-    height: 300px;
-    z-index:100;
-}
-.swiper-slide {
-    text-align: center;
-    font-size: 18px;
-    background: #fff;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    -webkit-justify-content: center;
-    justify-content: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    -webkit-align-items: center;
-    align-items: center;
-}
+
 .shop-info {
     overflow: hidden;
     position: relative;
     margin-top: 10px;
     padding: 0 2%;
 }
+
 .fix {
     height: 3%;
     box-sizing: border-box;
     overflow: hidden;
 }
+
 .fix_a {
     width: 13%;
     height: 40px;
     float: left;
     text-decoration: none;
 }
+
 .fix_a img {
     width: 100%;
     height: 100%;
     border: 1px solid #ddd;
     border-radius: 50%;
 }
+
 .fix_b {
     width: 85%;
     float: left;
     overflow: hidden;
 }
+
 .title {
     width: 30%;
     height: 3%;
@@ -735,6 +780,7 @@ body {
     margin-top: 3%;
     margin-left: 2%;
 }
+
 .not {
     float: right;
     width: 20%;
@@ -746,6 +792,7 @@ body {
     border-radius: 16px;
     margin-top: -8%;
 }
+
 .content {
     height: 5%;
     display: flex;
@@ -757,6 +804,7 @@ body {
     align-items: center;
     text-align: right;
 }
+
 .sale {
     width: 17%;
     height: 5%;
@@ -765,6 +813,7 @@ body {
     margin-right: 6%;
     max-height: 20%;
 }
+
 .all {
     width: 25%;
     height: 5%;
@@ -774,21 +823,25 @@ body {
     max-height: 20%;
     border-right: 1px solid #eee;
 }
+
 .content span {
     font-family: "微软雅黑";
     font-size: 14px;
 }
+
 .count {
     width: 40%;
     margin-left: -1%;
     line-height: 1.7;
 }
+
 .count li span {
     color: #666;
     font-size: 12px;
     display: inline-block;
     vertical-align: middle;
 }
+
 .count li em {
     color: #f13e3a;
     font-size: 12px;
@@ -796,6 +849,7 @@ body {
     display: inline-block;
     min-width: 3%;
 }
+
 .count li i {
     color: #f13e3a;
     font-size: 12px;
@@ -805,12 +859,14 @@ body {
     text-align: center;
     line-height: 11px;
 }
+
 .goshop {
     width: 100%;
     height: 3%;
     text-align: center;
     margin-bottom: 6%;
 }
+
 .goshop a {
     display: inline-block;
     width: 40%;
@@ -821,26 +877,31 @@ body {
     background: #f2f5f8;
     line-height: 26px;
 }
+
 .tab {
     width: 100%;
     height: 10%;
 }
+
 .tab_a {
     margin-top: 4%;
     height: 5%;
 }
+
 .tabs {
     display: -webkit-box;
     height: 6%;
     -webkit-box-orient: horizontal;
     -webkit-box-align: center;
 }
+
 .tab-item {
     float: left;
     width: 25%;
     padding: 0 2% 3.5% 2%;
     border-bottom: 1px solid #e5e5e5;
 }
+
 .tab-item span {
     width: 25%;
     font-weight: 700;
@@ -852,43 +913,51 @@ body {
     border-right: 1px solid #e5e5e5;
     font-family: "微软雅黑";
 }
+
+
+
 /*.tab-item i{
-    	width: 8%;
-    	display: block;
-    	position: absolute;
-    	bottom:35%;
-    	margin-left:-44%;
-    	height: 0.4%;
-    	background: #333;
-    	left: 50%;
+        width: 8%;
+        display: block;
+        position: absolute;
+        bottom:35%;
+        margin-left:-44%;
+        height: 0.4%;
+        background: #333;
+        left: 50%;
     }*/
+
 .footer {
     overflow: hidden;
-    width:100%;
+    width: 100%;
     height: 50px;
     position: fixed;
-	bottom:0;
-	left:0;
+    bottom: 0;
+    left: 0;
     z-index: 10;
-    background:#fff ;
+    background: #fff;
     border-top: 1px solid #dcdcdc;
 }
+
 .footer_a {
     width: 45%;
     height: 50px;
     margin-bottom: 8%;
     margin-left: 2%;
 }
+
 .footer_a ul {
     height: 50px;
     overflow: hidden;
     /*margin-top:7%;*/
 }
+
 .footer_a li {
     width: 33%;
     height: 15%;
     float: left;
 }
+
 .icon {
     display: block;
     width: 16px;
@@ -896,20 +965,24 @@ body {
     margin-left: 19%;
     margin-top: 18%;
 }
+
 .icon img {
     width: 100%;
     height: 100%;
 }
+
 .text {
     text-align: center;
     font-size: 12px;
     margin-left: 12%;
 }
+
 .footer_b {
     width: 53%;
     height: 50px;
     float: right;
 }
+
 .buy-cart {
     display: block;
     width: 47%;
@@ -920,6 +993,7 @@ body {
     background: #ffe817;
     text-align: center;
 }
+
 .buy-now {
     display: block;
     text-align: center;
@@ -930,13 +1004,16 @@ body {
     line-height: 60px;
     font-size: 12px;
 }
+
 .panel_a {
     width: 100%;
     overflow: hidden;
 }
+
 .prap {
     padding: 0 4%;
 }
+
 .start {
     float: left;
     width: 30%;
@@ -944,6 +1021,7 @@ body {
     background: #a3a3a5;
     position: relative;
 }
+
 .start i {
     left: 0;
     display: inline-block;
@@ -953,11 +1031,13 @@ body {
     position: absolute;
     top: -5%;
 }
+
 .desc {
     padding: 5% 0;
     color: #727272;
     font-size: 12px;
 }
+
 .end {
     float: right;
     width: 30%;
@@ -965,6 +1045,7 @@ body {
     background: #a3a3a5;
     position: relative;
 }
+
 .end i {
     right: 0;
     display: inline-block;
@@ -974,9 +1055,11 @@ body {
     position: absolute;
     top: -5%;
 }
+
 .pics {
     margin-top: 5%;
 }
+
 .pic-title {
     height: 30px;
     line-height: 30px;
@@ -985,6 +1068,7 @@ body {
     font-weight: 400;
     font-size: 11px;
 }
+
 .pic-desc {
     height: 40px;
     line-height: 40px;
@@ -992,27 +1076,33 @@ body {
     color: #727272;
     font-size: 11px;
 }
+
 .pic-list {
     width: 100%;
     margin: 0 auto;
 }
+
 .pic-list img {
     width: 100%;
     display: block;
     border: none;
     vertical-align: middle;
 }
+
 .fadeIn {
     animation: fadeIn .8s easc both;
 }
+
 .panel_b {
     box-sizing: border-box;
     margin-top: 5%;
 }
+
 .panel-head {
     padding-left: 4%;
     padding-right: 4%;
 }
+
 .panel-head span {
     display: block;
     line-height: 4%;
@@ -1020,22 +1110,28 @@ body {
     color: #333;
     font-size: 12px;
 }
+
 .panel-list {
     box-sizing: border-box;
 }
+
 .size {
     background: #fff;
     margin: 4% 4%;
 }
+
 .size table {
     width: 100%;
 }
+
 .size tr {
     border-bottom: 1px solid #f4f4f4;
 }
+
 .size td:first-child {
     width: 53%;
 }
+
 .size td {
     font-weight: 400;
     line-height: 38px;
@@ -1043,38 +1139,45 @@ body {
     color: #727272;
     padding-right: 10%;
 }
+
 .size-image {
     margin-bottom: 15px;
 }
+
 .size-image img {
     width: 100%;
     border: none;
     vertical-align: middle;
 }
+
 .panel_c {
     overflow: hidden;
     margin: 0 auto;
     background: #fff;
     margin-top: 5%;
 }
+
 .rate-head {
     padding-left: 3%;
     padding-right: 3%;
     padding-bottom: 2%;
     border-bottom: 1px solid #E0E0E0;
 }
+
 .rate-head .tit {
     padding: 5% 0 4%;
     color: #333;
     font-size: 12px;
     line-height: 4%;
 }
+
 .more {
     float: right;
     color: #666;
     font-size: 12px;
     margin-top: 3%;
 }
+
 .arrow {
     display: block;
     width: 10px;
@@ -1083,29 +1186,37 @@ body {
     margin-top: -13%;
     padding-left: 6%;
 }
+
 .arrow img {
     width: 100%;
     height: 100%;
 }
+
 .rate-list {
     padding-left: 3%;
     padding-right: 3%;
 }
+
+
+
 /*.user-info{
-     	width:30%;
-     	height: 35px;
-     	display: inline-block;
-     	line-height: 5%;
+        width:30%;
+        height: 35px;
+        display: inline-block;
+        line-height: 5%;
      }*/
+
 .rate-user {
     margin-top: 4%;
 }
+
 .rate-user img {
     width: 35px;
     height: 35px;
     border: 1px solid #efefef;
     border-radius: 50%;
 }
+
 .name {
     margin-left: 16%;
     margin-top: -9%;
@@ -1114,46 +1225,56 @@ body {
     font-size: 12px;
     vertical-align: middle;
 }
+
 .rate-cont {
     height: 20%;
     margin-top: 5%;
     color: #727272;
     font-size: 12px;
 }
+
 .rate-attr {
     line-height: 12px;
     margin-top: 2%;
 }
+
 .time {
     color: #999;
     font-size: 12px;
 }
+
 .sku {
     margin-left: 2%;
     color: #999;
     font-size: 12px;
 }
+
 .rate-imgs {
     overflow: hidden;
     margin-top: 2%;
 }
+
 .rate-imgs a {
     width: 20%;
     display: inline-block;
     margin-bottom: 2%;
     margin-right: 2%;
 }
+
 .rate-imgs a img {
     width: 100%;
     border: none;
 }
+
 .panel_d {
     overflow: hidden;
 }
+
 .mend {
     padding-left: 3%;
     padding-right: 3%;
 }
+
 .mend span {
     display: block;
     line-height: 30px;
@@ -1161,19 +1282,23 @@ body {
     color: #333;
     font-size: 2%;
 }
+
 .list {
     background: #fff;
     margin-top: 10px;
 }
+
 .list_ch li {
     float: left;
     width: 45%;
     margin-left: 12px;
 }
+
 .list_ch li img {
     width: 100%;
     height: 300px;
 }
+
 .list_ch li .li_title {
     height: 20px;
     line-height: 20px;
@@ -1182,6 +1307,7 @@ body {
     text-overflow: ellipsis;
     font-size: 12px;
 }
+
 .collect {
     display: inline-block;
     width: 16px;
@@ -1191,13 +1317,16 @@ body {
     position: relative;
     top: 4px;
 }
+
 .count {
     color: #ccc;
 }
+
 .ccc {
     padding: 0 5%;
     text-align: center;
 }
+
 .btn {
     background: #f69;
     height: 38px;
@@ -1207,9 +1336,11 @@ body {
     color: #fff;
     margin-top: 4%;
 }
+
 .rate-root {
     padding: 5% 5%;
 }
+
 .car_a {
     margin: 0 2%;
     display: -webkit-box;
@@ -1218,33 +1349,40 @@ body {
     border-bottom: 1px solid #f2f5f8;
     overflow: auto;
 }
+
 .cart {
     display: block;
     width: 22%;
     height: 6%;
     position: relative;
 }
+
 .cart img {
     width: 100%;
     height: 100%;
 }
+
 .show {
     margin-left: 3%;
     width: 57%;
     height: 20%;
     display: block;
 }
+
 .price_a {
     color: #f69;
     font-size: 14px;
 }
+
 .price_b {
     font-size: 14px;
 }
+
 .list_a {
     margin-top: 4%;
     border-bottom: 1px solid #f2f5f8;
 }
+
 .yanse {
     color: #fff;
     background-color: #f69;
@@ -1255,20 +1393,25 @@ body {
     margin-bottom: 3%;
     font-size: 14px;
 }
+
 .list_b {
     margin-top: 4%;
     border-bottom: 1px solid #f2f5f8;
 }
+
 .sku-num {
     margin-bottom: 15px;
 }
+
 .title {
     line-height: 16px;
     margin-bottom: 7px;
 }
+
 .counter {
     height: 6%;
 }
+
 .counter_a {
     width: 4%;
     height: 27px;
@@ -1277,6 +1420,7 @@ body {
     text-align: center;
     line-height: 27px;
 }
+
 .counter_a_b {
     color: #333;
     width: 4%;
@@ -1286,6 +1430,7 @@ body {
     text-align: center;
     line-height: 27px;
 }
+
 .counter_a_c {
     width: 4%;
     height: 27PX;
@@ -1294,6 +1439,7 @@ body {
     text-align: center;
     line-height: 27px;
 }
+
 .confirm {
     font-size: 14px;
     text-align: center;
@@ -1303,6 +1449,7 @@ body {
     height: 39px;
     line-height: 39px
 }
+
 .close {
     color: #bbb;
     font-size: 14px;
@@ -1315,6 +1462,7 @@ body {
     width: 3%;
     height: 30px;
 }
+
 .login {
     background: rgba(0, 0, 0, .5);
     width: 100px;
@@ -1327,4 +1475,5 @@ body {
     line-height: 30px;
     text-align: center;
     color: #fff;
-}</style>
+}
+</style>
