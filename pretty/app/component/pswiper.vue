@@ -50,10 +50,11 @@ export default {
 .swiper-container {
     width: 100%;
     height: 203px;
-    display: flex;
+    
 }
 
 .swiper-slide {
+    display: flex;
     text-align: center;
     font-size: 18px;
     background: #fff;
@@ -61,7 +62,6 @@ export default {
     display: -webkit-box;
     display: -ms-flexbox;
     display: -webkit-flex;
-    flex:1;
     -webkit-box-pack: center;
     -ms-flex-pack: center;
     -webkit-justify-content: center;
