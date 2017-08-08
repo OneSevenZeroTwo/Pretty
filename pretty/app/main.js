@@ -20,6 +20,7 @@ Vue.prototype.$ = $;
 import "./css/base.css";
 import "./css/weui.css";
 
+
 // 组件
 import Pindex from './router/pindex.vue';
 import Phome from './router/router/phome.vue'
