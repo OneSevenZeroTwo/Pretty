@@ -4,7 +4,7 @@
             <ul class="addrShow">
                 <li class="unit" v-for="(ali,index) in addrList" @click="useIt(ali.id)">
                     <div class="inner">
-                        <span class="choose_btn" :class="{unchoose:ali.isDefault==0,choose:ali.isDefault==1}"></span>
+                        <span class="choose_btn" :class="[ali.isDefault==0?'unchoose':'choose']"></span>
                         <div class="adrl_list inner_msg">
                             <p>
                                 <span class="nick_name">{{ali.addressUser}}</span>
@@ -41,35 +41,35 @@ export default {
             }
         },
         mounted() {
-            if (document.cookie.split("=")[1]) {
+            // if (document.cookie.split("=")[1]) {
                 this.$store.state.user_id = document.cookie.split("=")[1];
                 this.$store.state.useAddrId = null;
                 this.$store.dispatch("getAddrList");
 
-            } else {
-                this.isMaskShow = true;
+            // } else {
+            //     this.isMaskShow = true;
 
-            }
+            // }
         },
         computed: {
             addrList() {
                 //获取所有地址
-                //console.log(this.$store.state.addrList);
                 return this.$store.state.addrList;
             }
         },
         methods: {
             // 点击成为默认地址
             useIt(useId) {
-                this.$store.dispatch("isnomodifyAddr");
                 this.$store.state.useAddrId = useId;
                 this.$store.dispatch("ismodifyAddr");
                 window.location.href = "#/order";
+                
             },
             modthis(modthisId) {
                 this.$store.state.useAddrId = null;
                 this.$store.state.useAddrId = modthisId;
             },
+            // 返回个人中心
             goBack() {
                 window.location.href = "#/mycenter";
                 this.isMaskShow = false;

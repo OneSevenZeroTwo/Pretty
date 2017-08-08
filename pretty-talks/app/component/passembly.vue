@@ -64,14 +64,18 @@ export default {
     methods: {
         getWell() {
             // console.log(this)
-            this.$ajax.get('http://localhost:999/well').then((data) => {
+            this.$ajax.get(this.$store.state.baseUrl+'./well.json').then((data) => {
                 this.well1Img = data.data.data['0'].image;
-                this.well2Img = data.data.data['1'].image;
-                this.well3Img = data.data.data['2'].image;
+                this.well2Img = data.data.data2['0'].image;
+                this.well3Img = data.data.data3['0'].image;
                 this.aswell1 = data.data.data['0'].goodsList.slice(0,12);
-                this.aswell2 = data.data.data['1'].goodsList.slice(0,12);
-                this.aswell3 = data.data.data['2'].goodsList.slice(0,12);
-                // console.log(this.aswell3)
+                this.aswell2 = data.data.data2['0'].goodsList.slice(0,12);
+                this.aswell3 = data.data.data3['0'].goodsList.slice(0,12);
+                var a = ''
+                a+=data.data.data3['0'].goodsList.slice(0,12).map(function(item){
+                    return item.signGoodsId
+                })
+                // console.log(a.split(','))
             }).catch((err) => {
 
             })

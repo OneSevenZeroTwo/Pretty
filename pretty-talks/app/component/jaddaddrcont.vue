@@ -1,16 +1,16 @@
 <template>
     <div class="addr_new">
         <header class="page_head">
-            <div class="back_icon" id="back_btn">
-                <a href="javascript:history.go(-1)">
-                    <img src="http://s17.mogucdn.com/p1/160922/idid_ie3wmnbvgftginzsmizdambqgayde_35x52.png">
-                </a>
-            </div>
-            <a class="right_btn" id="save_address" href="javascript:;" @click="saveaddress">保存</a>
-            <div class="title">
-                <a href="javascript:;">收货地址</a>
-            </div>
-        </header>
+           <div class="back_icon" id="back_btn">
+               <a href="javascript:history.go(-1)">
+                   <img src="http://s17.mogucdn.com/p1/160922/idid_ie3wmnbvgftginzsmizdambqgayde_35x52.png">
+               </a>
+           </div>
+           <a class="right_btn" id="save_address" href="javascript:;" @click="saveaddress">保存</a>
+           <div class="title">
+               <a href="javascript:;">收货地址</a>
+           </div>
+       </header>
         <form id="addressForm" method="" onsubmit="return false" action="">
             <div class="addressErrorMessage">{{addressErrorMessage}}</div>
             <p class="item_wrap">
@@ -87,6 +87,7 @@
         </div>
     </div>
 </template>
+
 <script>
 import cityList from "../api/city.js";
 
@@ -165,7 +166,7 @@ export default {
                     return;
                 }
                 if (onoff) {
-                    console.log("可以保存")
+                    console.log(this.addressPid,this.addressCid,this.addressDid)
                     this.addressErrorMessage = "";
                     this.$store.state.userAddr = {
                         user_id: document.cookie.split("=")[1],
@@ -175,16 +176,20 @@ export default {
                         addressPname: this.addressPname,
                         addressCname: this.addressCname,
                         addressDname: this.addressDname,
+                        addressPid: this.addressPid,
+                        addressCid: this.addressCid,
+                        addressDid: this.addressDid,
                         addressStreet: this.addressStreet,
                         addressPostcode: this.addressPostcode,
                         isDefault: this.isDefault,
                     }
                     if (this.isDefault == 1) {
-                        this.$store.dispatch("isnomodifyAddr");
+                        //this.$store.dispatch("isnomodifyAddr");
                         this.$store.dispatch("ismodifyAddr");
                     }
                     console.log(this.$store.state.useAddrId);
-                    this.$store.dispatch("modifyAddrList");
+
+                    this.$store.dispatch("setAddrList");
                     window.location.href = "#/address";
                 }
             },
@@ -218,8 +223,9 @@ export default {
             },
             delAddr() {
                 this.$store.state.addrListId = this.$store.state.useAddrId;
+                console.log(this.$store.state.addrListId , this.$store.state.useAddrId)
                 this.$store.dispatch("delAddrList");
-                this.$store.state.addrListId = null;
+                //this.$store.state.addrListId = null;
                 window.location.href = "#/address";
             },
             goBack() {
@@ -243,7 +249,7 @@ export default {
 
         },
         mounted() {
-            console.log(document.cookie.split("=")[1])
+            console.log("用户ID",document.cookie.split("=")[1])
                 //console.log(this.$route.params)
             if (document.cookie.split("=")[1]) {
 
@@ -258,9 +264,13 @@ export default {
                             this.addressPname = item.addressPname;
                             this.addressCname = item.addressCname;
                             this.addressDname = item.addressDname;
+                            this.addressPid = item.addressPid;
+                            this.addressCid = item.addressCid;
+                            this.addressDid = item.addressDid;
                             this.addressStreet = item.addressStreet;
                             this.addressPostcode = item.addressPostcode;
                             this.isDefault = item.isDefault;
+                            this.isPidShow = false;
 
                         }
                     });
@@ -270,7 +280,6 @@ export default {
             }
 
         },
-
 }
 </script>
 <style scoped>

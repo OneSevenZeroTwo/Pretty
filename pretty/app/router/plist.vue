@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<xseek></xseek>
+		
 	</div>
 </template>
 

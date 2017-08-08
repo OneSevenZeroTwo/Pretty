@@ -6,6 +6,13 @@
             <div class="history" style="display: none;">
                 <h3><span></span>历史搜索</h3>
                 <ul class="clearfix">
+                    <li><a href="javascript:;">连衣裙</a></li>
+                    <li class="def"><a href="javascript:;">小白鞋</a></li>
+                    <li><a href="javascript:;">省心套装</a></li>
+                    <li class="def"><a href="javascript:;">碎花连衣裙</a></li>
+                    <li><a href="javascript:;">明星同款</a></li>
+                    <li class="def"><a href="javascript:;">高跟鞋</a></li>
+                    <li><a href="javascript:;">美妆</a></li>
                     <li ><a href="'javascript:;'">连衣裙</a></li>
                     <li class="def" ><a href="javascript:;"  ></a></li>
                     <li  ><a href="javascript:;" >省心套装</a></li>
@@ -19,6 +26,14 @@
             <div class="hot" v-show="isshowtsea">
                 <h3><span></span>热门搜索</h3>
                 <ul class="clearfix">
+                    <li><a href="#">连衣裙</a></li>
+                    <li class="def"><a href="#">小白鞋</a></li>
+                    <li><a href="#">省心套装</a></li>
+                    <li class="def"><a href="#">碎花连衣裙</a></li>
+                    <li><a href="#">明星同款</a></li>
+                    <li class="def"><a href="#">高跟鞋</a></li>
+                    <li><a href="#">美妆</a></li>
+                    <li class="def"><a href="#">墨镜</a></li>
                     <li @click="showfind('pop','连衣裙')"><a :href="'#/index/filist/pseek/pop/1/连衣裙'">连衣裙</a></li>
                     <li class="def" @click="showfind('pop','小白鞋')"><a :href="'#/index/filist/pseek/pop/1/小白鞋'">小白鞋</a></li>
                     <li  @click="showfind('pop','省心套装')"><a :href="'#/index/filist/pseek/pop/1/连衣裙'" >省心套装</a></li>
@@ -33,6 +48,7 @@
         </div>
         <div class="psealist" v-show="!isshowtsea">
             <ul>
+                <li v-for="(sea,index) of searchlist" :key="index"><a href="javascript:;" >{{sea.title | ten}}</a></li>
                 <li v-for="(sea,index) of searchlist" :key="index"><a :href="'#/detail/'+sea.iid">{{sea.title | ten}}</a></li>
             </ul>
         </div>

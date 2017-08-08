@@ -39,6 +39,17 @@ export default {
 div {
     background: #fff;
 }
+
+li {
+    margin: 10px 0 10px 10px;
+    float: left;
+}
+
+li img {
+    display: block;
+    width: 80px;
+    height: 80px;
+}
 ul{
     display: flex;
 }

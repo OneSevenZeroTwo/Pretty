@@ -54,13 +54,13 @@ export default {
             }
         },
         mounted() {
-            if (document.cookie.split("=")[1]) {
+            // if (document.cookie.split("=")[1]) {
                 this.$store.state.user_id = document.cookie.split("=")[1];
                 this.$store.state.carList = [];
                 this.$store.dispatch("getCarList");
-            } else {
-            	this.isMaskShow = true;
-            }
+            // } else {
+            // 	this.isMaskShow = true;
+            // }
         },
         computed: {
             orderList() {

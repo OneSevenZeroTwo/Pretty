@@ -210,11 +210,19 @@ app.get('/discuss', function(req, res) {
 //收藏
 app.get('/collect', function(req, res) {
     res.append('Access-Control-Allow-Origin', '*');
+<<<<<<< HEAD
+    
+//  var goId = req.query;
+// createConnection();
+//connection.connect();
+//  console.log(goId)
+=======
 
     var goId = req.query;
     createConnection();
     connection.connect();
     console.log(goId)
+>>>>>>> 7d69f5b5f27a5af9a16bb5a01f0a5312fc07cc10
 //  connection.query(`SELECT * FROM users where id="${goId.id}"`, function(error, results, fields) {
 //      var obj = {
 //          list: results

@@ -29,15 +29,35 @@ export default {
             h3: '',
         }
     },
-    methods: {
+    computed: {
+			yang(){
+				console.log(this.$store.state.choose)
+				return this.$store.state.choose;
+			},
+		},
+        methods: {
         shownav(num, sort) {
             this.isshownav = num;
             this.$store.state.list = [];
-
-            if (this.$route.matched[2].path == "/index/home/list/:sort/:page") {
-                this.h1 = '#/index/home/list/pop/1';
-                this.h2 = '#/index/home/list/sell/1';
-                this.h3 = '#/index/home/list/new/1';
+            this.$store.state.choose = [];
+            console.log(this.$route.matched)
+            if(this.$route.matched[1].path == "/listed/doing/:sort/:page/:pcid"){
+				 this.$ajax.get(this.$store.state.baseUrl + 'goodlist.json').then((data) => {
+                    var all = data.data.RECORDS
+//                    console.log(data)
+                    var arr = []
+                    for (var i = 0; i < all.length; i++) {
+                        if (all[i].sort == sort) {
+                            arr.push(all[i])
+                        }
+                    }
+//                  console.log(this.$store.state.list)
+                    this.$store.state.choose = this.$store.state.choose.concat(arr);
+                }).catch((err) => {
+                });
+            	this.h1 = '#/listed/doing/pop/1/'+ this.$route.params.pcid;
+                this.h2 = '#/listed/doing/sell/1/'+ this.$route.params.pcid;
+                this.h3 = '#/listed/doing/new/1/'+ this.$route.params.pcid; 
             } else if (this.$route.matched[2].path == "/index/filist/pseek/:sort/:page/:title") {
                 this.$ajax.get(this.$store.state.baseUrl + 'goodlist.json').then((data) => {
                     var all = data.data.RECORDS
@@ -54,6 +74,10 @@ export default {
                 this.h1 = '#/index/filist/pseek/pop/1/' + this.$route.params.title;
                 this.h2 = '#/index/filist/pseek/sell/1/' + this.$route.params.title;
                 this.h3 = '#/index/filist/pseek/new/1/' + this.$route.params.title;
+            }else if (this.$route.matched[2].path == "/index/home/list/:sort/:page") {
+                this.h1 = '#/index/home/list/pop/1';
+                this.h2 = '#/index/home/list/sell/1';
+                this.h3 = '#/index/home/list/new/1';
             }
         },
         onTop() {
@@ -65,7 +89,6 @@ export default {
                 }
             })
         }
-
     },
     mounted() {
         // console.log(this.$route)
@@ -87,13 +110,15 @@ export default {
             } else if (this.$route.path == '/index/filist/pseek/new/1/' + this.$route.params.title) {
                 this.isshownav = 2;
             }
+      }
+      this.$store.dispatch("setChoose")
         }
-
-    }
-
 }
 </script>
 <style>
+html,body{
+	background: #fff;
+}
 .list {
     background: #fff;
     margin-top: 10px;
@@ -106,6 +131,7 @@ export default {
     top: 0;
     margin-top: 0;
     z-index: 1000;
+
 }
 
 .lnav li {

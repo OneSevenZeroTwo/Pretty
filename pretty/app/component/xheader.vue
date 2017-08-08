@@ -55,6 +55,16 @@ export default {
             }
         },
         seekmsg() {
+//          this.$ajax.get('http://localhost:999/seek', {
+//              params: {
+//                  title: this.text
+//              }
+//          }).then((data) => {
+//              if (data.data.list.length <= 10) {
+//                  this.$store.state.searchlist = data.data.list;
+//                  // console.log(this.$store.state.searchlist)
+//              } else {
+//                  this.$store.state.searchlist = data.data.list.slice(0, 10);
             this.$ajax.get(this.$store.state.baseUrl + 'goodlist.json').then((data) => {
                 var all = data.data.RECORDS
                 var arr = []
@@ -76,6 +86,16 @@ export default {
             });
         },
         getfilist(sort) {
+//      	this.$store.state.list = [];
+//      	var title;
+//          this.$ajax.get('http://localhost:999/liseek', {
+//              params: {
+//                  page: 1,
+//                  sort: sort,
+//                  title: this.text
+//              }
+//          }).then((data) => {
+//              this.$store.state.list = this.$store.state.list.concat(data.data.list);
             this.$store.state.list = [];
             var title;
             this.$ajax.get(this.$store.state.baseUrl + 'goodlist.json').then((data) => {

@@ -149,7 +149,6 @@ app.get('/choose', function(req, res) {
     connection.end();
 })
 
-
 //热门
 app.get('/man', function(req, res) {
     res.append("Access-Control-Allow-Origin", "*");
@@ -169,10 +168,9 @@ app.get('/man', function(req, res) {
 app.post('/sethead', upload.any(), function(req, res, next) {	
 	res.append('Access-Control-Allow-Origin','*');
 	res.send({
-		imgurl
+		fileFormat
 	})
 });
-
 
 app.get('/newsimg', function(req, res) {
     res.append('Access-Control-Allow-Origin', '*');
@@ -194,6 +192,14 @@ app.get('/discuss', function(req, res) {
     createConnection();
     connection.connect();
     var IId = req.query;
+//  console.log(IId)
+    connection.query(`SELECT * FROM discuss where iid="${IId.iid}"`, function(error, results, fields) {
+        if (error) { throw error };
+        
+        if(results == ''){
+        	res.send('id为空')
+        }else{
+        	res.send(results);
     //  console.log(IId)
     connection.query(`SELECT * FROM discuss where iid="${IId.iid}"`, function(error, results, fields) {
         if (error) { throw error };
@@ -210,6 +216,11 @@ app.get('/discuss', function(req, res) {
 //收藏
 app.get('/collect', function(req, res) {
     res.append('Access-Control-Allow-Origin', '*');
+    
+//  var goId = req.query;
+// createConnection();
+//connection.connect();
+//  console.log(goId)
 
     var goId = req.query;
     createConnection();
@@ -247,7 +258,7 @@ app.get('/collect', function(req, res) {
 //  console.log(collId)
 //  connection.query(`UPDATE users SET iid="${collId.iid}" where id=${collId.id}`, function(error, results, fields) {
 //      if (error) { 
-//          throw error
+//      	throw error
 //      }
 //      res.send('ok') 
 //  });
@@ -318,4 +329,3 @@ app.get('/addcar', function(request, response) {
 app.listen(999, function() {
     console.log('打开999端口')
 })
-

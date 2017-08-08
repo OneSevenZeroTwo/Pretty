@@ -77,7 +77,8 @@
 				bind(el,binding){
 					var input = binding.value;
 					var time = (input.split('='))[1].split('&')[0]
-					el.setAttribute('href','#/listed/'+time)
+					el.setAttribute('href','#/listed/doing/pop/1/'+time)
+//					el.setAttribute('href','#/listed/'+time)
 				}
 			},
 			sing:{

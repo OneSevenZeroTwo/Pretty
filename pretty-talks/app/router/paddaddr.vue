@@ -14,7 +14,7 @@
  	 			/*jheaderMsg:{
  	 				title:"收货地址",
  	 				right_btn:"保存",
- 	 				id:"save_address",
+ 	 				id:"zsave_address",
  	 				href:"javascript:;",
  	 				click:"save",
  	 			}*/
