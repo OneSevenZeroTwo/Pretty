@@ -342,19 +342,6 @@ var store = new Vuex.Store({
 
       })
     },
-    getList(state, data) {
-      axios.get('http://localhost:999/home', {
-        params: {
-          page: state.page,
-          sort: state.sort
-        }
-      }).then((data) => {
-        state.list = state.list.concat(data.data.data.list);
-        // console.log(data.data.data.list)
-      }).catch((err) => {
-
-      })
-    },
     setNews(state) {
       axios.get('http://localhost:999/fsort', {
           params: {
@@ -369,19 +356,6 @@ var store = new Vuex.Store({
         .catch((error) => {
           //console.log(error);
         });
-    },
-    getList(state, data) {
-      axios.get('http://localhost:999/home', {
-        params: {
-          page: state.page,
-          sort: state.sort
-        }
-      }).then((data) => {
-        state.list = state.list.concat(data.data.data.list);
-        // console.log(data.data.data.list)
-      }).catch((err) => {
-
-      })
     },
     setChar(state) {
 
