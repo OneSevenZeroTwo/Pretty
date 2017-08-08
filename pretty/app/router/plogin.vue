@@ -34,13 +34,13 @@
 			return {
 				
 				headerMsg:{
-					title:'登录 - 美丽说',
+					title:'登录',
 					rightBtn:'注册',
 					theHref:'http://localhost:4399/#/reg/step1',
 					car:'false'
 				},
 				inputMsg:{
-					title:'美丽说账号登录',
+					title:'账号登录',
 					user:'昵称/邮箱/手机号',
 					type:'登录',
 					dialogTitle:'登录失败',
