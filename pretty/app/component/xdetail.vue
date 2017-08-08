@@ -2,14 +2,13 @@
     <div class="screen">
         <!--轮播图-->
         <swiper :options="swiperOption" ref="mySwiper">
-        	<!--<p v-did="gooding[0].carousel"></p>-->
             <swiper-slide v-for="(g,index) of carousel " :key="index"><img :src="g" alt="" /></swiper-slide>
             <!-- <swiper-slide><img :src="gooding.itemInfo.topImages[0]" alt="" /></swiper-slide>
             <swiper-slide><img :src="gooding.itemInfo.topImages[1]" alt="" /></swiper-slide>
             <swiper-slide><img :src="gooding.itemInfo.topImages[2]" alt="" /></swiper-slide>
             <swiper-slide><img :src="gooding.itemInfo.topImages[3]" alt="" /></swiper-slide>
             <swiper-slide><img :src="gooding.itemInfo.topImages[4]" alt="" /></swiper-slide> -->
-            <div class="swiper-pagination choose" slot="pagination">
+            <div class="swiper-pagination" slot="pagination">
             </div>
         </swiper>
         <!--商品详情-->
@@ -145,7 +144,7 @@
                         <!--<dt class="pic-title">{{gooding.detailInfo.detailImage[0].key}}</dt>-->
                         <!--<dt class="pic-desc">{{gooding.detailInfo.detailImage[0].desc}} </dt>-->
                         <dd class="pic-list">
-                            <img class="fadeIn" v-for="(rute,index) in rus" :src="rute" :key="index">
+                            <img class="fadeIn" v-for="(rute,index) in detailImage" :src="rute" :key="index">
                             <!--<img class="fadeIn" :src="{{gooding.detailInfo.detailImage[1].list}}">  
 							<img class="fadeIn" :src="{{gooding.detailInfo.detailImage[2].list}}">  
 							<img class="fadeIn" :src="{{gooding.detailInfo.detailImage[3].list}}">  
@@ -249,26 +248,14 @@
 							<!--<img :src="cuss[0].img==null?'':cuss[0].img" alt="" />-->
 							<img :src="men.img" alt="" />
                         <!--<img :src="cuss[0].image==null?'':cuss[0].image" alt="" />-->
-                        <img :src="gooding.image" alt="" />
+                        <img :src="men.image" alt="" />
                         <!--<span class="name">{{cuss[0].name=='null'?'':cuss[0].name}}</span>-->
-                         <span class="name">{{gooding.name}}</span>
+                         <span class="name">{{men.name}}</span>
                         <!--</span>-->
                     </div>
                     <div class="rate-cont">
                         <!--{{cuss[0].title==null?'':cuss[0].title}}-->
-                         {{gooding.title}}
-                    </div>
-                    <div class="rate-attr">
-                        <!--<span class="time">{{cuss[0].time==null?'':cuss[0].time}}</span>
-                        <span class="sku">颜色:{{cuss[0].color==null?'':cuss[0].color}} 尺码:【{{cuss[0].size==null?'':cuss[0].size}}】 </span>-->
-                        <span class="time">{{gooding.time}}</span>
-                        <span class="sku">颜色:{{gooding.color}} 尺码:【{{gooding.size}}】 </span>
-                    </div>
-                    <div class="rate-imgs">
-                        <a href="">
-							<!--<img :src="cuss[0].img==null?'':cuss[0].img" alt="" />-->
-							<img :src="gooding.img" alt="" />
-						</a>
+                         {{men.title}}
                     </div>
                 </div>
             </div>
@@ -435,6 +422,7 @@ export default {
                     		this.carousel = item.carousel.split(",");
                     		this.detailImage = item.imgAll.split(",");
                     	}
+                    	console.log(this.carousel)
                     })
 //                  console.log(this.chung)
                     
@@ -595,7 +583,7 @@ export default {
     }
 }
 </script>
-<style scoped>
+<style>
 html,
 body {
     
@@ -691,8 +679,9 @@ body {
     height: 371px;
 }
 .swiper-container img {
-    /*width: 80%;*/
-    height: 100%;
+    width: 80%;
+    height: 300px;
+    z-index:100;
 }
 .swiper-slide {
     text-align: center;
