@@ -2,12 +2,7 @@
     <div class="screen">
         <!--轮播图-->
         <swiper :options="swiperOption" ref="mySwiper">
-            <swiper-slide v-for="(g,index) of gooding['itemInfo']['topImages']" :key="index"><img :src="g" alt="" /></swiper-slide>
-            <!-- <swiper-slide><img :src="gooding.itemInfo.topImages[0]" alt="" /></swiper-slide>
-            <swiper-slide><img :src="gooding.itemInfo.topImages[1]" alt="" /></swiper-slide>
-            <swiper-slide><img :src="gooding.itemInfo.topImages[2]" alt="" /></swiper-slide>
-            <swiper-slide><img :src="gooding.itemInfo.topImages[3]" alt="" /></swiper-slide>
-            <swiper-slide><img :src="gooding.itemInfo.topImages[4]" alt="" /></swiper-slide> -->
+            <swiper-slide v-for="(g,index) of gooding['itemInfo']['topImages']" :key="index"><img :src="g"/></swiper-slide>
             <div class="swiper-pagination choose" slot="pagination">
             </div>
         </swiper>
@@ -350,10 +345,10 @@
     </div>
 </template>
 <script>
-import tohead from './tohead.vue'
+// import tohead from './tohead.vue'
 export default {
     // components:{
-    // 	tohead,
+    	// tohead,
     // },
     data() {
         return {
@@ -550,11 +545,6 @@ export default {
 }
 </script>
 <style scoped>
-html,
-body {
-    
-}
-
 .screen {
 	background: #fff;
     width: 100%;
@@ -656,13 +646,13 @@ body {
 }
 
 .swiper-container {
-    width: 80%;
+    width: 50%;
     height: 371px;
 }
 
 .swiper-container img {
-    /*width: 80%;*/
-    height: 100%;
+    width: 80%;
+    /*height: 100%;*/
 }
 
 .swiper-slide {
@@ -881,11 +871,13 @@ body {
 
 .footer {
     overflow: hidden;
+    width:100%;
     height: 50px;
-    /*position: fixed;
-	bottom:0;
-	left: 50%;*/
+    position: fixed;
+    bottom:0;
+    left:0;
     z-index: 10;
+    background:#fff ;
     border-top: 1px solid #dcdcdc;
 }
 
@@ -1437,4 +1429,5 @@ body {
     text-align: center;
     color: #fff;
 }
+
 </style>
