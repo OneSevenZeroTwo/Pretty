@@ -4,7 +4,7 @@
             <ul class="addrShow">
                 <li class="unit" v-for="(ali,index) in addrList" @click="useIt(ali.id)">
                     <div class="inner">
-                        <span class="choose_btn" :class="{unchoose:ali.isDefault==0,choose:ali.isDefault==1}"></span>
+                        <span class="choose_btn" :class="[ali.isDefault==0?'unchoose':'choose']"></span>
                         <div class="adrl_list inner_msg">
                             <p>
                                 <span class="nick_name">{{ali.addressUser}}</span>
@@ -21,39 +21,60 @@
                 </li>
             </ul>
         </div>
+        <div class="windowDrive" v-show="isMaskShow">
+            <div class="mask"></div>
+            <div class="dialog" id="alert" style="top: 22.0009%;">
+                <div class="dialog-con">非常抱歉，您还未登陆，请先登录后查看</div>
+                <div class="dialog-btn" @click="goBack">
+                    <span class="sureBtn">确认</span>
+                </div>
+            </div>
+        </div>
     </section>
 </template>
 <script>
 export default {
-	data(){
-		return{
-			isDefaultShow:false,
-		}
-	},
- 	mounted(){
- 		this.$store.state.useAddrId = null;
- 		this.$store.dispatch("getAddrList");
- 	},
- 	computed:{
- 		addrList(){
- 			//获取所有地址
-            //console.log(this.$store.state.addrList);
- 			return this.$store.state.addrList;
- 		}
- 	},
- 	methods:{
- 		// 点击成为默认地址
- 		useIt(useId){
-            this.$store.dispatch("isnomodifyAddr");
- 			this.$store.state.useAddrId = useId;
- 			this.$store.dispatch("ismodifyAddr");
- 			window.location.href = "#/order";
- 		},
- 		modthis(modthisId){
- 			this.$store.state.useAddrId = null;
- 			this.$store.state.useAddrId = modthisId;
- 		}
- 	}
+    data() {
+            return {
+                isDefaultShow: false,
+                isMaskShow: false,
+            }
+        },
+        mounted() {
+            // if (document.cookie.split("=")[1]) {
+                this.$store.state.user_id = document.cookie.split("=")[1];
+                this.$store.state.useAddrId = null;
+                this.$store.dispatch("getAddrList");
+
+            // } else {
+            //     this.isMaskShow = true;
+
+            // }
+        },
+        computed: {
+            addrList() {
+                //获取所有地址
+                return this.$store.state.addrList;
+            }
+        },
+        methods: {
+            // 点击成为默认地址
+            useIt(useId) {
+                this.$store.state.useAddrId = useId;
+                this.$store.dispatch("ismodifyAddr");
+                window.location.href = "#/order";
+                
+            },
+            modthis(modthisId) {
+                this.$store.state.useAddrId = null;
+                this.$store.state.useAddrId = modthisId;
+            },
+            // 返回个人中心
+            goBack() {
+                window.location.href = "#/mycenter";
+                this.isMaskShow = false;
+            }
+        }
 }
 </script>
 <style scoped>
@@ -93,10 +114,12 @@ export default {
     background: url(http://d02.res.meilishuo.net/pic/_o/52/6d/2c84d71dbaf4e2f4cfc30d48bef9_45_45.cg.png) no-repeat center;
     background-size: contain;
 }
+
 .addrShow .unchoose {
     border: 1px solid #979797;
     border-radius: 50%;
 }
+
 .addrShow .inner_msg {
     display: inline-block;
     vertical-align: middle;
@@ -106,7 +129,7 @@ export default {
 }
 
 .addrShow p {
-	line-height: 1;
+    line-height: 1;
     font-size: 0;
 }
 
@@ -144,5 +167,53 @@ export default {
     background: url(http://d01.res.meilishuo.net/pic/_o/4a/66/79cf7aceec345f584fde84e2b605_30_31.ch.png) no-repeat center;
     vertical-align: middle;
     background-size: contain;
+}
+
+.windowDrive {
+    text-align: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 160%;
+    z-index: 999;
+}
+
+.mask {
+    position: fixed;
+    top: 0;
+    z-index: 10000;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    opacity: .8;
+}
+
+.windowDrive .dialog {
+    position: relative;
+    display: inline-block;
+    background-color: #fff;
+    width: 270px;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+    z-index: 10001;
+}
+
+.windowDrive .dialog-con {
+    text-align: center;
+    color: #000;
+    padding: 20px;
+}
+
+.windowDrive .dialog-btn {
+    text-align: center;
+    line-height: 45px;
+    border-top: 1px solid #d9d9d9;
+}
+
+.windowDrive .dialog-btn span {
+    color: #f36;
+    box-sizing: border-box;
+    display: inline-block;
 }
 </style>

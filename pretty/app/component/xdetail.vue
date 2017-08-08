@@ -4,6 +4,11 @@
         <swiper :options="swiperOption" ref="mySwiper">
         	<!--<p v-did="gooding[0].carousel"></p>-->
             <swiper-slide v-for="(g,index) of carousel " :key="index"><img :src="g" alt="" /></swiper-slide>
+            <!-- <swiper-slide><img :src="gooding.itemInfo.topImages[0]" alt="" /></swiper-slide>
+            <swiper-slide><img :src="gooding.itemInfo.topImages[1]" alt="" /></swiper-slide>
+            <swiper-slide><img :src="gooding.itemInfo.topImages[2]" alt="" /></swiper-slide>
+            <swiper-slide><img :src="gooding.itemInfo.topImages[3]" alt="" /></swiper-slide>
+            <swiper-slide><img :src="gooding.itemInfo.topImages[4]" alt="" /></swiper-slide> -->
             <div class="swiper-pagination choose" slot="pagination">
             </div>
         </swiper>
@@ -136,11 +141,11 @@
                 </div>
                 <!--详情-->
                 <div class="pics">
-                    <dl class="pic-box" v-for="(rute,index) in detailImage" :key="index">
+                    <dl>
                         <!--<dt class="pic-title">{{gooding.detailInfo.detailImage[0].key}}</dt>-->
                         <!--<dt class="pic-desc">{{gooding.detailInfo.detailImage[0].desc}} </dt>-->
                         <dd class="pic-list">
-                            <img class="fadeIn" :src="rute">
+                            <img class="fadeIn" v-for="(rute,index) in rus" :src="rute" :key="index">
                             <!--<img class="fadeIn" :src="{{gooding.detailInfo.detailImage[1].list}}">  
 							<img class="fadeIn" :src="{{gooding.detailInfo.detailImage[2].list}}">  
 							<img class="fadeIn" :src="{{gooding.detailInfo.detailImage[3].list}}">  
@@ -161,6 +166,7 @@
                     </dl>
                 </div>
             </div>
+          </div>
             <div class="shop"></div>
             <!--商品参数-->
             <div class="panel_b">
@@ -239,16 +245,36 @@
                         <span class="sku">颜色:{{men.color}} 尺码:【{{men.size}}】 </span>
                     </div>
                     <div class="rate-imgs">
-                        <a href="">
+                        <a href=""></a>
 							<!--<img :src="cuss[0].img==null?'':cuss[0].img" alt="" />-->
 							<img :src="men.img" alt="" />
+                        <!--<img :src="cuss[0].image==null?'':cuss[0].image" alt="" />-->
+                        <img :src="gooding.image" alt="" />
+                        <!--<span class="name">{{cuss[0].name=='null'?'':cuss[0].name}}</span>-->
+                         <span class="name">{{gooding.name}}</span>
+                        <!--</span>-->
+                    </div>
+                    <div class="rate-cont">
+                        <!--{{cuss[0].title==null?'':cuss[0].title}}-->
+                         {{gooding.title}}
+                    </div>
+                    <div class="rate-attr">
+                        <!--<span class="time">{{cuss[0].time==null?'':cuss[0].time}}</span>
+                        <span class="sku">颜色:{{cuss[0].color==null?'':cuss[0].color}} 尺码:【{{cuss[0].size==null?'':cuss[0].size}}】 </span>-->
+                        <span class="time">{{gooding.time}}</span>
+                        <span class="sku">颜色:{{gooding.color}} 尺码:【{{gooding.size}}】 </span>
+                    </div>
+                    <div class="rate-imgs">
+                        <a href="">
+							<!--<img :src="cuss[0].img==null?'':cuss[0].img" alt="" />-->
+							<img :src="gooding.img" alt="" />
 						</a>
                     </div>
                 </div>
             </div>
             <div class="shop"></div>
             <!--热卖推荐-->
-            <div class="panel_d">
+       <div class="panel_d">
                 <div class="mend">
                     <span>热卖推荐</span>
                 </div>
@@ -264,9 +290,7 @@
                     </ul>
                 </div>
             </div>
-        </div>
         <!--底部-->
-        <!-- <tohead></tohead> -->
         <div class="footer">
             <div class="footer_a">
                 <ul>
@@ -316,12 +340,12 @@
                         <div class="show_b">
                             <span class="price_a">{{gooding.price}}</span>
                             <span class="price_b">库存
-					 	<span class="qty">{{gooding.buyCount}}</span> 件
-                            </span>
-                        </div>
+					 	<span class="qty">{{gooding.buyCount}}</span> 件</span>
+                        <!--<img :src="gooding['itemInfo']['topImages'][0]" alt="" />-->
                     </div>
                     <span class="close">╳</span>
                 </div>
+               </div>
                 <div class="scoll">
                     <div class="sku-list">
                         <div class="list_a">
@@ -351,11 +375,11 @@
                 </div>
             </mu-list>
         </mu-bottom-sheet>
-        <!--</div>-->
+        </div>
     </div>
 </template>
+
 <script>
-import tohead from './tohead.vue'
 export default {
     // components:{
     // 	tohead,
@@ -394,7 +418,7 @@ export default {
                     params: {
                         iid: this.$route.params.iid
                     }
-                }).then((response) => {
+               }).then((response) => {
 //                     console.log(response)
 //                     console.log(this.$route.params.iid)
 //                  this.gooding = response.data.result
@@ -414,6 +438,11 @@ export default {
                     })
 //                  console.log(this.chung)
                     
+                    // console.log(response)
+//                  this.gooding = response.data.result
+//                  this.rus = response.data.result.detailInfo.detailImage['0'].list
+                    // console.log(state.gooding)
+                    // console.log(this.rus,response.data.result.detailInfo.detailImage['0'])
                 })
                 .catch((error) => {
                     console.log(error)
@@ -508,10 +537,10 @@ export default {
 //              })
 //              this.men = this.men.slice(0,20)
 //              //					console.log(this.men)
-            }).catch((error) => {
-                console.log(error)
-            })
-        },
+            }) .catch((error) => {
+                       // console.log(error)
+                   })
+       },
         add() {
             this.num++;
         },
@@ -566,7 +595,6 @@ export default {
     }
 }
 </script>
-
 <style scoped>
 html,
 body {
@@ -629,7 +657,6 @@ body {
     white-space: nowrap;
     box-sizing: border-box;
     margin-top: 6%;
-    margin-right:2%;
 }
 .ing li img {
     float: left;
@@ -860,7 +887,6 @@ body {
 .footer_a {
     width: 45%;
     height: 50px;
-    float: left;
     margin-bottom: 8%;
     margin-left: 2%;
 }
@@ -891,7 +917,7 @@ body {
     margin-left: 12%;
 }
 .footer_b {
-    width: 50%;
+    width: 53%;
     height: 50px;
     float: right;
 }
@@ -902,23 +928,19 @@ body {
     line-height: 60px;
     font-size: 12px;
     color: #333;
-    float: left;
     background: #ffe817;
     text-align: center;
 }
-
 .buy-now {
     display: block;
     text-align: center;
     color: #fff;
     background: #f69;
     width: 53%;
-    height: 50px;
-    float: right;
-    line-height: 50px;
+    height: 60px;
+    line-height: 60px;
     font-size: 12px;
 }
-
 .panel_a {
     width: 100%;
     overflow: hidden;
@@ -1161,7 +1183,7 @@ body {
 }
 .list_ch li img {
     width: 100%;
-    height: 283px;
+    height: 300px;
 }
 .list_ch li .li_title {
     height: 20px;
@@ -1316,5 +1338,4 @@ body {
     line-height: 30px;
     text-align: center;
     color: #fff;
-}
-</style>
+}</style>

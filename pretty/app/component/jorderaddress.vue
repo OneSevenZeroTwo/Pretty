@@ -1,8 +1,13 @@
 <template>
 	<section class="address-box" @click="toAddress">
 		<b></b>
-		<p class="name" v-show="hasAddresss">收件人：{{addrList.addressUser}}<i>{{addrList.addressPhone}}</i></p>
-		<p class="address">{{noAddress}}{{addrList.addressPname}} {{addrList.addressCname}} {{addrList.addressDname}} {{addrList.addressStreet}}</p>
+		<div v-show="hasAddresss">
+			<p class="name">收件人：{{addrList?addrList.addressUser:""}}<i>{{addrList?addrList.addressPhone:""}}</i></p>
+			<p class="address">{{addrList?addrList.addressPname:""}} {{addrList?addrList.addressCname:""}} {{addrList?addrList.addressDname:""}} {{addrList?addrList.addressStreet:""}}</p>
+		</div>
+		<div v-show="!hasAddresss">
+			<p class="address">请设置你的收货地址</p>
+		</div>
 		<b></b>
 		<span class="arrow"></span>
 	</section>
@@ -23,19 +28,17 @@
 			}
 		},
 	 	mounted(){
-	 		this.$store.dispatch("getOrderAddr");
+            this.$store.state.user_id = document.cookie.split("=")[1];
+	 		this.$store.dispatch("getAddrList");
 	 	},
 	 	computed:{
 	 		addrList(){
-	 			//获取所有地址
-				if(this.$store.state.addrList != null){
+	 			//获取默认地址
+				if(this.$store.state.isDefaultAddr != null){
 					this.hasAddresss = true;
-					this.noAddress = "";
-					console.log("订单页-收货地址",this.$store.state.addrList);
-					return this.$store.state.addrList;
+					return this.$store.state.isDefaultAddr;
 				}else{
 					this.hasAddresss = false;
-					this.noAddress = "请设置你的收货地址";
 				}
 	 		}
 	 	},

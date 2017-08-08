@@ -39,16 +39,22 @@ export default {
 div {
     background: #fff;
 }
-
-li {
-    margin: 10px 0 10px 10px;
-    float: left;
+ul{
+    display: flex;
 }
-
+li {
+    margin: 2% 0 2% 2%;
+   flex: 1;
+}
+li:last-child{
+    margin-right: 2%;
+}
+li a{
+    width: 100%;
+}
 li img {
     display: block;
-    width: 80px;
-    height: 80px;
+     width: 100%;
 }
 
 .cl_title {

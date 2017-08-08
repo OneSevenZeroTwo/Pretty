@@ -8,7 +8,6 @@
 <script>
 	import xdetail from '../component/xdetail.vue';
 	import tohead from '../component/tohead.vue';
-	
 	export default{
 		components:{
 			xdetail,

@@ -55,32 +55,58 @@ export default {
             }
         },
         seekmsg() {
-            this.$ajax.get('http://localhost:999/seek', {
-                params: {
-                    title: this.text
+//          this.$ajax.get('http://localhost:999/seek', {
+//              params: {
+//                  title: this.text
+//              }
+//          }).then((data) => {
+//              if (data.data.list.length <= 10) {
+//                  this.$store.state.searchlist = data.data.list;
+//                  // console.log(this.$store.state.searchlist)
+//              } else {
+//                  this.$store.state.searchlist = data.data.list.slice(0, 10);
+            this.$ajax.get(this.$store.state.baseUrl + 'goodlist.json').then((data) => {
+                var all = data.data.RECORDS
+                var arr = []
+                console.log(this.text)
+                for (var i = 0; i < all.length; i++) {
+                    if (all[i].title.includes(this.text)) {
+                        // console.log(all[i])
+                        arr.push(all[i])
+                    }
                 }
-            }).then((data) => {
-                if (data.data.list.length <= 10) {
+                if (arr.length <= 10) {
                     this.$store.state.searchlist = data.data.list;
                     // console.log(this.$store.state.searchlist)
                 } else {
-                    this.$store.state.searchlist = data.data.list.slice(0, 10);
+                    this.$store.state.searchlist = arr.slice(0, 10);
                 }
             }).catch((err) => {
 
             });
         },
         getfilist(sort) {
-        	this.$store.state.list = [];
-        	var title;
-            this.$ajax.get('http://localhost:999/liseek', {
-                params: {
-                    page: 1,
-                    sort: sort,
-                    title: this.text
+//      	this.$store.state.list = [];
+//      	var title;
+//          this.$ajax.get('http://localhost:999/liseek', {
+//              params: {
+//                  page: 1,
+//                  sort: sort,
+//                  title: this.text
+//              }
+//          }).then((data) => {
+//              this.$store.state.list = this.$store.state.list.concat(data.data.list);
+            this.$store.state.list = [];
+            var title;
+            this.$ajax.get(this.$store.state.baseUrl + 'goodlist.json').then((data) => {
+                var all = data.data.RECORDS
+                var arr = []
+                for (var i = 0; i < all.length; i++) {
+                    if (all[i].sort == this.$route.params.sort) {
+                        arr.push(all[i])
+                    }
                 }
-            }).then((data) => {
-                this.$store.state.list = this.$store.state.list.concat(data.data.list);
+                this.$store.state.list = this.$store.state.list.concat(arr.slice(0,10));
             }).catch((err) => {
 
             });

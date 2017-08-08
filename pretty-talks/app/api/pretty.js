@@ -122,7 +122,7 @@ app.get('/tsort', function(request, response) {
 app.get('/main', function(request, response) {
     response.append("Access-Control-Allow-Origin", "*");
     var getId = request.query
-//  console.log(getId)
+    //  console.log(getId)
     https.get(`https://m.meilishuo.com/detail/mls/v1/h5?iid=${getId.iid}`, function(res) {
         var data = '';
         res.on('data', function(chunk) {
@@ -142,12 +142,13 @@ app.get('/choose', function(req, res) {
     var fcid = req.query.pcid;
     console.log(req.query)
     connection.query(`SELECT * FROM goodlist where fcid="${fcid}"`, function(error, results, fields) {
-       if (error) { throw error };
+        if (error) { throw error };
 
         res.send(results);
     })
     connection.end();
 })
+
 
 //热门
 app.get('/man', function(req, res) {
@@ -168,10 +169,10 @@ app.get('/man', function(req, res) {
 app.post('/sethead', upload.any(), function(req, res, next) {	
 	res.append('Access-Control-Allow-Origin','*');
 	res.send({
-		fileFormat
+		imgurl
 	})
 });
-  
+
 
 app.get('/newsimg', function(req, res) {
     res.append('Access-Control-Allow-Origin', '*');
@@ -193,14 +194,14 @@ app.get('/discuss', function(req, res) {
     createConnection();
     connection.connect();
     var IId = req.query;
-//  console.log(IId)
+    //  console.log(IId)
     connection.query(`SELECT * FROM discuss where iid="${IId.iid}"`, function(error, results, fields) {
         if (error) { throw error };
-        
-        if(results == ''){
-        	res.send('id为空')
-        }else{
-        	res.send(results);
+
+        if (results == '') {
+            res.send('id为空')
+        } else {
+            res.send(results);
         }
     });
     connection.end();
@@ -209,11 +210,19 @@ app.get('/discuss', function(req, res) {
 //收藏
 app.get('/collect', function(req, res) {
     res.append('Access-Control-Allow-Origin', '*');
+<<<<<<< HEAD
     
 //  var goId = req.query;
 // createConnection();
 //connection.connect();
 //  console.log(goId)
+=======
+
+    var goId = req.query;
+    createConnection();
+    connection.connect();
+    console.log(goId)
+>>>>>>> 7d69f5b5f27a5af9a16bb5a01f0a5312fc07cc10
 //  connection.query(`SELECT * FROM users where id="${goId.id}"`, function(error, results, fields) {
 //      var obj = {
 //          list: results
@@ -246,7 +255,7 @@ app.get('/collect', function(req, res) {
 //  console.log(collId)
 //  connection.query(`UPDATE users SET iid="${collId.iid}" where id=${collId.id}`, function(error, results, fields) {
 //      if (error) { 
-//      	throw error
+//          throw error
 //      }
 //      res.send('ok') 
 //  });
@@ -299,7 +308,22 @@ app.get('/getstar', function(request, response) {
     connection.end();
 });
 
+// 点击加入购物车
+app.get('/addcar', function(request, response) {
+    response.append("Access-Control-Allow-Origin", "*");
+    createConnection();
+    connection.connect();
+    var tatol = request.query;
+    connection.query(`INSERT INTO carlist (imgUrl, title, color, size, num, price, origin_price,user_id,orders) VALUES ( "${tatol.imgUrl}", "${tatol.title}", "${tatol.color}", "${tatol.size}", "${tatol.num}", ${tatol.price},${tatol.origin_price}, "${tatol.user_id}",0)`, function(error, results, fields) {
+        if (error) { throw error };
+        response.send('ok');
+
+    });
+
+    connection.end();
+});
 
 app.listen(999, function() {
     console.log('打开999端口')
 })
+

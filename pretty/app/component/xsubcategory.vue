@@ -78,6 +78,7 @@
 					var input = binding.value;
 					var time = (input.split('='))[1].split('&')[0]
 					el.setAttribute('href','#/listed/doing/pop/1/'+time)
+//					el.setAttribute('href','#/listed/'+time)
 				}
 			},
 			sing:{
@@ -118,6 +119,7 @@
 		padding: 0;
 	}
 	.list_log li{
+		height: 106px;
 		width:25%;
 		float: left;
 		position: relative;

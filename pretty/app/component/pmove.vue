@@ -20,7 +20,7 @@
         <div class="fmove">
             <ul class="bomove clearfix" v-shift="">
                 <li v-for="(lia,index) of liactive" :key="index">
-                    <a href="javascript:;">
+                    <a :href="'#/detail/'+lia.item_id">
 						<img :src="lia.image">
 						<p class="mo_price">{{lia.discountPrice}} <span class="old_price">{{lia.price}}</span></p>
 						<button class="mo_buy">立即抢购</button>
@@ -113,7 +113,7 @@ export default {
                     	ss = '0'+ss
                     }
 
-
+  
                     tlist[0].innerHTML = hour[0];
                     tlist[1].innerHTML = hour[1];
                     tlist[2].innerHTML = min[0];

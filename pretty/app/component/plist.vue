@@ -3,7 +3,7 @@
     <div :class="{list:!isontop,listTop:isontop}">
         <ul class="lnav clearfix">
             <li @click="shownav(0,'pop')">
-                <a href="javascript:;"><span :class="{active:isshownav==0}" >流行</span></a>
+                <a :href="h1"><span :class="{active:isshownav==0}" >流行</span></a>
             </li>
             <li @click="shownav(1,'sell')">
                 <a :href="h2"><span :class="{active:isshownav==1}">新款</span></a>
@@ -35,16 +35,16 @@ export default {
 				return this.$store.state.choose;
 			},
 		},
-    methods: {
-        shownav(num,sort) {
+        methods: {
+        shownav(num, sort) {
             this.isshownav = num;
             this.$store.state.list = [];
             this.$store.state.choose = [];
-         
+            console.log(this.$route.matched)
             if(this.$route.matched[1].path == "/listed/doing/:sort/:page/:pcid"){
 				 this.$ajax.get(this.$store.state.baseUrl + 'goodlist.json').then((data) => {
                     var all = data.data.RECORDS
-                      
+//                    console.log(data)
                     var arr = []
                     for (var i = 0; i < all.length; i++) {
                         if (all[i].sort == sort) {
@@ -59,14 +59,15 @@ export default {
                 this.h2 = '#/listed/doing/sell/1/'+ this.$route.params.pcid;
                 this.h3 = '#/listed/doing/new/1/'+ this.$route.params.pcid; 
             } else if (this.$route.matched[2].path == "/index/filist/pseek/:sort/:page/:title") {
-                this.$ajax.get('http://localhost:999/liseek', {
-                    params: {
-                        page: 1,
-                        sort: sort,
-                        title: this.$route.params.title
+                this.$ajax.get(this.$store.state.baseUrl + 'goodlist.json').then((data) => {
+                    var all = data.data.RECORDS
+                    var arr = []
+                    for (var i = 0; i < all.length; i++) {
+                        if (all[i].sort == sort) {
+                            arr.push(all[i])
+                        }
                     }
-                }).then((data) => {
-                    this.$store.state.list = this.$store.state.list.concat(data.data.list);
+                    this.$store.state.list = this.$store.state.list.concat(arr);
                 }).catch((err) => {
 
                 });
@@ -81,7 +82,7 @@ export default {
         },
         onTop() {
             window.addEventListener('scroll', () => {
-                if (window.scrollY >= 2567) {
+                if (window.scrollY >= 2490) {
                     this.isontop = true;
                 } else {
                     this.isontop = false;
@@ -111,9 +112,7 @@ export default {
             }
       }
       this.$store.dispatch("setChoose")
-
-    }
-
+        }
 }
 </script>
 <style>
@@ -131,6 +130,8 @@ html,body{
     position: fixed;
     top: 0;
     margin-top: 0;
+    z-index: 1000;
+
 }
 
 .lnav li {

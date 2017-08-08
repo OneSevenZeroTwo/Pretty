@@ -71,6 +71,7 @@ export default {
 
                 success: (data)=> {
                 	// console.log(data)
+                	console.log('./headImg/' + data.imgurl)
                     this.headerImgUrl = './headImg/' + data.imgurl;
                     this.$('.headpic').attr('src',this.headerImgUrl)
                 }

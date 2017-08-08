@@ -78,6 +78,7 @@
 	}
 	.list_log li{
 		width:25%;
+		height: 106px;
 		float: left;
 		position: relative;
 		border-right: 1px solid #eee;

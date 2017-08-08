@@ -50,6 +50,23 @@ li img {
     width: 80px;
     height: 80px;
 }
+ul{
+    display: flex;
+}
+li {
+    margin: 2% 0 2% 2%;
+   flex: 1;
+}
+li:last-child{
+    margin-right: 2%;
+}
+li a{
+    width: 100%;
+}
+li img {
+    display: block;
+     width: 100%;
+}
 
 .cl_title {
     text-align: center;

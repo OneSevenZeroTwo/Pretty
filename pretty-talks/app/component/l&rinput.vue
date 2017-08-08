@@ -68,6 +68,14 @@
 		-webkit-transform: rotate(270deg);
 		-o-transform: rotate(270deg);
 	}
+<<<<<<< HEAD
+
+	.animateDeg{
+		transition: all 0.5s;
+	}
+	
+=======
+>>>>>>> dbd7bc51bc0dce2eb002933f6a8c841debe2f51a
 	#captcha {
 		margin: 0 15px 0 15px;
 	}

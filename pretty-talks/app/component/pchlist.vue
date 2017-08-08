@@ -14,9 +14,9 @@
             <i class="weui-loading"></i>
             <span class="weui-loadmore__tips">正在加载</span>
         </div>
-        <!--  <div class="weui-loadmore weui-loadmore_line">
+         <div class="weui-loadmore weui-loadmore_line" v-show="isnone">
             <span class="weui-loadmore__tips">暂无数据</span>
-        </div> -->
+        </div>
     </div>
 </template>
 <script>
@@ -28,6 +28,8 @@ export default {
             isshownav: 0,
             wasmore: null,
             isshownone: false,
+            page: 0,
+            isnone:false
         }
     },
     computed: {
@@ -48,14 +50,36 @@ export default {
             window.addEventListener('scroll', () => {
                 if (document.body.offsetHeight - window.scrollY == 667) {
                     this.wasmore = true;
-                    this.$ajax.get('http://localhost:999/home', {
-                        params: {
-                            page: this.$route.params.page++,
-                            sort: this.sort
+                    this.$ajax.get(this.$store.state.baseUrl + 'goodlist.json').then((data) => {
+                        var all = data.data.RECORDS;
+                        var arr = [];
+                        if (this.$route.matched[2].path == "/index/home/list/:sort/:page") {
+                            for (var i = 0; i < all.length; i++) {
+                                if (all[i].sort == this.$route.params.sort) {
+                                    arr.push(all[i])
+                                }
+                            }
+
+                        } else if (this.$route.matched[2].path == "/index/filist/pseek/:sort/:page/:title") {
+                             for (var i = 0; i < all.length; i++) {
+                                if (all[i].sort == this.$route.params.sort && all[i].title.includes(this.$route.params.title)) {
+                                    // console.log(all[i])
+                                    arr.push(all[i])
+                                }
+                            }
                         }
-                    }).then((data) => {
-                        this.$store.state.list = this.$store.state.list.concat(data.data.list);
-                        this.wasmore = false
+                        var start = this.page * 10;
+                        var end = start + 10;
+                        this.page++;
+                        // console.log(end,arr.length)
+                        if(end<arr.length){
+                            this.$store.state.list = this.$store.state.list.concat(arr.slice(start, end))
+                        }else{
+                            this.wasmore = false;
+                            this.isnone = true
+                        }
+                        // console.log(arr(start,end))
+
                     }).catch((err) => {
 
                     });
@@ -65,14 +89,8 @@ export default {
         },
         liseek() {
             this.wasmore = true;
-            this.$ajax.get('http://localhost:999/liseek', {
-                params: {
-                    page: 1,
-                    sort: this.sort,
-                    title:this.title
-                }
-            }).then((data) => {
-                this.$store.state.list = this.$store.state.list.concat(data.data.list);
+            this.$ajax.get(this.$store.state.baseUrl + 'goodlist.json').then((data) => {
+                this.$store.state.list = this.$store.state.list.concat(data.data.RECORDS);
                 this.wasmore = false
 
             }).catch((err) => {

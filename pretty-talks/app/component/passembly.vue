@@ -7,7 +7,7 @@
             <div class="fmove">
                 <ul class="bomove clearfix" v-shift="">
                     <li v-for="a1 in aswell1">
-                        <a href="javascript:;">
+                        <a :href="'#/detail/'+a1.signGoodsId">
                             <img :src="a1.image">
                             <p class="astitle">{{a1.title}}</p>
                             <p class="mo_price">{{a1.price}}</p>
@@ -21,7 +21,7 @@
             <div class="fmove">
                 <ul class="bomove clearfix" v-shift="">
                     <li v-for="a2 in aswell2">
-                        <a href="javascript:;">
+                        <a :href="'#/detail/'+a2.signGoodsId">
                             <img :src="a2.image">
                             <p class="astitle">{{a2.title}}</p>
                             <p class="mo_price">{{a2.price}}</p>
@@ -35,7 +35,7 @@
             <div class="fmove">
                 <ul class="bomove clearfix" v-shift="">
                     <li v-for="a3 in aswell3">
-                        <a href="javascript:;">
+                        <a :href="'#/detail/'+a3.signGoodsId">
                             <img :src="a3.image">
                             <p class="astitle">{{a3.title}}</p>
                             <p class="mo_price">{{a3.price}}</p>
@@ -64,14 +64,18 @@ export default {
     methods: {
         getWell() {
             // console.log(this)
-            this.$ajax.get('http://localhost:999/well').then((data) => {
+            this.$ajax.get(this.$store.state.baseUrl+'./well.json').then((data) => {
                 this.well1Img = data.data.data['0'].image;
-                this.well2Img = data.data.data['1'].image;
-                this.well3Img = data.data.data['2'].image;
+                this.well2Img = data.data.data2['0'].image;
+                this.well3Img = data.data.data3['0'].image;
                 this.aswell1 = data.data.data['0'].goodsList.slice(0,12);
-                this.aswell2 = data.data.data['1'].goodsList.slice(0,12);
-                this.aswell3 = data.data.data['2'].goodsList.slice(0,12);
-                console.log(this.aswell3.length)
+                this.aswell2 = data.data.data2['0'].goodsList.slice(0,12);
+                this.aswell3 = data.data.data3['0'].goodsList.slice(0,12);
+                var a = ''
+                a+=data.data.data3['0'].goodsList.slice(0,12).map(function(item){
+                    return item.signGoodsId
+                })
+                // console.log(a.split(','))
             }).catch((err) => {
 
             })
