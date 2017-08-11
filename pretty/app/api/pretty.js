@@ -200,17 +200,9 @@ app.get('/discuss', function(req, res) {
         	res.send('id为空')
         }else{
         	res.send(results);
-    //  console.log(IId)
-    connection.query(`SELECT * FROM discuss where iid="${IId.iid}"`, function(error, results, fields) {
-        if (error) { throw error };
-
-        if (results == '') {
-            res.send('id为空')
-        } else {
-            res.send(results);
         }
-    });
     connection.end();
+    })
 });
 
 //收藏

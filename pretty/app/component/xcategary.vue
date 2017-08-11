@@ -58,8 +58,7 @@
 	}
 </script>
 
-<style >
-<style>
+<style scoped>
 	html,body{
 		background: #fff;
 	}

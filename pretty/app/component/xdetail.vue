@@ -614,10 +614,8 @@ export default {
 </script>
 <style scoped>
 html,
-body {}
-
-
-
+body {
+}
 /*轮播*/
 
 .goods {
@@ -944,6 +942,7 @@ body {}
     height: 50px;
     margin-bottom: 8%;
     margin-left: 2%;
+    float:left;
 }
 
 .footer_a ul {
@@ -978,6 +977,7 @@ body {}
 }
 
 .footer_b {
+	float: left;
     width: 53%;
     height: 50px;
     float: right;
@@ -985,9 +985,10 @@ body {}
 
 .buy-cart {
     display: block;
+    float: left;
     width: 47%;
-    height: 60px;
-    line-height: 60px;
+    height: 50px;
+    line-height: 50px;
     font-size: 12px;
     color: #333;
     background: #ffe817;
@@ -996,12 +997,13 @@ body {}
 
 .buy-now {
     display: block;
+    float: right;
     text-align: center;
     color: #fff;
     background: #f69;
     width: 53%;
-    height: 60px;
-    line-height: 60px;
+    height: 50px;
+    line-height: 50px;
     font-size: 12px;
 }
 
