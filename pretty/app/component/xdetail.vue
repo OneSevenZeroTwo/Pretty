@@ -234,33 +234,23 @@
                     <!--<span class="name">{{cuss[0].name=='null'?'':cuss[0].name}}</span>-->
                     <!--</span>-->
                     <span class="user-info">
-                        <img :src="men.img" alt="" />
-                        <span class="name">{{men.name}}</span>
+                        <img :src="nows.image" alt="" />
+                        <span class="name">{{nows.name}}</span>
                     </span>
                 </div>
                 <div class="rate-cont">
                     <!--{{cuss[0].title==null?'':cuss[0].title}}-->
-                    {{men.title}}
+                    {{nows.title}}
                 </div>
                 <div class="rate-attr">
                     <!--<span class="time">{{cuss[0].time==null?'':cuss[0].time}}</span>-->
                     <!--<span class="sku">颜色:{{cuss[0].color}} 尺码:【{{cuss[0].size==null?'':cuss[0].size}}】 </span>-->
-                    <span class="time">{{men.time}}</span>
-                    <span class="sku">颜色:{{men.color}} 尺码:【{{men.size}}】 </span>
+                    <span class="time">{{nows.time}}</span>
+                    <span class="sku">颜色:{{nows.color}} 尺码:【{{nows.size}}】 </span>
                 </div>
                 <div class="rate-imgs">
-                    <a href=""></a>
                     <!--<img :src="cuss[0].img==null?'':cuss[0].img" alt="" />-->
-                    <img :src="men.img" alt="" />
-                    <!--<img :src="cuss[0].image==null?'':cuss[0].image" alt="" />-->
-                    <img :src="men.image" alt="" />
-                    <!--<span class="name">{{cuss[0].name=='null'?'':cuss[0].name}}</span>-->
-                    <span class="name">{{men.name}}</span>
-                    <!--</span>-->
-                </div>
-                <div class="rate-cont">
-                    <!--{{cuss[0].title==null?'':cuss[0].title}}-->
-                    {{men.title}}
+                    <img :src="nows.img" alt="" />
                 </div>
             </div>
         </div>
@@ -314,9 +304,9 @@
                 <span class="buy-cart" @click="openSheet">加入购物车</span>
                 <span class="buy-now">购买</span>
             </div>
-            <div class="login" v-show="isshowload">
+            <!--<div class="login" v-show="isshowload">
                 请登录
-            </div>
+            </div>-->
         </div>
         <!--<div class="car">-->
         <mu-bottom-sheet :open="Sheet" @close="closeSheet">
@@ -386,7 +376,7 @@ export default {
             isshowload: false,
             num: 1,
             gooding: [],
-            // cuss:[],
+//          cuss:[],
             rus: [],
             men: [],
             name: 'carrousel',
@@ -397,9 +387,12 @@ export default {
     },
     computed: {
         cuss() {
-            //              console.log(this.$store.state.cuss)
             return this.$store.state.cuss;
         },
+//      nows() {
+//      	console.log(this.$store.state.nows)
+//          return this.$store.state.nows;
+//      },
     },
     methods: {
         setDetail() {
@@ -407,17 +400,7 @@ export default {
                     params: {
                         iid: this.$route.params.iid
                     }
-                }).then((response) => {
-                    //                     console.log(response)
-                    //                     console.log(this.$route.params.iid)
-                    //                  this.gooding = response.data.result
-                    //                  this.goodsImg = this.goodsImg?this.gooding.itemInfo.topImages:1;
-                    //                  console.log(this.goodsImg)
-                    //                  this.rus = response.data.RECORDS
-                    //                     console.log(this.rus)
-                    // console.log(this.rus,response.data.result.detailInfo.detailImage['0'])
-                    //                  this.chung = response.data.RECORDS.carousel
-                    //                  console.log(this.gooding)
+               }).then((response) => {
                     response.data.RECORDS.forEach((item) => {
                         if (item.iid == this.$route.params.iid) {
                             this.gooding = item;
@@ -426,21 +409,33 @@ export default {
                         }
                         // console.log(this.carousel)
                     })
-                    //                  console.log(this.chung)
-
-                    // console.log(response)
-                    //                  this.gooding = response.data.result
-                    //                  this.rus = response.data.result.detailInfo.detailImage['0'].list
-                    // console.log(state.gooding)
-                    // console.log(this.rus,response.data.result.detailInfo.detailImage['0'])
                 })
                 .catch((error) => {
-                    // console.log(error)
+                       console.log(error)
                 })
         },
-        discuss() {
-            this.$store.dispatch("setCuss")
+         setCuss() {
+            this.$ajax.get("data/discuss.json", {
+                    params: {
+                         iid: this.$route.params.iid
+                    },
+                })
+                .then((response) => {
+                	 response.data.RECORDS.forEach((good) => {
+                        if (good.iid == this.$route.params.iid) {
+                            this.nows = good;
+                            
+                        }
+//                         console.log(this.nows)
+                    })
+                })
+                .catch((error) => {
+                    //console.log(error);
+                });
         },
+//      discuss() {
+//          this.$store.dispatch("setCuss")
+//      },
         collect() {
             this.$store.dispatch("setColl")
         },
@@ -512,7 +507,6 @@ export default {
             this.$ajax.get("data/goodlist.json", {
                 params: {}
             }).then((response) => {
-                console.log(response)
                 //                this.men = response.data.RECORDS  
                 response.data.RECORDS.forEach((item) => {
                     this.men = response.data.RECORDS.slice(0, 20)
@@ -524,9 +518,9 @@ export default {
                 //                  }
                 //              })
                 //              this.men = this.men.slice(0,20)
-                //              //                  console.log(this.men)
+                //                    console.log(this.men)
             }).catch((error) => {
-                // console.log(error)
+                   console.log(error)
             })
         },
         add() {
@@ -544,9 +538,11 @@ export default {
     mounted() {
         this.$store.state.iid = this.$route.params.iid; //          console.log(this.$store.state.iid)
         this.setDetail();
-        this.discuss();
+//      this.discuss();
         this.collect();
-        // this.remen();
+//      this.nows();
+        this.setCuss();
+        this.remen();
         this.id = document.cookie.split('=')[1];
     },
     directives: {
@@ -980,7 +976,7 @@ body {
 	float: left;
     width: 53%;
     height: 50px;
-    float: right;
+    float: left;
 }
 
 .buy-cart {
@@ -1254,6 +1250,9 @@ body {
 .rate-imgs {
     overflow: hidden;
     margin-top: 2%;
+    margin-bottom: 2%;
+    width: 100px;
+    height: 100px;
 }
 
 .rate-imgs a {
@@ -1263,8 +1262,9 @@ body {
     margin-right: 2%;
 }
 
-.rate-imgs a img {
+.rate-imgs img {
     width: 100%;
+    height: 100%;
     border: none;
 }
 

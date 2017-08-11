@@ -394,19 +394,7 @@ var store = new Vuex.Store({
                 });
         },
         //评论
-        setCuss(state) {
-            axios.get(state.baseUrl + "discuss.json", {
-                    params: {
-
-                    },
-                })
-                .then((response) => {
-                    state.news = response.data.value
-                })
-                .catch((error) => {
-                    //console.log(error);
-                });
-        },
+    
         getList(state, data) {
             axios.get('http://localhost:999/home', {
                 params: {
