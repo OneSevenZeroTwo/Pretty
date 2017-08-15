@@ -922,12 +922,15 @@ body {
     }*/
 
 .footer {
-    display: flex;
-    position: absolute;
-    z-index: 500;
-    bottom: 0;
-    width: 100%;
-    background-color: #F7F7FA;
+    overflow: hidden;
+    width:100%;
+    height: 50px;
+    position: fixed;
+	bottom:0;
+	left:0;
+    z-index: 10;
+    background:#fff ;
+    border-top: 1px solid #dcdcdc;
 }
 
 .footer_a {
